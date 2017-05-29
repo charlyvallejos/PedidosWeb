@@ -12,7 +12,7 @@
     <body>
         <header id="cabecera">
             <h2>Pedidos</h2>
-            <div><img src="img/super-heroes.png" alt="Super Héroes" /></div>
+            <div><img src="img/logo.jpg" alt="Super Héroes" /></div>
             <a href="#" id="insertar">Agregar</a>
         </header>
         <section id="contenido">
