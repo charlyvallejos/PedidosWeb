@@ -2,7 +2,7 @@
     ini_set('display_errors', 0);
 //    require_once('modulos/controladorEditoriales.php');
 //    require_once('modulos/controladorSA.php');
-require_once('clases/pedid_ca.php');
+require_once('clases/Pedid_Ca.php');
     
     function listaEditoriales()
     {         
@@ -116,9 +116,9 @@ require_once('clases/pedid_ca.php');
     
     function mostrarPedido()
     {
-        $pedido_ca = new pedid_ca();
+        $pedido_ca = new Pedid_Ca();
         $pedidos = $pedido_ca->consultaTodos();
-        $totalRegistros = $pedidos->num_rows;
+        $totalRegistros = $pedido_ca->getCantidadPedidos;
         
         if($totalRegistros == 0)
         {
@@ -160,7 +160,7 @@ require_once('clases/pedid_ca.php');
                 {
                     $paginacion .= "<p>";
                         $paginacion .= ($pagina != 1) ? "<a href='?pag=".($pagina-1)."'>&laquo</a>" :"";
-                        for($i; $i <= $totalPaginas;$i++)
+                        for($i=0; $i <= $totalPaginas;$i++)
                         {
                             $actual = "<span class='actual'>$pagina</span>";
                             $enlace = "<a href='?pag=$i'>$i</a>";
