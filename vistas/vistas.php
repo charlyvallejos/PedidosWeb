@@ -118,8 +118,8 @@ require_once('clases/Pedid_Ca.php');
     {
         $pedido_ca = new Pedid_Ca();
         $pedidos = $pedido_ca->consultaTodos();
-        $totalRegistros = $pedido_ca->getCantidadPedidos;
-        
+        $totalRegistros = $pedido_ca->CantidadPedidos;
+
         if($totalRegistros == 0)
         {
             $respuesta = "<div class='error'>NO HAY REGISTRO DE PEDIDOS</div>";

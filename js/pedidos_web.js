@@ -74,7 +74,7 @@ function insertarPedido(evento)
         
     }
     //alert('prueba');
-    //console.log(datos);
+    console.log(datos);
     ejecutarAJAX(datos);    
 }
 

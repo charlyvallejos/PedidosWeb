@@ -36,15 +36,8 @@ class Pedid_Ca{
     protected $Porc_IngBr_Mis;
     protected $IngBr_Mis;
 
-    protected $CantidadPedidos;
+    public $CantidadPedidos;
 
-/*
-    protected $conn;
-    
-    public function __construct() {
-        $this->conn = new conexion();
-    }
-*/
     public function consultaTodos(){
         $sql = "SELECT * FROM pedid_Ca";
         try{
@@ -57,10 +50,6 @@ class Pedid_Ca{
             return $e->getMessage();
         }
     }
-    public function getCantidadPedidos(){
-        return $this->CantidadPedidos;
-    }
-    
-            
+
 }
 
