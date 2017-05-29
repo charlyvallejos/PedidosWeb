@@ -1,6 +1,6 @@
 <?php
 require_once('conexion.php');
-class pedid_ca{
+class Pedid_ca{
     protected $Nro_Pedido;
     protected $id_Cliente;
     protected $Fecha_Pedido;
