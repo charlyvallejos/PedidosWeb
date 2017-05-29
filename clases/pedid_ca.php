@@ -35,6 +35,9 @@ class Pedid_Ca{
     protected $Generado_Por;
     protected $Porc_IngBr_Mis;
     protected $IngBr_Mis;
+
+    protected $CantidadPedidos;
+
 /*
     protected $conn;
     
@@ -47,13 +50,16 @@ class Pedid_Ca{
         try{
             $query = Conexion::conectar()->prepare($sql);
             $query->execute();
+            $this->CantidadPedidos = $query->rowCount();
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e)
         {
             return $e->getMessage();
         }
     }
-    
+    public function getCantidadPedidos(){
+        return $this->CantidadPedidos;
+    }
     
             
 }
