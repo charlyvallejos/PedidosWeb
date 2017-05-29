@@ -185,18 +185,19 @@ require_once('clases/Pedid_Ca.php');
                     $tabla .= "</tr>";
                 $tabla .= "</thead>";
                 $tabla .= "<tbody>";
-                while($row = mysqli_fetch_array($pedidos)){            
+                foreach($pedidos as $pedido)
+                {
                     $tabla .= "<tr>";
-                        $tabla .= "<td><h3>".$row['Nro_Pedido']."</h3></td>";
-                        $tabla .= "<td><h3>".$row['id_Cliente']."</h3></td>";
-                        $tabla .= "<td><h3>".$row['Fecha_Pedido']."<//h3></td>";
-                        $tabla .= "<td><h3>".$row['Codigo_Vendedor']."</h3></td>";
-                        $tabla .= "<td><h3>".$row['Estado']."</h3></td>";
-                        $tabla .= "<td><a href='#' class='editar' data-id=".$row['Nro_Pedido'].">Editar</a></td>";
-                        $tabla .= "<td><a href='#' class='eliminar' data-id=".$row['Nro_Pedido'].">Eliminar</a></td>";
+                        $tabla .= "<td><h3>".$pedido['Nro_Pedido']."</h3></td>";
+                        $tabla .= "<td><h3>".$pedido['id_Cliente']."</h3></td>";
+                        $tabla .= "<td><h3>".$pedido['Fecha_Pedido']."</h3></td>";
+                        $tabla .= "<td><h3>".$pedido['Codigo_Vendedor']."</h3></td>";
+                        $tabla .= "<td><h3>".$pedido['Estado']."</h3></td>";
+                        $tabla .= "<td><a href='#' class='editar' data-id=".$pedido['Nro_Pedido'].">Editar</a></td>";
+                        $tabla .= "<td><a href='#' class='eliminar' data-id=".$pedido['Nro_Pedido'].">Eliminar</a></td>";
                     $tabla .= "</tr>"; 
                 }
-                $pedidos->free();
+                //$pedidos->free();
                 $tabla .= "</tbody>";            
             $tabla .= "</table>";                
             //FIN DE TABLA
@@ -204,7 +205,7 @@ require_once('clases/Pedid_Ca.php');
             $respuesta = $tabla.$paginacion;
         }
         
-        $pedidos->free();
+        //$pedidos->free();
         
 //        $controladorEditoriales = null;
 //        $controladorSA = null;
