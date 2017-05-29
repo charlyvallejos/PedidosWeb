@@ -1,12 +1,17 @@
 <?php
-    require_once('config.php');
-    class conexion extends mysqli{
-        public function __construct(){
-            parent::__construct(SERVER,USER,PASS,DB);
-            $this->query("SET NAMES UTF8");
-            $this->connect_errno ? die("Error de conexión") : $x = "Conexión establecida";
-            //echo $x;
-            unset($x);            
+    require_once('Config.php');
+    class Conexion
+    {
+        private static $conn = NULL;
+
+        public static function conectar(){
+
+            if(!self::$conn)
+            {
+                $conexion = new Config();
+                self::$conn = new PDO("$conexion->tipo:host=$conexion->host;dbname=$conexion->dbname",$conexion->user,$conexion->pw,$conexion->opciones);
+            }
+            return self::$conn;
         }
     }
 ?>

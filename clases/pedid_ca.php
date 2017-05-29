@@ -33,17 +33,23 @@ class pedid_ca{
     protected $Descuento;
     protected $Id_Transporte;
     protected $Generado_Por;
-    
+/*
     protected $conn;
     
     public function __construct() {
         $this->conn = new conexion();
     }
-    
+*/
     public function consultaTodos(){
         $sql = "SELECT * FROM pedid_Ca";
-        $resultado = $this->conn->query($sql);
-        return $resultado;
+        try{
+            $query = Conexion::conectar()->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e)
+        {
+            return $e->getMessage();
+        }
     }
     
     
