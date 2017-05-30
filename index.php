@@ -92,7 +92,7 @@
                                     { ?>
                                         <p>
                                         <?php if($pagina != 1){  ?>
-                                            <a href='?pag="<?php echo ($pagina-1) . "&laquo" ?>"'></a>
+                                            <a href='?pag=<?php echo ($pagina-1)?>'>&laquo</a>
                                         <?php }
                                             for($i=1; $i <= $totalPaginas;$i++)
                                             {
