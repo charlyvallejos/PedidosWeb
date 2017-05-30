@@ -5,10 +5,10 @@
 require_once('clases/Pedid_Ca.php');
     
     function listaEditoriales()
-    {         
+    {
         $controladorEditoriales = new controladorEditoriales();
         $editoriales = $controladorEditoriales->listar();
-        
+
         if($editoriales->num_rows > 0)
         {
             $comboBox = "<select id='editorial' name='slc_editorial' required>";
@@ -18,19 +18,19 @@ require_once('clases/Pedid_Ca.php');
                     $comboBox .= sprintf("<option value='%d'>%s</option>",$row['id_editorial'], $row['editorial']);
                 }
             $comboBox .= "</select>";
-            
-            $editoriales->free();            
+
+            $editoriales->free();
         }
-        
+
         $controladorEditoriales = NULL;
         return ($comboBox);
     }
-    
+
     function listaEditorialesActual($editorial)
-    {         
+    {
         $controladorEditoriales = new controladorEditoriales();
         $editoriales = $controladorEditoriales->listar();
-        
+
         if($editoriales->num_rows > 0)
         {
             $comboBox = "<select id='editorial' name='slc_editorial' required>";
@@ -41,14 +41,14 @@ require_once('clases/Pedid_Ca.php');
                     $comboBox .= sprintf("<option value='%d' $selected >%s</option>",$row['id_editorial'], $row['editorial']);
                 }
             $comboBox .= "</select>";
-            
-            $editoriales->free();            
+
+            $editoriales->free();
         }
-        
+
         $controladorEditoriales = NULL;
         return ($comboBox);
     }
-    
+
     function altaPedido()
     {
         $form = "<form id='alta-pedido' class='formulario' data-insertar>";
@@ -89,7 +89,7 @@ require_once('clases/Pedid_Ca.php');
                 $form .= "<div>";
                     $form .= "<label for='nombre'>Nombre: </label>";
                     $form .= "<input type='text' id='nombre' name='txt_nombre' value ='".$datos['nombre']."' required />";
-                $form .= "</div>"; 
+                $form .= "</div>";
                 $form .= "<div>";
                     $form .= "<label for='imagen'>Imagen: </label>";
                     $form .= "<input type='text' id='imagen' name='txt_imagen' value='".$datos['imagen']."'required />";
@@ -109,11 +109,11 @@ require_once('clases/Pedid_Ca.php');
                 $form .= "</div>";
             $form .= "</fieldset>";
         $form .= "</form>";
-        
+
         //$datos->free();
         return printf($form);
     }
-    
+
     function mostrarPedido()
     {
         $pedido_ca = new Pedid_Ca();
@@ -146,7 +146,7 @@ require_once('clases/Pedid_Ca.php');
             }
 
             $totalPaginas = ceil($totalRegistros / $numxPag);
-            
+
             $pedidos = $pedido_ca->consultaTodos();
             
             $paginacion = "<div class='paginacion'>";
@@ -172,6 +172,7 @@ require_once('clases/Pedid_Ca.php');
             $paginacion .= "</div>";
             //FIN DE PAGINACION
             //TABLA
+
             $tabla = "<table id='tabla-heroes' class='tabla' data-mostrar>";
                 $tabla .= "<thead>";
                     $tabla .= "<tr>";
@@ -199,7 +200,8 @@ require_once('clases/Pedid_Ca.php');
                 }
                 //$pedidos->free();
                 $tabla .= "</tbody>";            
-            $tabla .= "</table>";                
+            $tabla .= "</table>";
+
             //FIN DE TABLA
 
             $respuesta = $tabla.$paginacion;

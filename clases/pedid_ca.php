@@ -1,5 +1,4 @@
 <?php
-require_once('Conexion.php');
 class Pedid_Ca{
     protected $Nro_Pedido;
     protected $id_Cliente;
@@ -39,7 +38,7 @@ class Pedid_Ca{
     public $CantidadPedidos;
 
     public function consultaTodos(){
-        $sql = "SELECT * FROM pedid_Ca";
+        $sql = "SELECT * FROM pedid_ca";
         try{
             $query = Conexion::conectar()->prepare($sql);
             $query->execute();
@@ -51,5 +50,21 @@ class Pedid_Ca{
         }
     }
 
+    public function insertarPedido($pedido)
+    {
+
+    }
+    public function editarPedido($pedido)
+    {
+
+    }
+    public function borrarPedido($pedido)
+    {
+
+    }
+    public function consultaPedido_NroPedido($nro_pedido)
+    {
+
+    }
 }
 

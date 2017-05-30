@@ -9,7 +9,7 @@
 
 /* Document
    ========================================================================== */
-
+*{margin:0; padding:0}
 html {
   font-family: sans-serif; /* 1 */
   line-height: 1.15; /* 2 */

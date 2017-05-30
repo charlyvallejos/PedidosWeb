@@ -1,11 +1,13 @@
 <?php
-    require('vistas/vistas.php');
-    //require('modulos/controladorSA.php');
-    $transaccion = $_POST['transaccion'];
-    
-    function mostrarPedidos(){
-        mostrarPedido();
-    }
+    require('clases/Config.php');
+    require('clases/Conexion.php');
+    require('clases/Pedid_Ca.php');
+
+    $pedido_ca = new Pedid_Ca();
+    $pedidos = $pedido_ca->consultaTodos();
+    $totalRegistros = $pedido_ca->CantidadPedidos;
+
+    //$transaccion = $_POST['transaccion'];
     
     function ejecutarTransaccion($transaccion)
     {
@@ -71,6 +73,6 @@
                             
     }
     
-    ejecutarTransaccion($transaccion);
+    //ejecutarTransaccion($transaccion);
 
 ?>

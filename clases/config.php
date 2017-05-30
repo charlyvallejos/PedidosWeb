@@ -8,6 +8,8 @@ class Config
     public $pw;
     public $opciones;
 
+    //NOTA: la funcion rowCount() no funciona en servidores SQLSERVER
+
     public function __construct()
     {
         $this->tipo = "mysql";
