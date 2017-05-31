@@ -15,6 +15,7 @@
             }
             return self::$conn;
             */
+
             try{
                 $conexion = new Config();
                 $pdo = new PDO("$conexion->tipo:host=$conexion->host;dbname=$conexion->dbname",$conexion->user,$conexion->pw,$conexion->opciones);
