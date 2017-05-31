@@ -38,9 +38,8 @@ class Pedid_Ca{
     public $CantidadPedidos;
 
     public function consultaTodos(){
-        $sql = "SELECT * FROM Pedid_Ca";
         try{
-            $conexion = Conexion::conectar()->prepare($sql);
+            $conexion = Conexion::conectar()->prepare("CALL Pedid_Ca_Cons()");
             $conexion->execute();
             $this->CantidadPedidos = $conexion->rowCount();
             return $conexion->fetchAll(PDO::FETCH_ASSOC);
