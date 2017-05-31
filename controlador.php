@@ -3,13 +3,12 @@
     require('clases/Conexion.php');
     require('clases/Pedid_Ca.php');
 
+
     $pedido_ca = new Pedid_Ca();
     $pedidos = $pedido_ca->consultaTodos();
     $totalRegistros = $pedido_ca->CantidadPedidos;
 
-    //$transaccion = $_POST['transaccion'];
-    
-    function ejecutarTransaccion($transaccion)
+    /*function ejecutarTransaccion($transaccion)
     {
         if ($transaccion == 'alta')
         {
@@ -71,8 +70,10 @@
         }
 
                             
-    }
+    }*/
     
     //ejecutarTransaccion($transaccion);
+
+
 
 ?>

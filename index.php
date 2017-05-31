@@ -11,6 +11,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="js/clien_ma.js"></script>
+
     </head>
     <body>
     <div class="container-fluid">
@@ -18,7 +22,6 @@
             <div class="col-md-2 col-sm-2 col-xs-12 cabecera">
                 <header id="cabecera">
                     <div><img src="img/logo_saporiti.jpg" alt="Saporiti" /></div>
-                    <!-- <a href="#" id="insertar">Agregar</a>-->
                 </header>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-12 contenido">
@@ -26,6 +29,7 @@
                     <div><h1>Pedidos Saporiti</h1></div>
                     <!--<div id="respuesta"></div>-->
                     <div id="precarga"></div>
+
                     <div class="panel">
                         <div class="panel-body">
                             <?php if($totalRegistros == 0){  ?>
@@ -58,55 +62,14 @@
                                     <?php } ?>
                                     </tbody>
                                 </table>
-                                <?php
-                                    //PAGINACION
-                                    $numxPag = 2;
-                                    $pagina = false;
-
-                                    if(isset($_GET['pag']))
-                                    {
-                                        $pagina = $_GET['pag'];
-                                    }
-
-                                    if(!$pagina)
-                                    {
-                                        $pagina = 1;
-                                        $inicio = 0;
-                                    }
-                                    else
-                                    {
-                                        $inicio = ($pagina - 1) * $numxPag;
-                                    }
-
-                                    $totalPaginas = ceil($totalRegistros / $numxPag);
-                                ?>
+                                <?php include 'paginacion.php' ?>
                                 <div class="paginacion">
                                     <p>
                                         Número de resultados: <b><?php echo $totalRegistros ?></b>
                                         Mostrando <b><?php echo $numxPag ?></b> resultados por página
                                         Página <b><?php echo $pagina ?></b> de <b><?php echo $totalPaginas ?></b>
                                     </p>
-                                    <?php
-
-                                    if ($totalPaginas > 1)
-                                    { ?>
-                                        <p>
-                                        <?php if($pagina != 1){  ?>
-                                            <a href='?pag=<?php echo ($pagina-1)?>'>&laquo</a>
-                                        <?php }
-                                            for($i=1; $i <= $totalPaginas;$i++)
-                                            {
-                                                if($i == $pagina){ ?>
-                                                    <span class='actual'><?php echo $pagina ?></span>
-                                                <?php }else{  ?>
-                                                    <a href='?pag=<?php echo $i ?>'><?php echo $i ?></a><?php }
-                                            }
-
-                                            if($pagina != $totalPaginas){ ?>
-                                            <a href='?pag=<?php echo ($pagina+1) ?>'>&raquo</a> <?php
-                                            } ?>
-                                        </p>
-                                    <?php } ?>
+                                    <?php include 'paginacion_detalle.php' ?>
                                  </div>
                         <?php } ?>
                         </div>
