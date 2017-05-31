@@ -67,6 +67,19 @@ class Pedid_Ca{
             $e->getMessage();
         }
     }
+    
+    public function consultaPedidoLimitado($inicio, $fin){
+        $sql = "SELECT * FROM Pedid_Ca LIMIT $inicio, $fin";
+        try{
+            $conexion = Conexion::conectar()->prepare($sql);
+            $conexion->execute();
+            return $conexion->fetchALL(PDO::FETCH_ASSOC);
+            
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+            
     public function altaPedido(){
         $sql = "INSERT INTO Pedid_Ca () values ()";
         try{
