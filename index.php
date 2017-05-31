@@ -35,6 +35,7 @@
                             <?php if($totalRegistros == 0){  ?>
                                 <div class='error'>NO HAY REGISTRO DE PEDIDOS</div>
                             <?php }else{  ?>
+                                <?php include 'paginacion.php' ?>
                                 <table data-mostrar class="table table-striped">
                                     <thead>
                                     <tr>
@@ -62,7 +63,6 @@
                                     <?php } ?>
                                     </tbody>
                                 </table>
-                                <?php include 'paginacion.php' ?>
                                 <div class="paginacion">
                                     <p>
                                         Número de resultados: <b><?php echo $totalRegistros ?></b>
