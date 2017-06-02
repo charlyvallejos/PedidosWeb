@@ -1,5 +1,7 @@
 <?php    
     require_once('controlador.php');
+    $titulo = "Pedidos Saporiti";
+    $vista =  "vistaPedidos.php";
 ?>
 <html>
     <head>
@@ -12,8 +14,6 @@
 
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
         <link rel="stylesheet" href="css/agregado.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <script src="js/clien_ma.js"></script>
 
     </head>
     <body>
@@ -26,55 +26,10 @@
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 contenido">
                 <section id="contenido">
-                    <h1>Pedidos Saporiti</h1>
-
-                    <?php include 'formPedido.php' ?>
+                    <h1><?php echo $titulo ?></h1>
 
                     <div id="precarga"></div>
-                    <div class="panel">
-                        <div class="panel-body">
-                            <?php if($totalRegistros == 0){  ?>
-                                <div class='error'>NO HAY REGISTRO DE PEDIDOS</div>
-                            <?php }else{  ?>
-                                <?php include 'paginacion.php' ?>
-                                <table data-mostrar class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Nro Pedido</th>
-                                        <th class="centrar">Codigo Cliente</th>
-                                        <th class="centrar">Fecha Pedido</th>
-                                        <th class="centrar">Codigo Vendedor</th>
-                                        <th class="centrar">Estado</th>
-                                        <th class="centrar"><!--<a href="formPedido.php?accion=Alta" id="btnAgregar">Agregar <img src="img/add.png">--></a></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php foreach($pedidos as $pedido){ ?>
-                                    <tr>
-                                        <td><?php echo $pedido['Nro_Pedido'] ?></td>
-                                        <td class="centrar"><?php echo $pedido['id_Cliente'] ?></td>
-                                        <td class="centrar"><?php echo $pedido['Fecha_Pedido'] ?></td>
-                                        <td class="centrar"><?php echo $pedido['Codigo_Vendedor'] ?></td>
-                                        <td class="centrar"><?php echo $pedido['Estado'] ?></td>
-                                        <td class="centrar">
-                                            <a href="formPedido.php?accion=editar" class="editar" data-id="<?php echo $pedido['Nro_Pedido'] ?>">Editar <img src="img/edit.png" alt="Editar"></a>
-                                            <a href="formPedido.php?accion=eliminar" class="eliminar" data-id="<?php echo $pedido['Nro_Pedido']  ?>">Eliminar <img src="img/drop.png" alt="Borrar"></a>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
-                                <div class="paginacion">
-                                    <p>
-                                        Número de resultados: <b><?php echo $totalRegistros ?></b>
-                                        Mostrando <b><?php echo $numxPag ?></b> resultados por página
-                                        Página <b><?php echo $pagina ?></b> de <b><?php echo $totalPaginas ?></b>
-                                    </p>
-                                    <?php include 'paginacion_detalle.php' ?>
-                                 </div>
-                        <?php } ?>
-                        </div>
-                    </div>
+                    <?php include 'vistas/'.$vista ?>
                 </section>
             </div>
         </div>

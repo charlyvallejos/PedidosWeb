@@ -1,11 +1,11 @@
 <?php ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><a href="" ng-click="slideToggle()" class="agregar">AGREGAR<img src="img/add.png" alt=""></a></div>
+    <div class="panel-heading"><a href="" class="agregar"><img src="img/add.png" alt=""></a></div>
     <div class="mensaje ocultar">
         <div class="error"><p></p></div>
         <div class="exito"><p></p></div>
     </div>
-    <div class="panel-body none formData">
+    <div class="panel-body ocultar formData">
         <form class="form" name="provForm" class="form-horizontal form-label-left" novalidate>
             <div class="col-md-6 col-xs-12">
 

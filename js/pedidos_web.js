@@ -2,16 +2,33 @@
 var READY_STATE_COMPLETE = 4;
 var STATUS_OK = 200;
 
+
 //Variables
-var btnInsertar = document.querySelector("#insertar"),
-    precarga = document.querySelector("#precarga"),
-    respuesta = document.querySelector("#respuesta"),
-    mostrar = document.querySelector("#mostrar"),
-    btnEliminar = document.querySelectorAll(".eliminar"),
-    btnEditar = document.querySelectorAll(".editar"),
+var btnInsertar = $("#insertar"),
+    precarga = $("#precarga"),
+    respuesta = $("#respuesta"),
+    mostrar = $("#mostrar"),
     ajax = null;
-    
-//Funciones  
+
+formUp = $('.formData'),
+btnPlus = $('.agregar'),
+btnEditar = $('.editar'),
+btnEliminar = $('.eliminar');
+
+btnPlus.on('click',function(e){
+    e.preventDefault();
+    formUp.slideToggle();
+});
+btnEditar.on('click',function(e,pedido){
+    e.preventDefault();
+    console.log(pedido);
+    formUp.slideToggle();
+});
+btnEliminar.on('click',function(e,pedido){
+    e.preventDefault();
+});
+
+
 function objetoAJAX()
 {
     if(window.XMLHttpRequest)
@@ -134,14 +151,14 @@ function editarPedido(evento)
     ejecutarAJAX(datos);    
 }
 
-
+/*
 function alCargarDocumento()
 {
     $('#insertar').click(altaPedido);       
     $('.eliminar').click(eliminarPedido);
     $('.editar').click(editarPedido);       
-}
+}*/
 //window.addEventListener("load",alCargarDocumento);    
 
-$(document).ready(alCargarDocumento);
+//$(document).ready(alCargarDocumento);
 

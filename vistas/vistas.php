@@ -1,9 +1,5 @@
 <?php
-    ini_set('display_errors', 0);
-//    require_once('modulos/controladorEditoriales.php');
-//    require_once('modulos/controladorSA.php');
-require_once('clases/Pedid_Ca.php');
-    
+
     function listaEditoriales()
     {
         $controladorEditoriales = new controladorEditoriales();
