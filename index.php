@@ -23,11 +23,12 @@
                 <header id="cabecera">
                     <div><img src="img/logo_saporiti.jpg" alt="Drogueria Saporiti" /></div>
                 </header>
+                <nav>
+                    <?php include 'vistas/menu.php' ?>
+                </nav>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 contenido">
                 <section id="contenido">
-                    <h1><?php echo $titulo ?></h1>
-
                     <div id="precarga"></div>
                     <?php include 'vistas/'.$vista ?>
                 </section>
