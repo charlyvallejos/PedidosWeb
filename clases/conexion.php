@@ -23,7 +23,7 @@
                 return $pdo;
             }catch(PDOException $e)
             {
-                //Se podria hacer un log informando: usuario, fecha, hora y archivo disparador del error (con el error)
+                //Se podria hacer, en vez de esto, un loG informando: usuario, fecha, hora y archivo disparador del error (con el error) ponele...
                 $e->getMessage();
             }
         }

@@ -11,30 +11,32 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
-
+        <link rel="stylesheet" href="css/agregado.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         <script src="js/clien_ma.js"></script>
 
     </head>
     <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-md-2 col-sm-2 col-xs-12 cabecera">
+            <div class="col align-self-start cabecera">
                 <header id="cabecera">
-                    <div><img src="img/logo_saporiti.jpg" alt="Saporiti" /></div>
+                    <div><img src="img/logo_saporiti.jpg" alt="Drogueria Saporiti" /></div>
                 </header>
             </div>
-            <div class="col-md-10 col-sm-10 col-xs-12 contenido">
+            <div class="col-md-12 col-sm-12 col-xs-12 contenido">
                 <section id="contenido">
-                    <div><h1>Pedidos Saporiti</h1></div>
-                    <!--<div id="respuesta"></div>-->
-                    <div id="precarga"></div>
+                    <h1>Pedidos Saporiti</h1>
 
+                    <?php include 'formPedido.php' ?>
+
+                    <div id="precarga"></div>
                     <div class="panel">
                         <div class="panel-body">
                             <?php if($totalRegistros == 0){  ?>
                                 <div class='error'>NO HAY REGISTRO DE PEDIDOS</div>
                             <?php }else{  ?>
+                                <?php include 'paginacion.php' ?>
                                 <table data-mostrar class="table table-striped">
                                     <thead>
                                     <tr>
@@ -43,7 +45,7 @@
                                         <th class="centrar">Fecha Pedido</th>
                                         <th class="centrar">Codigo Vendedor</th>
                                         <th class="centrar">Estado</th>
-                                        <th class="centrar"><a href="">Agregar <img src="img/add.png"></a></th>
+                                        <th class="centrar"><!--<a href="formPedido.php?accion=Alta" id="btnAgregar">Agregar <img src="img/add.png">--></a></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -55,14 +57,13 @@
                                         <td class="centrar"><?php echo $pedido['Codigo_Vendedor'] ?></td>
                                         <td class="centrar"><?php echo $pedido['Estado'] ?></td>
                                         <td class="centrar">
-                                            <a href="#" class="editar" data-id="<?php echo $pedido['Nro_Pedido'] ?>">Editar <img src="img/edit.png" alt="Editar"></a>
-                                            <a href="#" class="eliminar" data-id="<?php echo $pedido['Nro_Pedido']  ?>">Eliminar <img src="img/drop.png" alt="Borrar"></a>
+                                            <a href="formPedido.php?accion=editar" class="editar" data-id="<?php echo $pedido['Nro_Pedido'] ?>">Editar <img src="img/edit.png" alt="Editar"></a>
+                                            <a href="formPedido.php?accion=eliminar" class="eliminar" data-id="<?php echo $pedido['Nro_Pedido']  ?>">Eliminar <img src="img/drop.png" alt="Borrar"></a>
                                         </td>
                                     </tr>
                                     <?php } ?>
                                     </tbody>
                                 </table>
-                                <?php include 'paginacion.php' ?>
                                 <div class="paginacion">
                                     <p>
                                         Número de resultados: <b><?php echo $totalRegistros ?></b>

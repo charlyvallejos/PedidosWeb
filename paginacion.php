@@ -19,4 +19,6 @@ else
 }
 
 $totalPaginas = ceil($totalRegistros / $numxPag);
+
+$pedidos = $pedido_ca->consultaPedidoLimitado($inicio, $numxPag);
 ?>

@@ -29,21 +29,29 @@ img{
 }
 
 .error{
-    background-color: #fff5f5;
-    margin: auto;
+    /*background-color: #a62833;*/
+    margin: 5px auto;
     width: 450px;
     padding: 20px;
-    color: #a62833;
+    /*color: #a62833;*/
     text-align: center;
+    color: #E9EDEF;
+    background-color: rgba(217, 49, 58, 0.88);
+    border-color: rgba(178, 40, 48, 0.88);
+    border-radius: 2px;
 }
 
 .exito{
-    background-color: #f2ffe8;
+    /*background-color: #2e9123;*/
     margin: auto;
     width: 450px;
     padding: 20px;
-    color: #2e9123;
+    /*color: #2e9123;*/
     text-align: center;
+    color: #ffffff;
+    background-color: rgba(38, 185, 154, 0.88);
+    border-color: rgba(38, 185, 154, 0.88);
+    border-radius: 2px;
 }
 
 .formulario, .tabla p{
@@ -61,7 +69,6 @@ img{
 
 
 .paginacion a, .actual{
-    /*color: #EC673A;*/
     color:#a62833;
     font-weight: bold;
     font-size: 1.5rem;
@@ -71,48 +78,21 @@ img{
 }
 
 .paginacion a:hover, .actual{
-    color: #1C5F81;
+    color: #23ab8e;
 }
 
 .actual{
     font-size: 3rem;
 }
 
-.tabla{
-    margin: auto;
-    width: 100%;
-}
-
-.tabla a{
-	color: #EEE;
-}
-
-.tabla a:hover{
-	color: #292623;
-}
-
-.tabla img{
-	max-width: 200px;
-	max-height: 200px;
-}
-
-.tabla td{
-	vertical-align: top;
-}
-
-.tabla th{
-	background: #292623;
-	color: #EEE;
-}
-
-.tabla tr:nth-child(odd){
-	/*background: #EC673A;*/
-    background:#bf2b37;
-}
-
-.tabla tr:nth-child(even){
-	background: #1C5F81;
-}
 .centrar{
     text-align: center;
+}
+
+.eliminar, .editar, .agregar {
+    font-weight: bold;
+}
+
+.ocultar{
+    display:none;
 }

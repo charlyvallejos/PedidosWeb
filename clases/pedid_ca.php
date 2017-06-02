@@ -49,16 +49,18 @@ class Pedid_Ca{
         }
     }
     public function consultaPedido($NroPedido){
-        $sql = "SELECT * FROM Pedid_Ca WHERE Nro_Pedido = $NroPedido";
         try{
-            $conexion = Conexion::conectar()->prepare($sql);
-            $conexion->execute();
-            $r = $conexion->fetch(PDO::FETCH_ASSOC);
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare("CALL Pedid_Ca_Igual_Nro_Pedido(:NroPedido)");
+            $query->bindParam(':NroPedido',$NroPedido,PDO::PARAM_INT);
 
+            $query->execute();
+            $r = $query->fetch(PDO::FETCH_ASSOC);
+
+            //Y todos los datos que hagan falta para la modificacion
             $this->id_Cliente = $r['id_Cliente'];
             $this->Nro_Pedido = $r['Nro_Pedido'];
             $this->Fecha_Pedido = $r['Fecha_Pedido'];
-
 
 
             return $r;
@@ -81,16 +83,142 @@ class Pedid_Ca{
     }
             
     public function altaPedido(){
-        $sql = "INSERT INTO Pedid_Ca () values ()";
+        //$sql = "INSERT INTO Pedid_Ca () values ()";
         try{
-            $conexion = Conexion::conectar()->prepare($sql);
-            return $conexion->execute();
+            $conexion = Conexion::conectar();
+
+            //TODO rutina insertar de pedidosWeb
+
+
+            // esto es tedioso tipear pero evitamos el asqueroso entrecomillado
+
+            $sql = "CALL Pedid_Ca_Insert(
+                                        :Nro_Pedido,
+                                        :Fecha_Pedido,
+                                        :Codigo_Vendedor,
+                                        :Nro_Cotizacion
+                                        :Nro_Presupuesto,
+                                        :Id_Lista,
+                                        :Id_Condicion,
+                                        :Id_Moneda,
+                                        :Cotizacion_Moneda,
+                                        :Estado,
+                                        :Id_Reparto,
+                                        :Nro_orden_compra,
+                                        :Id_Tomado_Por,
+                                        :Id_Usuario,
+                                        :Fecha_Operacion,
+                                        :Id_Grupo_Cliente,
+                                        :Total_Gravado,
+                                        :Total_Exento,
+                                        :Total_Producto_Exento,
+                                        :Porc_Iva_Ins,
+                                        :Iva_Ins,
+                                        :Porc_Iva_NoIns,
+                                        :Iva_NoIns,
+                                        :Porc_IngBr_Cba,
+                                        :IngBr_Cba,
+                                        :Porc_IngBr_Pba,
+                                        :IngBr_Pba,
+                                        :Total_Neto,
+                                        :Descuento,
+                                        :Id_Transporte,
+                                        :Generado_Por,
+                                        :Porc_IngBr_Mis,
+                                        :IngBr_Mis)";
+
+            $query = $conexion->prepare($sql); //El prepare es para que no puedan inyectar codigo
+
+            $this->cargarDatosFormulario(); //Trae los datos de $_POST
+
+            /////// TRAE DE PEDID_NUMER ///////////////
+            $NumeroPedido = $this->traerUltimoNumero();
+
+
+            $Nro_Pedido = $NumeroPedido;
+            $Codigo_Vendedor = $this->Codigo_Vendedor;
+            $Nro_Cotizacion = $this->Nro_Cotizacion;
+            $Nro_Presupuesto = $this->Nro_Presupuesto;
+            $Id_Lista = $this->Id_Lista;
+            $Id_Condicion = $this->Id_Condicion;
+            $Id_Moneda = $this->Id_Moneda;
+            $Cotizacion_Moneda = $this->Cotizacion_Moneda;
+            $Estado = $this->Estado;
+            $Id_Reparto = $this->Id_Reparto;
+            $Nro_orden_compra =  $this->Nro_orden_compra;
+            $Id_Tomado_Por = $this->Id_Tomado_Por;
+            $Id_Usuario = $this->Id_Usuario;
+            $Fecha_Operacion = $this->Fecha_Operacion;
+            $Id_Grupo_Cliente = $this->Id_Grupo_Cliente;
+            $Total_Gravado = $this->Total_Gravado;
+            $Total_Exento = $this->Total_Exento;
+            $Total_Producto_Ex = $this->Total_Producto_Ex;
+            $Porc_Iva_Ins = $this->Porc_Iva_Ins;
+            $Iva_Ins = $this->Iva_Ins;
+            $Porc_Iva_NoIns = $this->Porc_Iva_NoIns;
+            $Iva_NoIns = $this->Iva_NoIns;
+            $Porc_IngBr_Cba = $this->Porc_IngBr_Cba;
+            $IngBr_Cba = $this->IngBr_Cba;
+            $Porc_IngBr_Pba = $this->Porc_IngBr_Pba;
+            $IngBr_Pba = $this->IngBr_Pba;
+            $Total_Neto = $this->Total_Neto;
+            $Descuento = $this->Descuento;
+            $Id_Transporte = $this->Id_Transporte;
+            $Generado_Por = $this->Generado_Por;
+            $Porc_IngBr_Mis = $this->Porc_IngBr_Mis;
+            $IngBr_Mis = $this->IngBr_Mis;
+
+            $query->bindParam(':Nro_Pedido',$Nro_Pedido);
+            $query->bindParam(':Fecha_Pedido',$idCliente);
+            $query->bindParam(':Codigo_Vendedor', $Codigo_Vendedor);
+            $query->bindParam(':Nro_Cotizacion',$Nro_Cotizacion);
+            $query->bindParam(':Nro_Presupuesto',$Nro_Presupuesto);
+            $query->bindParam(':Id_Lista',$Id_Lista);
+            $query->bindParam(':Id_Condicion',$Id_Condicion);
+            $query->bindParam(':Id_Moneda',$Id_Moneda);
+            $query->bindParam(':Cotizacion_Moneda',$Cotizacion_Moneda);
+            $query->bindParam(':Estado',$Estado);
+            $query->bindParam(':Id_Reparto',$Id_Reparto);
+            $query->bindParam(':Nro_orden_compra',$Nro_orden_compra);
+            $query->bindParam(':Id_Tomado_Por',$Id_Tomado_Por);
+            $query->bindParam(':Id_Usuario',$Id_Usuario);
+            $query->bindParam(':Fecha_Operacion',$Fecha_Operacion);
+            $query->bindParam(':Id_Grupo_Cliente',$Id_Grupo_Cliente);
+            $query->bindParam(':Total_Gravado', $Total_Gravado);
+            $query->bindParam(':Total_Exento', $Total_Exento);
+            $query->bindParam(':Total_Producto_Exento',$Total_Producto_Ex);
+            $query->bindParam(':Porc_Iva_Ins',$Porc_Iva_Ins);
+            $query->bindParam(':Iva_Ins',$Iva_Ins);
+            $query->bindParam(':Porc_Iva_NoIns',$Porc_Iva_NoIns);
+            $query->bindParam(':Iva_NoIns',$Iva_NoIns);
+            $query->bindParam(':Porc_IngBr_Cba',$Porc_IngBr_Cba);
+            $query->bindParam(':IngBr_Cba',$IngBr_Cba);
+            $query->bindParam(':Porc_IngBr_Pba',$Porc_IngBr_Pba);
+            $query->bindParam(':IngBr_Pba',$IngBr_Pba);
+            $query->bindParam(':Total_Neto',$Total_Neto);
+            $query->bindParam(':Descuento',$Descuento);
+            $query->bindParam(':Id_Transporte',$Id_Transporte);
+            $query->bindParam(':Generado_Por',$Generado_Por);
+            $query->bindParam(':Porc_IngBr_Mis',$Porc_IngBr_Mis);
+            $query->bindParam(':IngBr_Mis',$IngBr_Mis);
+
+            return $query->execute();
+
         }catch(PDOException $e)
         {
             $e->getMessage();
         }
     }
 
+    private function traerUltimoNumero(){
+        $conexion = Conexion::conectar();
+        $sql = "SELECT Numero FROM Pedid_Numer LIMIT 1";
+        $query = $conexion->prepare($sql);
+        $query->execute();
+
+        return $query->fetch()['Numero'];
+
+    }
     public function editarPedido(){
         $sql = "UPDATE Pedid_Ca SET blabla = ''";
         try{
@@ -102,11 +230,47 @@ class Pedid_Ca{
         }
     }
 
+    private function cargarDatosFormulario(){
+        if(isset($_POST)){
+            if(isset($_POST['Nro_Pedido']))
+                $this->Nro_Pedido = $_POST['Nro_Pedido'];
+            else
+                $this->Nro_Pedido = 0;
 
+            $this->Codigo_Vendedor = $_POST['Codigo_Vendedor'];
+            $this->Nro_Cotizacion = $_POST['Nro_Cotizacion'];
+            $this->Nro_Presupuesto = $_POST['Nro_Presupuesto'];
+            $this->Id_Lista = $_POST['Id_Lista'];
+            $this->Id_Condicion = $_POST['Id_Condicion'];
+            $this->Id_Moneda = $_POST['Id_Moneda'];
+            $this->Cotizacion_Moneda = $_POST['Cotizacion_Moneda'];
+            $this->Estado = $_POST['Estado'];
+            $this->Id_Reparto = $_POST['Id_Reparto'];
+            $this->Nro_orden_compra = $_POST['Nro_orden_compra'];
+            $this->Id_Tomado_Por = $_POST['Id_Tomado_Por'];
+            $this->Id_Usuario = $_POST['Id_Usuario'];
+            $this->Fecha_Operacion = $_POST['Fecha_Operacion'];
+            $this->Id_Grupo_Cliente = $_POST['Id_Grupo_Cliente'];
+            $this->Total_Gravado = $_POST['Total_Gravado'];
+            $this->Total_Exento = $_POST['Total_Exento'];
+            $this->Total_Producto_Ex = $_POST['Total_Producto_Ex'];
+            $this->Porc_Iva_Ins = $_POST['Porc_Iva_Ins'];
+            $this->Iva_Ins = $_POST['Iva_Ins'];
+            $this->Porc_Iva_NoIns = $_POST['Porc_Iva_NoIns'];
+            $this->Iva_NoIns = $_POST['Iva_NoIns'];
+            $this->Porc_IngBr_Cba = $_POST['Porc_IngBr_Cba'];
+            $this->IngBr_Cba = $_POST['IngBr_Cba'];
+            $this->Porc_IngBr_Pba = $_POST['Porc_IngBr_Pba'];
+            $this->IngBr_Pba = $_POST['IngBr_Pba'];
+            $this->Total_Neto = $_POST['Total_Neto'];
+            $this->Descuento = $_POST['Descuento'];
+            $this->Id_Transporte = $_POST['Id_Transporte'];
+            $this->Generado_Por = $_POST['Generado_Por'];
+            $this->Porc_IngBr_Mis = $_POST['Porc_IngBr_Mis'];
+            $this->IngBr_Mis = $_POST['IngBr_Mis'];
 
-
-
-
+        }
+    }
 
     public function getNroPedido()
     {

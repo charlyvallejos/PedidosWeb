@@ -1,8 +1,5 @@
 <?php
-    require('clases/Config.php');
-    require('clases/Conexion.php');
-    require('clases/Pedid_Ca.php');
-
+    require_once 'config/config.php';
 
     $pedido_ca = new Pedid_Ca();
     $pedidos = $pedido_ca->consultaTodos();
@@ -73,6 +70,7 @@
     }*/
     
     //ejecutarTransaccion($transaccion);
+
 
 
 
