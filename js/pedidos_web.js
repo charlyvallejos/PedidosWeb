@@ -10,7 +10,7 @@ var btnInsertar = $("#insertar"),
     mostrar = $("#mostrar"),
     ajax = null;
 
-formUp = $('.formData'),
+var formUp = $('.formData'),
 btnPlus = $('.agregar'),
 btnEditar = $('.editar'),
 btnEliminar = $('.eliminar');
