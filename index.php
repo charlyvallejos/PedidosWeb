@@ -8,15 +8,19 @@
         <meta charset="UTF-8">
         <title>Pedidos Web</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
         <link rel="stylesheet" href="css/agregado.css">
 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+
+        <script type="text/javascript" src="js/app.js"></script>
+        <script src="js/bower_components/angularUtils-pagination/dirPagination.js"></script>
+
+
     </head>
-    <body>
+    <body  ng-app="appSapo">
     <div class="container">
         <div class="row">
             <div class="col align-self-start cabecera">
@@ -35,7 +39,6 @@
             </div>
         </div>
     </div>
-
-        <script src="./js/pedidos_web.js"></script>
+    <script src="./js/pedidos_web.js"></script>
     </body>
 </html>

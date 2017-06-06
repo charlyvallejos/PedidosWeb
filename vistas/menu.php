@@ -4,7 +4,7 @@ function actual($seccion){
     $break = Explode('/', $file); // quitar nombre del directorio
     $pfile = $break[count($break) - 1];
     $pfile = substr($pfile, 0, -4); // quitar extension
-    if ($pfile == $seccion || $pfile == 'plantilla') {
+    if ($pfile == $seccion) {
         echo 'class="actualNav"';
     }
 }

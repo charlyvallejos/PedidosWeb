@@ -3,9 +3,11 @@
 session_start();
 
 
-//Esto hace
-function AutoLoader($archivoClase){
-    require_once "clases/".$archivoClase.".php";
-}
+//Esto hace la autocarga de clases
+
+    function AutoLoader($archivoClase){
+        require_once "clases/".$archivoClase.".php";
+    }
+
 
 spl_autoload_register('AutoLoader');

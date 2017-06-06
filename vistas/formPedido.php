@@ -6,7 +6,7 @@
         <div class="exito"><p></p></div>
     </div>
     <div class="panel-body ocultar formData">
-        <form class="form" name="provForm" class="form-horizontal form-label-left" novalidate>
+        <form name="provForm" class="form-horizontal form-label-left" novalidate>
             <div class="col-md-6 col-xs-12">
 
                 <!-- ############# CLIENTE ############ -->
@@ -17,13 +17,13 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
                             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
                                 <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" required type="search"><br>
-                            </div>
+                        </div>
                         </div>
                     </div>
                     <div class="item form-group">
                         <div class="row">
                             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                                <label class="control-label" for="RazonSocial">Razon Social</label>
+                                <label class="control-label" for="RazonSocial" name="inputRazonSocial">Razon Social</label>
                             </div>
                             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
                                 <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
@@ -55,7 +55,7 @@
                     <div class="item form-group">
                         <div class="row fila-form">
                             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                                <label class="control-label" for="RazonSocial">Dir</label>
+                                <label class="control-label" for="RazonSocial">Dirección</label>
                             </div>
                             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
                                 <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
@@ -194,18 +194,17 @@
 
 
             </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
-
-                <div class="ln_solid"></div>
-                <br>
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-6">
-                        <button  type="reset" class="btn btn-primary" ng-click="resetForm(provForm)">Cancelar</button>
-                        <button  type="submit" class="btn btn-success" ng-hide="!tempProvData.Id" ng-click="updateProv(provForm)">Grabar</button>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br>
+                    <div class="form-group">
+                        <div class="col align-self-center">
+                            <button  type="reset" class="btn btn-primary">Cancelar</button>
+                            <button  type="submit" class="btn btn-success" ng-click="modificarPedido(provForm)">Grabar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
