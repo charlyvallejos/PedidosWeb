@@ -104,14 +104,20 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
     border: 1px solid #169F85;
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
-    background-color: rgba(38, 185, 154, 0.88);
-    border-color: rgba(38, 185, 154, 0.88);
+    background-color: rgba(25, 122, 101, 0.88);
+    border-color: rgba(24, 118, 98, 0.88);
 }
 
 .btn-primary{
     background-color: rgba(178, 40, 48, 0.88);
     border-color: rgba(164, 37, 44, 0.88);
 }
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+    background-color: rgba(132, 30, 36, 0.88);
+    border-color: rgba(133, 30, 36, 0.88);
+}
+
 
 a {
     color: #148f78;
