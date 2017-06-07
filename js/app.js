@@ -18,12 +18,9 @@
 
             //////////////////////////////
 
-
             /// PAGINACION //
-            $scope.pagActual = 1;
-            $scope.numXpag = 1;
-            $scope.totalPaginas = Math.ceil($scope.CantidadPedidos / $scope.numXpag);
-            $scope.inicio = ($scope.pagActual - 1) * $scope.numXpag;
+
+            $scope.numXpag = 2;
 
             //////////////////////////////
 

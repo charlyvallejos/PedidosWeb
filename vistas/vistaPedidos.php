@@ -20,12 +20,19 @@ include 'formPedido.php' ?>
                     <th ng-click="sort('Fecha_Pedido')" class="centrar">Fecha Pedido</th>
                     <th class="centrar">Codigo Vendedor</th>
                     <th class="centrar">Estado</th>
-                    <th class="centrar"></a></th>
+                    <th class="centrar"><label for="itemsPerPageForm">Pedidos por pagina</label>
+                        <select name="itemsPerPageForm" id="itemsPerPageForm" ng-model="numXpag">
+                            <option value="3">3</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php // foreach($pedidos as $pedido){ ?>
-                    <tr dir-paginate="ped in pedidos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage:2">
+                    <tr dir-paginate="ped in pedidos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag">
                         <td><?php // echo $pedido['Nro_Pedido'] ?>{{ped.Nro_Pedido}}</td>
                         <td class="centrar"><?php //echo $pedido['id_Cliente'] ?>{{ped.id_Cliente}}</td>
                         <td class="centrar"><?php //echo $pedido['Fecha_Pedido'] ?>{{ped.Fecha_Pedido}}</td>
