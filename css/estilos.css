@@ -89,10 +89,6 @@ img{
     text-align: center;
 }
 
-.eliminar, .editar, .agregar {
-    font-weight: bold;
-}
-
 .ocultar{
     display:none;
 }

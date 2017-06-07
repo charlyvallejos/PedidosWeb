@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="prod in pedidoSelected.productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag">
+        <tr dir-paginate="prod in pedidoSelected.productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag" pagination-id="prod">
             <td>{{prod.Codigo}}</td>
             <td>{{prod.Descripcion}}</td>
             <td>{{prod.Cantidad}}</td>
@@ -25,18 +25,13 @@
             <td>{{prod.Nro_Cot}}</td>
             <td>
                 <a href="" class="editar">Editar <img src="img/edit.png" alt="Editar" ng-click="consultaPedidoNro(ped)"></a>
-                <a href="" class="eliminar" ">Eliminar <img src="img/drop.png" alt="Borrar"></a>
+                <a href="" class="eliminar">Eliminar <img src="img/drop.png" alt="Borrar"></a>
             </td>
         </tr>
         </tbody>
     </table>
     <dir-pagination-controls
-        [max-size="5"]
-        [direction-links="true"]
-        [boundary-links="true"]
-        [on-page-change=""]
-        [pagination-id=""]
-        [template-url=""]
-        [auto-hide=""]>
+        boundary-links="true"
+        pagination-id="prod">
     </dir-pagination-controls>
 </fieldset>
