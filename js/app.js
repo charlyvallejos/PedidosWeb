@@ -1,5 +1,23 @@
 
-    var apiURL = 'loadData.php';  // archivo en donde pasan los datos hacia las clases
+    var apiURL = 'loadData.php';  // archivo en donde pasan los datos hacia las clases+
+
+    //Variables jquery
+    var btnInsertar = $("#insertar"),
+        precarga = $("#precarga"),
+        respuesta = $("#respuesta"),
+        mostrar = $("#mostrar"),
+        ajax = null;
+
+    var formUp = $('.formData'),
+        btnPlus = $('.agregar'),
+        btnEditar = $('.editar'),
+        btnEliminar = $('.eliminar');
+
+    btnPlus.on('click',function(e){
+        e.preventDefault();
+        formUp.slideToggle();
+    });
+
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination']) // aplicacion de angular
 
         .controller('pedidosController',function($scope,$http){ //controlador pedidos
@@ -14,7 +32,7 @@
             };
 
             /////// PAGINACION --- es para que puedan seleccionar q cantidad x pag///////////
-            $scope.numXpag = 2;
+            $scope.numXpag = 2; //(default)
             //////////////////////////////
 
             $scope.consultaPedidos = function(){
@@ -28,7 +46,6 @@
             };
 
             $scope.selectPedido = function (ped) {
-                console.log("hola");
                 $scope.pedidoTemporal = {
                     Nro_Pedido:ped.Nro_Pedido,
                     Fecha_Pedido:ped.Fecha_Pedido,
@@ -105,27 +122,3 @@
         });
 
 
-    //Variables jquery
-    var btnInsertar = $("#insertar"),
-        precarga = $("#precarga"),
-        respuesta = $("#respuesta"),
-        mostrar = $("#mostrar"),
-        ajax = null;
-
-    var formUp = $('.formData'),
-        btnPlus = $('.agregar'),
-        btnEditar = $('.editar'),
-        btnEliminar = $('.eliminar');
-
-    btnPlus.on('click',function(e){
-        e.preventDefault();
-        formUp.slideToggle();
-    });
-    btnEditar.on('click',function(e,pedido){
-        e.preventDefault();
-        console.log(pedido);
-        formUp.slideToggle();
-    });
-    btnEliminar.on('click',function(e,pedido){
-        e.preventDefault();
-    });

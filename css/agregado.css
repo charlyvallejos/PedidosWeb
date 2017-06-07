@@ -195,3 +195,11 @@ li.active > a:hover, li.active > span:hover{
     color:#23ab8e !important;
     font-weight: bolder;
 }
+
+.editar , .eliminar {
+    font-weight: bold !important;
+}
+
+.editar:hover,.eliminar:hover{
+    color:rgb(164, 37, 44);
+}
