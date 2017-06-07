@@ -86,24 +86,23 @@
                 };
 
                 //Traigo el detalle del pedido
-                $http.get(apiURL+"?a=get&t=ped_de&nro="+ped.Nro_Pedido)
-                    .then(function(resp){
-                        $scope.pedidoTemporal.Productos = resp.data;
-                    })
-                    .catch(function(resp){
-                        console.log(resp);
-                    });
-
-
                 //Tambien traigo el cliente
-                http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
-                    .then(function(resp){
-                       $scope.pedidoTemporal.Cliente = resp.data;
-                    })
-                    .catch(function(resp){
-                        console.log(resp);
-                    });
-
+                $scope.traePedidoDetalle = function(){
+                    $http.get(apiURL+"?a=get&t=ped_de&nro="+ped.Nro_Pedido)
+                        .then(function(resp){
+                            $scope.pedidoTemporal.Productos = resp.data;
+                            http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
+                                .then(function(resp){
+                                    $scope.pedidoTemporal.Cliente = resp.data;
+                                })
+                                .catch(function(resp){
+                                    console.log(resp);
+                                });
+                        })
+                        .catch(function(resp){
+                            console.log(resp);
+                        });
+                };
 
 
                 //Capturo el indice del array pedidos que seleccione
@@ -113,12 +112,6 @@
             };
 
 
-
-
-
-            $scope.modificarPedido = function(form){
-
-            }
         });
 
 
