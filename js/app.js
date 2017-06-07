@@ -88,28 +88,22 @@
 
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
-                $scope.traePedidoDetalle = function(){
-                    $http.get(apiURL+"?a=get&t=ped_de&nro="+ped.Nro_Pedido)
-                        .then(function(resp){
-                            $scope.pedidoTemporal.Productos = resp.data;
-                            http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
-                                .then(function(resp){
-                                    $scope.pedidoTemporal.Cliente = resp.data;
-                                })
-                                .catch(function(resp){
-                                    console.log(resp);
-                                });
-                        })
-                        .catch(function(resp){
-                            console.log(resp);
-                        });
-                };
+
+                $http.get(apiURL+"?a=get&t=ped_de&nro="+ped.Nro_Pedido)
+                    .then(function(resp){
+                        $scope.pedidoTemporal.Productos = resp.data;
+                        console.log(resp.data);
+                    })
+                    .catch(function(resp){
+                        console.log(resp);
+                    });
+
 
 
                 //Capturo el indice del array pedidos que seleccione
                 $scope.index = $scope.pedidos.indexOf(ped);
 
-                formUp.slideDown();
+                //formUp.slideDown();
             };
             
             /////////////////////////////////////////
@@ -136,3 +130,13 @@
         });
 
 
+/*
+ http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
+ .then(function(pepe){
+ $scope.pedidoTemporal.Cliente = pepe.data;
+ console.log(pepe.data);
+ })
+ .catch(function(resp){
+ console.log(resp);
+ });
+ */

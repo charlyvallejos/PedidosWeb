@@ -14,7 +14,7 @@
                 <label class="control-label" for="RazonSocial" name="inputRazonSocial">Razon Social</label>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Razon_Social">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Cod</label>

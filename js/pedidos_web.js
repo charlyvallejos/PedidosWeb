@@ -2,12 +2,6 @@
 var READY_STATE_COMPLETE = 4;
 var STATUS_OK = 200;
 
-
-function hola(evento){
-    evento.preventDefault();
-    console.log("hola");
-}
-
 function objetoAJAX()
 {
     if(window.XMLHttpRequest)

@@ -27,16 +27,18 @@ if(isset($_GET)){
             if($tabla == 'ped')
             {
                 $pedid_ca = new Pedid_Ca();
-                if(isset($inicio) && isset($fin))
-                {
-                    echo json_encode($pedid_ca->consultaPedidoLimitado($inicio,$fin));
-                }else{
 
-                    if(!isset($nroPedido))
-                        echo json_encode($pedid_ca->consultaTodos());
-                    else
-                        echo json_encode($pedid_ca->consultaPedido($nroPedido));
-                }
+                if(!isset($nroPedido))
+                    echo json_encode($pedid_ca->consultaTodos());
+                else
+                    echo json_encode($pedid_ca->consultaPedido($nroPedido));
+
+            }
+            else if($tabla == 'ped_de')
+            {
+                $pedid_de = new Pedid_De();
+                if(isset($nroPedido))
+                    echo json_encode($pedid_de->consultaPedidoDetalle($nroPedido));
             }
             else if($tabla == 'cli')
             {
@@ -47,6 +49,7 @@ if(isset($_GET)){
                     echo json_encode($clien_ma->consultaDescripcion($des));
                 }
             }
+
         }
     }
 
