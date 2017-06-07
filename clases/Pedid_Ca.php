@@ -70,19 +70,14 @@ class Pedid_Ca{
         }
     }
     
-    public function consultaPedidoLimitado($pagenumber, $itemsperpage){
-        //$sql = "SELECT * FROM Pedid_Ca LIMIT $inicio, $fin";
-        $sql = "SELECT * FROM Pedid_Ca LIMIT (:param_uno, :param_dos";
+    public function consultaPedidoLimitado($inicio, $fin){
+        $sql = "SELECT * FROM Pedid_Ca LIMIT $inicio, $fin";
+
         try{
             $conexion = Conexion::conectar();
             $query = $conexion->prepare($sql);
-            $param_uno = $pagenumber -1 * $itemsperpage;
-
-            $query->bindParam(':param_uno',$param_uno);
-            $query->bindParam(':param_dos',$itemsperpage);
-
             $query->execute();
-            return $conexion->fetchALL(PDO::FETCH_ASSOC);
+            return $query->fetchALL(PDO::FETCH_ASSOC);
             
         } catch (PDOException $e) {
             $e->getMessage();

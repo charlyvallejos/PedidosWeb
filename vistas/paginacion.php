@@ -1,6 +1,6 @@
 <?php
 //PAGINACION
-$numxPag = 2;
+$numxPag = 1;
 $pagina = false;
 
 if(isset($_GET['pag']))
