@@ -37,6 +37,6 @@
     <script src="js/dirPagination.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 
-    <script src="./js/pedidos_web.js"></script>
+<!--    <script src="./js/pedidos_web.js"></script>-->
     </body>
 </html>

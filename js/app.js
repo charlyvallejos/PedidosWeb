@@ -23,6 +23,7 @@
         .controller('pedidosController',function($scope,$http){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
+            $scope.descripcionCliente;
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -110,6 +111,26 @@
 
                 formUp.slideDown();
             };
+            
+            /////////////////////////////////////////
+            // CLIEN_MA
+            
+            $scope.consultaClienteDescripcion = function(descri){
+                $scope.descripcionCliente += descri.key;
+                console.log($scope.descripcionCliente);
+//                $http.get(apiURL+"?a=get&t=cli&des="+descri)
+//                    .then(function(resp){
+//                            //console.log(resp.data.records);
+//                    })
+//                    .catch(function(){
+//                        console.log("ERROR");
+//                    })
+            
+            }
+            
+            
+            
+            /////////////////////////////////////////
 
 
         });

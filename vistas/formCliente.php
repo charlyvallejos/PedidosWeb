@@ -4,7 +4,7 @@
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
-                <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" required type="search"><br>
+                <input id="buscarCliente" class="form-control col-md-7 col-xs-12" ng-keypress="consultaClienteDescripcion($event)" name="buscarCliente" required type="search"><br>
             </div>
         </div>
     </div>
