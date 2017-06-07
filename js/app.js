@@ -7,16 +7,14 @@
             $scope.pedidoTemporal = {};
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
-            //// Filtro de busqueda /////
+            //// Para ordenar por nro pedido, fecha o cliente /////
             $scope.sort = function(keyname){
                 $scope.sortKey = keyname;
                 $scope.reverse = !$scope.reverse;
             };
 
-            /////// PAGINACION ///////////
-
+            /////// PAGINACION --- es para que puedan seleccionar q cantidad x pag///////////
             $scope.numXpag = 2;
-
             //////////////////////////////
 
             $scope.consultaPedidos = function(){
