@@ -16,7 +16,9 @@ if(isset($_GET)){
         $inicio = $_GET['ini'];
     if(isset($_GET['fin']))
         $fin = $_GET['fin'];
-
+    if(isset($_GET['des']))
+        $des = $_GET['des'];
+    
     if(isset($accion) && $accion == 'get')
     {
 
@@ -38,7 +40,12 @@ if(isset($_GET)){
             }
             else if($tabla == 'cli')
             {
-
+                $clien_ma = new Clien_Ma();
+                
+                if(isset($des))
+                {
+                    echo json_encode($clien_ma->consultaDescripcion($des));
+                }
             }
         }
     }
