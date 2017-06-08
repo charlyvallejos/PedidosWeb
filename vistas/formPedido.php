@@ -1,5 +1,5 @@
 <?php ?>
-<div class="panel panel-default">
+<div class="panel panel-default panel_pedido_plus">
     <div class="panel-heading"><a href="" class="agregar"><img src="img/add.png" alt=""></a></div>
     <div class="mensaje ocultar">
         <div class="error"><p></p></div>
@@ -30,10 +30,10 @@
                         <div class="col align-self-center">
                             <br> <!-- Si... esto es berreta por ahora -->
                             <br>
-                            <button  type="reset" class="btn btn-primary" ng-click="resetearForm(pedidoForm)">Cancelar</button>
+                            <button  type="reset" class="btnCancelar" ng-click="resetearForm(pedidoForm)"><img src="img/btncancel.png" alt="Cancelar" width="24px" height="24px"><span>Cancelar</span></button>
                             <br><br>
                             <br>
-                            <button  type="submit" class="btn btn-success" ng-click="modificarPedido(form)">Grabar</button>
+                            <button  type="submit" class="btnGrabar" ng-click="modificarPedido(form)"><img src="img/btngrabar.png" alt="Grabar" width="25px" height="25px"><span>Grabar</span></button>
                             <br>
                             <br>
                             <br>
