@@ -151,6 +151,14 @@
                     $scope.clienteSeleccionado = clie;
                     $scope.mostrar = false;
                 }
+            };
+
+            $scope.resetearForm = function(pedidoForm){
+                $('input').val('').removeAttr('checked').removeAttr('selected');
+                formUp.slideUp();
+                $scope.pedidoTemporal = {};
+                pedidoForm.$setPristine();
+                pedidoForm.$setUntouched();
             }
 
         });
