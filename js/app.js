@@ -125,11 +125,11 @@
             $scope.clienteSeleccionado = [];
             
             $scope.consultaClienteDescripcion = function(des){
-                console.log(des);
+                //console.log(des);
                 if(des !== ""){
                 $http.get(apiURL+"?a=get&t=cli&des="+des)
                     .then(function(resp){
-                        //console.log(resp.data);
+                        console.log(resp.data);
                         $scope.clientes = resp.data;
                         $scope.mostrar = $scope.clientes.length > 0;
                     })
