@@ -22,6 +22,7 @@
                 <?php include 'formProducto.php' ?><!-- ######### PRODUCTO ############ -->
             </div>
             <div class="col-md-4 col-xs-12">
+                <strong class="nroPedido">PEDIDO {{pedidoTemporal.Nro_Pedido}}</strong>
                 <br>
                 <br>
                 <fieldset>
@@ -29,10 +30,10 @@
                         <div class="col align-self-center">
                             <br> <!-- Si... esto es berreta por ahora -->
                             <br>
-                            <button  type="reset" class="btn btn-primary">Cancelar</button>
+                            <button  type="reset" class="btn btn-primary" ng-click="resetearForm(pedidoForm)">Cancelar</button>
                             <br><br>
                             <br>
-                            <button  type="submit" class="btn btn-success" ng-click="modificarPedido(provForm)">Grabar</button>
+                            <button  type="submit" class="btn btn-success" ng-click="modificarPedido(form)">Grabar</button>
                             <br>
                             <br>
                             <br>
