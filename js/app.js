@@ -156,7 +156,7 @@
                 console.log(clie);
                 $scope.mostrar = true;
                 if(clie !== null){
-                    $scope.clienteSeleccionado = clie;
+                    $scope.pedidoTemporal.Cliente = clie;
                     $scope.mostrar = false;
                 }
             };
