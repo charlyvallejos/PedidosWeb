@@ -119,6 +119,14 @@
                 formUp.slideDown();
             };
 
+
+            ////////// SELECCIONA PRODUCTO DE GRILLA
+            $scope.selectProducto = function(prod){
+                //$scope.ProductoSeleccionado =
+            };
+
+
+
             /////////////////////////////////////////
             // CLIEN_MA
             $scope.clientes = [];
