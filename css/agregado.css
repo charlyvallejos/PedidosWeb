@@ -226,3 +226,9 @@ tr.selected td {
    
     z-index: 999;
 }
+
+.nroPedido {
+    background:#202D34;
+    padding:10px;
+    color:#23ab8e;
+}
