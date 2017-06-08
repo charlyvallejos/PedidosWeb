@@ -25,7 +25,7 @@
                 <label class="control-label" for="CodigoCliente">Cod</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="CodigoCliente" class="form-control" name="CodigoCliente" ng-model="clienteSeleccionado.Codigo_Cliente"  readonly>
+                <input type="text" id="CodigoCliente" class="form-control" name="CodigoCliente" ng-model="pedidoTemporal.Cliente.Codigo_Cliente"  readonly>
             </div>
         </div>
     </div>
@@ -35,13 +35,13 @@
                 <label class="control-label" for="NombreFantasia">Nombre Fantasia</label>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
-                <input type="text" id="NombreFantasia" class="form-control" name="NombreFantasia" ng-model="clienteSeleccionado.Nombre_Fantasia" readonly>
+                <input type="text" id="NombreFantasia" class="form-control" name="NombreFantasia" ng-model="pedidoTemporal.Cliente.Nombre_Fantasia" readonly>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="Tipo_Iva">IVA</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="Tipo_Iva" class="form-control" name="Tipo_Iva" ng-model="clienteSeleccionado.Tipo_Iva" readonly>
+                <input type="text" id="Tipo_Iva" class="form-control" name="Tipo_Iva" ng-model="pedidoTemporal.Cliente.Tipo_Iva" readonly>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 <label class="control-label" for="Domicilio">Dirección</label>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
-                <input type="text" id="Domicilio" class="form-control" name="Domicilio" ng-model="clienteSeleccionado.Domicilio" readonly>
+                <input type="text" id="Domicilio" class="form-control" name="Domicilio" ng-model="pedidoTemporal.Cliente.Domicilio" readonly>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Rep</label>
@@ -99,7 +99,7 @@
                 <label class="control-label" for="Codigo_Vendedor">Vend</label>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="Codigo_Vendedor" class="form-control" name="Codigo_Vendedor" ng-model="clienteSeleccionado.Codigo_Vendedor"  readonly>
+                <input type="text" id="Codigo_Vendedor" class="form-control" name="Codigo_Vendedor" ng-model="pedidoTemporal.Cliente.Codigo_Vendedor"  readonly>
             </div>
         </div>
     </div>
