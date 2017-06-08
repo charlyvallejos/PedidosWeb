@@ -218,3 +218,11 @@ tr.selected td {
     border-top: 1px solid rgba(38, 185, 154, 0.4);
     /*border-bottom: 1px solid rgba(38, 185, 154, 0.4);*/
 }
+
+.clienteSeleccion{
+    background-color: lightyellow;
+    color: #58FA82;
+    font-size: 18px;
+   
+    z-index: 999;
+}
