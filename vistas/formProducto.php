@@ -41,6 +41,7 @@
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <input type="text" id="PrecioProd" class="form-control" name="PrecioProd" readonly>
             </div>
+
         </div>
     </div>
     <div class="item form-group">
@@ -56,6 +57,9 @@
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <input type="text" id="CantProd" class="form-control" name="CantProd" readonly>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+                <a href=""><img src="img/borrar.png" alt="Borrar"></a>
             </div>
         </div>
     </div>
