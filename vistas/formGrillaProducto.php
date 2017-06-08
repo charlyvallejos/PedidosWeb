@@ -10,23 +10,18 @@
             <th>Estado</th>
             <th>Fecha Cot</th>
             <th>Nro Cotiz</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="prod in pedidoSelected.productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag" pagination-id="prod">
-            <td>{{prod.Codigo}}</td>
+        <tr dir-paginate="prod in pedidoTemporal.Productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag  track by $index" pagination-id="prod">
+            <td>{{prod.Codigo_Producto}}</td>
             <td>{{prod.Descripcion}}</td>
             <td>{{prod.Cantidad}}</td>
             <td>{{prod.Precio}}</td>
-            <td>{{prod.Total}}</td>
+            <td>{{prod.Cantidad * prod.Precio | number: 3}} </td>
             <td>{{prod.Estado}}</td>
-            <td>{{prod.Fecha_Cot}}</td>
-            <td>{{prod.Nro_Cot}}</td>
-            <td>
-                <a href="" class="editar">Editar <img src="img/edit.png" alt="Editar" ng-click="consultaPedidoNro(ped)"></a>
-                <a href="" class="eliminar">Eliminar <img src="img/drop.png" alt="Borrar"></a>
-            </td>
+            <td>{{prod.Fecha_Cotizacion}}</td>
+            <td>{{prod.Nro_Cotizacion}}</td>
         </tr>
         </tbody>
     </table>

@@ -25,7 +25,7 @@ class Pedid_De
             $query->bindParam(':NroPedido',$NroPedido,PDO::PARAM_INT);
 
             $query->execute();
-            $r = $query->fetch(PDO::FETCH_ASSOC);
+            $r = $query->fetchAll(PDO::FETCH_ASSOC);
 
             return $r;
         }catch(PDOException $e)

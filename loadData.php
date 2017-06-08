@@ -18,6 +18,8 @@ if(isset($_GET)){
         $fin = $_GET['fin'];
     if(isset($_GET['des']))
         $des = $_GET['des'];
+    if(isset($_GET['idCli']))
+        $idCli = $_GET['idCli'];
     
     if(isset($accion) && $accion == 'get')
     {
@@ -49,6 +51,9 @@ if(isset($_GET)){
                     //echo $des;
                     echo json_encode($clien_ma->consultaDescripcion($des));
                 }
+                else
+                    if(isset($idCli))
+                        echo json_encode($clien_ma->consultaCliente_Id($idCli));
             }
 
         }
