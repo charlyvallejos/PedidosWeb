@@ -47,6 +47,7 @@
                     });
             };
 
+            /////////// SELECCIONA PEDIDO
             $scope.selectPedido = function (ped) {
                 $scope.pedidoTemporal = {
                     Nro_Pedido:ped.Nro_Pedido,
@@ -154,14 +155,3 @@
 
         });
 
-
-/*
- http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
- .then(function(pepe){
- $scope.pedidoTemporal.Cliente = pepe.data;
- console.log(pepe.data);
- })
- .catch(function(resp){
- console.log(resp);
- });
- */
