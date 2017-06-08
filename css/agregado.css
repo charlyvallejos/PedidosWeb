@@ -142,33 +142,6 @@ label{
     margin-top:6px !important;
 }
 
-/* Styles go here */
-
-.my-controller {
-    border: 1px solid #fcc;
-    padding: 5px;
-    margin: 3px;
-}
-.my-controller small {
-    color: #c99;
-}
-.other-controller {
-    border: 1px solid #ccf;
-    padding: 5px;
-    margin: 3px;
-}
-.other-controller small {
-    color: #99c;
-}
-.third-controller {
-    border: 1px solid #cfc;
-    padding: 5px;
-    margin: 3px;
-}
-.third-controller small {
-    color: #9c9;
-}
-
 th {
     color:rgb(164, 37, 44);
     cursor:pointer;
@@ -228,7 +201,36 @@ tr.selected td {
 }
 
 .nroPedido {
-    background:#202D34;
     padding:10px;
     color:#23ab8e;
+}
+
+
+.panel_pedido_plus{
+    background: #eeefe7;
+}
+
+.btnCancelar, .btnGrabar{
+    padding:10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-family:Arial,sans-serif;
+    border:0;
+    width:60%;
+    text-align: center;
+    font-weight: bold;
+    color: #eeeeee;
+}
+
+.btnCancelar{
+    background: #761626;
+    box-shadow: 1px 1px 1px 1px rgb(64, 11, 17);
+}
+.btnGrabar{
+    background: #187662;
+    box-shadow: 1px 1px 1px 1px rgb(13, 64, 53);
+}
+
+.btnGrabar > img, .btnCancelar > img{
+    margin-right:10px;
 }

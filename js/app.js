@@ -23,6 +23,7 @@
         .controller('pedidosController',function($scope,$http){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
+            $scope.productoTemporal = {};
             $scope.mostrar = false;
            
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
@@ -122,7 +123,8 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod){
-                //$scope.ProductoSeleccionado =
+                $scope.index = $scope.productosTemporales.indexOf(prod);
+                $scope.productoTemporal = prod;
             };
 
 

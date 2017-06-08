@@ -8,7 +8,7 @@ include 'formPedido.php' ?>
 
     <!-------------------------------------------------------------------------------------------------------------------->
 
-    <div class="panel" ng-init="consultaPedidos()">
+    <div class="panel panel_pedido" ng-init="consultaPedidos()">
     <div class="panel-body">
            <!--<div ng-show="pedidos.length == 0" class='error'>NO HAY REGISTRO DE PEDIDOS</div>-->
             <div class="row">

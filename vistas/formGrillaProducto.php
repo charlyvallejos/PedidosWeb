@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="prod in pedidoTemporal.Productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag  track by $index" pagination-id="prod">
+        <tr dir-paginate="prod in pedidoTemporal.Productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag" pagination-id="prod" ng-click="selectProducto(prod)">
             <td>{{prod.Codigo_Producto}}</td>
             <td>{{prod.Descripcion}}</td>
             <td>{{prod.Cantidad}}</td>

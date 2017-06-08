@@ -16,7 +16,7 @@
     <div class="item form-group">
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <label class="control-label" for="RazonSocial" name="inputRazonSocial">Razon Social</label>
+                <label class="control-label" for="RazonSocial">Razon Social</label>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
                 <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" ng-model="pedidoTemporal.Cliente.Razon_Social" readonly>
