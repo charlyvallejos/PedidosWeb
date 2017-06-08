@@ -82,11 +82,12 @@ class Clien_Ma
     protected $Email_Factura_PDF;
 
     public function consultaDescripcion($descripcion){
-        $sql = "SELECT * FROM clien_ma Where razon_social like '%$descripcion%'";
+        $sql = "SELECT * FROM clien_ma WHERE Razon_Social LIKE '%$descripcion%'";
         try {
-            $conexion = Conexion::conectar()->prepare($sql);
-            $conexion->execute();
-            return $conexion->fetchAll(PDO::FETCH_ASSOC);
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
             
         } catch (PDOException $ex) {
             $e->getMessage();

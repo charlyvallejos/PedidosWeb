@@ -46,6 +46,7 @@ if(isset($_GET)){
                 
                 if(isset($des))
                 {
+                    //echo $des;
                     echo json_encode($clien_ma->consultaDescripcion($des));
                 }
             }

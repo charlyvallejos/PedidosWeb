@@ -23,7 +23,8 @@
         .controller('pedidosController',function($scope,$http){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
-            $scope.descripcionCliente;
+            $scope.mostrar = false;
+            $scope.clientes = [];
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -109,17 +110,32 @@
             /////////////////////////////////////////
             // CLIEN_MA
             
-            $scope.consultaClienteDescripcion = function(descri){
-                $scope.descripcionCliente += descri.key;
-                console.log($scope.descripcionCliente);
-//                $http.get(apiURL+"?a=get&t=cli&des="+descri)
-//                    .then(function(resp){
-//                            //console.log(resp.data.records);
-//                    })
-//                    .catch(function(){
-//                        console.log("ERROR");
-//                    })
+            $scope.consultaClienteDescripcion = function(des){                
+                //console.log(descri);
+                $http.get(apiURL+"?a=get&t=cli&des="+des)
+                    .then(function(resp){
+                        //console.log(resp.data);
+                        $scope.clientes = resp.data;
+                        if($scope.clientes.length > 0)
+                        {
+                            $scope.mostrar = true;
+                        }
+                        else
+                        {
+                            $scope.mostrar = false;
+                        }
+                    })
+                    .catch(function(){
+                        console.log("ERROR");
+                    })
             
+            }
+            
+            $scope.seleccionCliente = function(clie){
+                console.log(clie);
+                $scope.mostrar = false;
+                $scope.Razon_Social = clie;
+                
             }
             
             

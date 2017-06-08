@@ -4,9 +4,14 @@
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
-                <input id="buscarCliente" class="form-control col-md-7 col-xs-12" ng-keypress="consultaClienteDescripcion($event)" name="buscarCliente" required type="search"><br>
+                <input id="buscarCliente" class="form-control col-md-7 col-xs-12" ng-keyup="consultaClienteDescripcion($event.target.value)" name="buscarCliente" required type="search">                
+            </div><!--
+            --><div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
+                <select ng-show="mostrar" ng-model="clie" ng-change="seleccionCliente(clie)">
+                        <option ng-repeat="clie in clientes" value="{{clie.Razon_Social}}">{{clie.Codigo_Cliente }}{{clie.Razon_Social}}</option>
+                </select>
             </div>
-        </div>
+        </div>        
     </div>
     <div class="item form-group">
         <div class="row">
@@ -14,13 +19,13 @@
                 <label class="control-label" for="RazonSocial" name="inputRazonSocial">Razon Social</label>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Razon_Social">
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="Razon_Social">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Cod</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial"  readonly>
             </div>
         </div>
     </div>
