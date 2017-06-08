@@ -34,7 +34,7 @@ if(isset($_GET)){
                     echo json_encode($pedid_ca->consultaPedido($nroPedido));
 
             }
-            else if($tabla == 'ped_de')
+            else if($tabla == 'pedide')
             {
                 $pedid_de = new Pedid_De();
                 if(isset($nroPedido))
