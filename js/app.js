@@ -24,7 +24,7 @@
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
             $scope.mostrar = false;
-            $scope.clientes = [];
+           
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -109,9 +109,12 @@
 
             /////////////////////////////////////////
             // CLIEN_MA
-
+            $scope.clientes = [];
+            $scope.clienteSeleccionado = [];
+            
             $scope.consultaClienteDescripcion = function(des){
-                //console.log(descri);
+                console.log(des);
+                if(des !== ""){
                 $http.get(apiURL+"?a=get&t=cli&des="+des)
                     .then(function(resp){
                         //console.log(resp.data);
@@ -121,13 +124,21 @@
                     .catch(function(){
                         console.log("ERROR");
                     })
+                }
+                else
+                {
+                    $scope.mostrar = false;
+                }
 
             };
 
-            $scope.seleccionCliente = function(clie){
+            $scope.seleccionCliente = function(clie){                
                 console.log(clie);
-                $scope.mostrar = false;
-                $scope.Razon_Social = clie;
+                $scope.mostrar = true;
+                if(clie !== null){
+                    $scope.clienteSeleccionado = clie;
+                    $scope.mostrar = false;
+                }
             }
 
         });
