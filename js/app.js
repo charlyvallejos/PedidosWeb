@@ -23,6 +23,8 @@
         .controller('pedidosController',function($scope,$http){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
+            $scope.mostrar = false;
+            $scope.clientes = [];
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -88,18 +90,10 @@
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
 
-                $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
+                $http.get(apiURL+"?a=get&t=ped_de&nro="+ped.Nro_Pedido)
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data;
                         console.log(resp.data);
-                        $http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
-                            .then(function(pepe){
-                                $scope.pedidoTemporal.Cliente = pepe.data;
-                                console.log(pepe);
-                            })
-                            .catch(function(pepe){
-                                console.log(pepe);
-                            });
                     })
                     .catch(function(resp){
                         console.log(resp);
@@ -110,9 +104,42 @@
                 //Capturo el indice del array pedidos que seleccione
                 $scope.index = $scope.pedidos.indexOf(ped);
 
-                formUp.slideDown();
+                //formUp.slideDown();
             };
 
+            /////////////////////////////////////////
+            // CLIEN_MA
+
+            $scope.consultaClienteDescripcion = function(des){
+                //console.log(descri);
+                $http.get(apiURL+"?a=get&t=cli&des="+des)
+                    .then(function(resp){
+                        //console.log(resp.data);
+                        $scope.clientes = resp.data;
+                        $scope.mostrar = $scope.clientes.length > 0;
+                    })
+                    .catch(function(){
+                        console.log("ERROR");
+                    })
+
+            };
+
+            $scope.seleccionCliente = function(clie){
+                console.log(clie);
+                $scope.mostrar = false;
+                $scope.Razon_Social = clie;
+            }
 
         });
 
+
+/*
+ http.get(apiURL+"?a=get&t=cli&id="+ped.id_Cliente)
+ .then(function(pepe){
+ $scope.pedidoTemporal.Cliente = pepe.data;
+ console.log(pepe.data);
+ })
+ .catch(function(resp){
+ console.log(resp);
+ });
+ */

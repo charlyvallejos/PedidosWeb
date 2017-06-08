@@ -18,6 +18,36 @@ class Pedid_De
     private $Id_Origen;
 
 
+    public function consultaPedidoDetalle($NroPedido){
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare("CALL Pedid_De_Igual_Nro_Pedido(:NroPedido)");
+            $query->bindParam(':NroPedido',$NroPedido,PDO::PARAM_INT);
+
+            $query->execute();
+            $r = $query->fetch(PDO::FETCH_ASSOC);
+
+            return $r;
+        }catch(PDOException $e)
+        {
+            $e->getMessage();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function getNroPedido()
     {
         return $this->Nro_Pedido;
