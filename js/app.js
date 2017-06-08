@@ -96,12 +96,8 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
-                        console.log($scope.pedidoTemporal.Productos);
-
-                        //console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
-                                //console.log(resp.data);//track by $index
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
 
                             })
@@ -123,8 +119,9 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod){
-                $scope.index = $scope.productosTemporales.indexOf(prod);
+                $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
+                console.log($scope.productoTemporal);
             };
 
 
