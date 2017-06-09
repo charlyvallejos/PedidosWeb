@@ -90,7 +90,7 @@ class Clien_Ma
             //$query->bindParam(':descripcion',$descripcion,PDO::PARAM_STR);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
-            
+            //asdkjhasdjksakdasdhajkd
         } catch (PDOException $ex) {
             return $ex->getMessage();
         }

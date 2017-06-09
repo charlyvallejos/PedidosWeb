@@ -222,11 +222,10 @@
             $scope.clienteSeleccionado = [];
             
             $scope.consultaClienteDescripcion = function(des){
-                //console.log(des);
                 if(des !== ""){
                 $http.get(apiURL+"?a=get&t=cli&des="+des)
                     .then(function(resp){
-                        console.log(resp.data);
+                        //console.log(resp.data);
                         $scope.clientes = resp.data;
                         $scope.mostrarC = $scope.clientes.length > 0;
                         $("#clienteSeleccion").attr('size', 5);
