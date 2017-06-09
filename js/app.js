@@ -122,11 +122,7 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod,formCtrlProducto){
-
-                //Si hace un selected de producto grilla significa que esta modificando, por
-                //lo tanto, el input de busqueda queda deshabilitado
-                //formCtrlProducto.buscarProducto
-
+                
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
