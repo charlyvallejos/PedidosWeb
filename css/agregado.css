@@ -72,8 +72,8 @@ legend {
     padding: 0;
 }
 .top_search .form-control {
-    box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 25px 0px 0px 25px;
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 25px 0 0 25px;
     padding-left: 20px;
     border: 1px solid rgba(221, 226, 232, 0.71);
     background: rgba(89, 92, 86, 0.1);
@@ -84,14 +84,13 @@ legend {
     border-right: 0;
 }
 .top_search .input-group-btn button {
-    border-radius: 0px 25px 25px 0px;
+    border-radius: 0 25px 25px 0;
     border: 1px solid rgba(221, 226, 232, 0.49);
     border-left: 0;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     color: #93A2B2;
     margin-bottom: 0 !important;
 }
-
 
 .btn {
     border-radius: 2px;
@@ -192,13 +191,7 @@ tr.selected td {
     /*border-bottom: 1px solid rgba(38, 185, 154, 0.4);*/
 }
 
-.clienteSeleccion{
-    background-color: lightyellow;
-    color: #58FA82;
-    font-size: 18px;
-   
-    z-index: 999;
-}
+
 
 .nroPedido {
     padding:10px;
@@ -233,4 +226,29 @@ tr.selected td {
 
 .btnGrabar > img, .btnCancelar > img{
     margin-right:10px;
+}
+
+.clienteSeleccion{
+
+    position:absolute;
+    top:100px;
+    left: 200px;
+    z-index: 999;
+
+}
+#clienteSeleccion,#productoSeleccion option{
+    color: #0d4035;
+    font-size: 14px;
+    font-weight:bold;
+    padding:5px;
+    width: 100%;
+}
+
+#clienteSeleccion > option:first-child,#productoSeleccion > option:first-child{
+    display: none;
+}
+
+#clienteSeleccion option:checked,#productoSeleccion option:checked{
+    background: linear-gradient(#115345, #187662);
+    background-color: #0d4035 !important; /* for IE */
 }
