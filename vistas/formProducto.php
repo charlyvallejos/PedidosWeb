@@ -6,7 +6,7 @@
                 <input id="buscarProducto" class="form-control col-md-7 col-xs-12"  name="buscarCliente" type="search" ng-keyup="consultaProductoDescripcion($event.target.value)" required><br>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
-                <select style="color:lightblue;font-size: 16px;position:absolute;z-index: 999;top:-10px;left: 200px;" ng-show="mostrarP" ng-model="prod" ng-options="x.Codigo_ProductoF  +' - '+ x.Descripcion_Producto for x in productos" ng-change="seleccionProducto(prod)">
+                <select style="color:blue;font-size: 16px;position:absolute;z-index: 999;top:-10px;left: 200px;" ng-show="mostrarP" ng-model="prod" ng-options="x.Codigo_ProductoF  +' - '+ x.Descripcion_Producto for x in productos" ng-change="seleccionProducto(prod)">
                         <!--<option ng-repeat="clie in clientes" value="{{clie.Razon_Social}}">{{clie.Codigo_Cliente }}{{clie.Razon_Social}}</option>-->
                 </select>
         </div>
@@ -43,7 +43,7 @@
                 <label class="control-label" for="RazonSocial">Precio</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="PrecioProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio_Lista">
+                <input type="text" id="PrecioProd" class="form-control" name="PrecioLista" readonly ng-model="productoTemporal.Precio_Lista">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <select name="estadoProd" id="" class="form-control" disabled>
@@ -65,7 +65,7 @@
                 <label class="control-label" for="RazonSocial">Precio</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="CantProd" class="form-control" name="CantProd" readonly ng-model="productoTemporal.Precio">
+                <input type="text" id="CantProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <a href=""><img src="img/delete.png" width="44px" height="44px" alt="Borrar" ng-click="borraProductoGrilla(productoTemporal)"></a>

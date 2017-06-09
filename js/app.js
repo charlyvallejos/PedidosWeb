@@ -11,7 +11,11 @@
     var formUp = $('.formData'),
         btnPlus = $('.agregar'),
         btnEditar = $('.editar'),
-        btnEliminar = $('.eliminar');
+        btnEliminar = $('.eliminar'),
+        clienteSeleccion = $("#clienteSeleccion"),
+        productoSeleccion = $("#productoSeleccion");
+
+
 
     btnPlus.on('click',function(e){
         e.preventDefault();
@@ -28,6 +32,7 @@
             $scope.produ_frac = {};
             $scope.mostrarC = false;
             $scope.mostrarP = false;
+           
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -98,7 +103,6 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
-                        console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
@@ -119,7 +123,6 @@
                 formUp.slideDown();
             };
 
-
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod,formCtrlProducto){
 
@@ -127,27 +130,46 @@
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
                 //console.log($scope.productoTemporal);
-//                $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
-//                        .then(function(resp){
-//                            $scope.produ_ma = resp.data;
-//                            $http.get(apiURL+"?a=get&t=prodfrac&idPro="+prod.id_Producto+"&idFrac="+prod.id_Fraccio)
-//                                    .then(function(resp){
-//                                        $scope.produ_frac = resp.data;
-//                                    })
-//                                    .catch(function(resp){
-//                                        console.log(resp);
-//                                    })
-//                        })
-//                        .catch(function(resp){
-//                            console.log(resp);
-//                        })
+                $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
+                        .then(function(resp){
+                            $scope.produ_ma = resp.data;
+                            $http.get(apiURL+"?a=get&t=prodfrac&idPro="+prod.id_Producto+"&idFrac="+prod.id_Fraccio)
+                                    .then(function(resp){
+                                        $scope.produ_frac = resp.data;
+                                    })
+                                    .catch(function(resp){
+                                        console.log(resp);
+                                    })
+                        })
+                        .catch(function(resp){
+                            console.log(resp);
+                        })
             };
 
             $scope.borraProductoGrilla = function(prodTemporal){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
-                //borrar producto de la grilla..........
+                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
+                if($scope.index > 0)
+                    $scope.pedidoTemporal.Productos.splice($scope.index,1);
+                else
+                {
+                    $scope.resetSeleccionProducto();
+                    clienteSeleccion.focus();
+                }
+
+
             };
 
+            $scope.resetSeleccionProducto = function(){
+                pedidoForm.DescProd.value = '';
+                pedidoForm.CodProd.value = '';
+                pedidoForm.RubroProd.value = '';
+                pedidoForm.UmeVta.value = '';
+                pedidoForm.ListaProd.value = '';
+                pedidoForm.PrecioLista.value = '';
+                pedidoForm.CantProd.value = '';
+                pedidoForm.PrecioProd = '';
+            };
             $scope.agregarProductoGrilla = function(event,prodTemporal){
                 if(event.which === 13 )
                 {
@@ -180,15 +202,20 @@
                         })
                     }
 
-
-
+                    $scope.calculaTotal();
 
                 }
             };
 
+            $scope.calculaTotal = function(){
+                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
+                    $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
+                })
+            };
+
 
             /////////////////////////////////////////
-            // BUSCADOR DE CLIENTES
+            // CLIEN_MA
             $scope.clientes = [];
             $scope.clienteSeleccionado = [];
             
@@ -200,6 +227,7 @@
                         console.log(resp.data);
                         $scope.clientes = resp.data;
                         $scope.mostrarC = $scope.clientes.length > 0;
+                        $("#clienteSeleccion").attr('size', $scope.clientes.length+1);
                     })
                     .catch(function(){
                         console.log("ERROR");
@@ -246,7 +274,7 @@
                 $scope.mostrarP = false;
                 if(prod !== null){
                     $scope.productoTemporal = prod;
-                    $scope.mostrarC = false;
+                    $scope.mostrarP = false;
                 }
             }
             

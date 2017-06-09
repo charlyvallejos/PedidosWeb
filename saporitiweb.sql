@@ -223,53 +223,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_De_Igual_Nro_Pedido` (IN `_Nr
   WHERE Nro_Pedido = _Nro_Pedido
   ORDER BY Nro_Pedido, Renglon$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons_Id` (IN `_Id` INT)
-   SELECT
-   IFNULL(Id,0) as Id,
-   IFNULL(Codigo_Producto,'') AS Codigo_Producto,
-   IFNULL(Descripcion, '') AS Descripcion,
-   IFNULL(id_Ume_Cpra, 0) AS id_Ume_Cpra,
-   IFNULL(Ume_Cpra,0) AS  Ume_Cpra,
-   IFNULL(id_Ume_Vta, 0) AS id_Ume_Vta,
-   IFNULL(Ume_Vta, '') AS Ume_Vta,
-   IFNULL(Factor_Conver,0) AS Factor_Conver,
-   IFNULL(id_Rubro_Cpra,0) AS id_Rubro_Cpra,
-   IFNULL(Rubro_Cpra, '') AS  Rubro_Cpra,
-   IFNULL(id_Rubro_Vta,0) AS id_Rubro_Vta,
-   IFNULL(Rubro_Vta, '') AS Rubro_Vta,
-   IFNULL(Costo, 0) AS Costo,
-   IFNULL(Ubicacion,'') AS Ubicacion,
-   IFNULL(id_Moneda, 0) AS id_Moneda,
-   IFNULL(Codigo_Moneda, '') AS Codigo_Moneda,
-   IFNULL(Minimo, 0) AS Minimo,
-   IFNULL(Tipo_Iva, '') AS Tipo_Iva,
-   IFNULL(Id_Tipo, 0) AS Id_Tipo,
-   IFNULL(Tipo, '') AS Tipo,
-   IFNULL(senal, '') AS senal,
-   IFNULL(Residuo, 0) AS Residuo,
-   IFNULL(Tipo_Ing_Brutos, 0) AS Tipo_Ing_Brutos,
-   IFNULL(Nadi, '') AS Nadi,
-   IFNULL(Porc_Minimo, 0) AS Porc_Minimo,
-   IFNULL(Baja, 0) AS Baja,
-   IFNULL(Sedronar, 0) AS Sedronar,
-   IFNULL(Refrigerado,0) AS Refrigerado,
-   IFNULL(Id_Marca, 0) AS Id_Marca,
-   IFNULL(Id_Especialidad, 0) AS Id_Especialidad,
-   IFNULL(Parafarm, 0) AS Parafarm,
-   IFNULL(Costo_MP, 0) AS Costo_MP,
-   IFNULL(Trazabilidad, 0) AS Trazabilidad,
-   IFNULL(Imprime_Envase, 0) AS Imprime_Envase,
-   IFNULL(Imprime_Etiq_Cliente, 0) AS Imprime_Etiq_Cliente
-   FROM Produ_Ma
-   WHERE Id = _Id$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Frac_Cons_Prod_Frac` (IN `_Id_Producto` INT, IN `_Id_Fraccio` INT)
-    SELECT 
-    
-    FROM Produ_Frac
-    WHERE Id_Producto = _Id_Producto
-    AND Id_Fraccio = _Id_Fraccio$$
-
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -514,18 +467,6 @@ CREATE TABLE `produ_frac` (
   `Controla_Envase` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
----
----cargha datos produ_frac
----
-
-INSERT INTO Produ_Frac (id_Producto, id_Fraccio, Codigo_producto, Codigo_Fraccio, cruz, Minimo, Costo, id_Ume_Vta, Ume_Vta, Ubicacion, Descripcion, id_Ume_Frac, Ume_Frac, Agrupa, Factor, Baja, Habil_Cot, Habil_Pre, Habil_Ped, Indice, Cantidad_Pack, Porc_Minimo, EnWeb, Id_Ubicacion, Permitir_Vendedores, Costo_MP, Trazabilidad, Controla_Envase) VALUES (1, 2, '09998/000', '002', 0, 1.000, 100.000 , 1, 'UN ', 'VS ', '', 1, 'UN ', '09998/000', 1.000, 0, 1, 1, 1, NULL, 0.001, 0.000, NULL, -1, 1, 100.000, 1, 1),
-(2, 3, '01367/000', '002', 0, 0.005, 146.000, 4, 'Kg', '2GI', '', 4, 'Kg', '01367/000', 0.005, 0, 1, 1, 1, NULL, 0.001, 20.000, NULL, -1, 1, 146.000, 1, 1),
-(1198, 3, '00566/000', '002', 0, 0.005, 5952.380, 4, 'Kg', '3A', '', 4, 'Kg', '00566/000', 0.005, 0, 1, 1, 1, NULL, 0.001, 20.000, NULL, -1, 1, 5952.380, 1, 1),
-(924, 3, '03323/000', '002', 0, 0.005, 564.170, 4, 'Kg', '3A', '', 4, 'Kg', '03323/000', 0.005, 0, 1, 1, 1, NULL, 0.001, 20.000, NULL, -1, 1, 564.170, 1, 1),
-(2176, 3, '00647/000', '002', 0, 0.005, 1277.040, 4, 'Kg', '3B', '', 4, 'Kg', '00647/000', 0.005, 0, 1, 1, 1, 0.000, 0.001, 20.000, 0, 0, 1, 1277.040, 1, 1);
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -569,18 +510,6 @@ CREATE TABLE `produ_ma` (
   `Imprime_Envase` bit(1) DEFAULT NULL,
   `Imprime_Etiq_Cliente` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
----
----carga datos para produ_ma
----
-
-INSERT INTO Produ_Ma (id, Codigo_Producto, Descripcion, id_Ume_Cpra, Ume_Cpra, id_Ume_Vta, Ume_Vta, Factor_Conver, id_Rubro_Cpra, Rubro_Cpra, id_Rubro_Vta, Rubro_Vta, Costo, Ubicacion, id_Moneda, Codigo_Moneda, Minimo, Tipo_Iva, Id_Tipo, Tipo, senal, Residuo, Tipo_Ing_Brutos, Nadi, Porc_Minimo, Baja, Sedronar, Refrigerado, Id_Marca, Id_Especialidad, Parafarm, Costo_MP, Trazabilidad, Imprime_Envase, Imprime_Etiq_Cliente) VALUES (1, '09003/000', 'INTERES Y GASTOS POR MORA', 1, 'UN ', 1, 'UN ', 0.000, NULL, ' ', 11, '000000', 1.000, ' ', 2, 'U$S', 0.001 , 'G', 6, 'O', ' ', 0, 0, '  ', 20.000, 0, 0, 0, NULL, 0, 0, 1.000, 0, 0, 0),
-(2, '09999/000', 'VARIOS', 1, 'UN ', 1, 'UN ', 1.000, 0, '', 11, '000000', 0.010, ' ', 2, 'U$S', 0.001, 'G', 6, 'O', ' ', 0, 0, ' ', 0.000, 0, 0, 0, 0, 0, 0, 0.010, 0, 0, 0),
-(3, '09998/000', 'VARIOS', 1, 'UN ', 1, 'UN ', 1.000, NULL, ' ', 11, '000000', 8.000, ' ', 2, 'U$S', 0.001, 'E', 6, 'O', ' ', 0, 0, '0', 0.000, 0, 0, 0, NULL, 0, 0, 8.000, 0, 0, 0),
-(4, '09004/000', 'GASTOS POR CHEQUES RECHAZADOS', 1, 'UN ', 1, 'UN ', 1.000, 9, 'PTACSUP04', 11, '000000', 0.010, ' ', 2, 'U$S', 0.001, 'G', 6, 'O', ' ', 0, 0, '  ', 0.000, 0, 0, 0, NULL, 0, 0, 0.010, 0, 0, 0),
-(5, '00000/000', 'DESCUENTO PAGO EFECTIVO', 1, 'UN ', 1, 'UN ', 1.000, NULL, '  ', 11, '000000', 1.000, ' ', 2, 'U$S', 0.001, 'G', 3, 'F', ' ', 0, 0, '  ', 0.000, 0, 0, 0, NULL, 0, 0, 1.000, 0, 0, 0);
-
-
 
 --
 -- Índices para tablas volcadas
