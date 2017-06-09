@@ -39,7 +39,7 @@
                 <label class="control-label" for="RazonSocial">Precio</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="PrecioProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio_Lista">
+                <input type="text" id="PrecioProd" class="form-control" name="PrecioLista" readonly ng-model="productoTemporal.Precio_Lista">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <select name="estadoProd" id="" class="form-control" disabled>
@@ -61,7 +61,7 @@
                 <label class="control-label" for="RazonSocial">Precio</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="CantProd" class="form-control" name="CantProd" readonly ng-model="productoTemporal.Precio">
+                <input type="text" id="CantProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <a href=""><img src="img/delete.png" width="44px" height="44px" alt="Borrar" ng-click="borraProductoGrilla(productoTemporal)"></a>
