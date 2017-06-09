@@ -77,6 +77,7 @@ if(isset($_GET)){
                     echo json_encode($produ_frac->consultaProdFraccio($idPro, $idFrac));
                 }
             }
+            
         }
     }
 
