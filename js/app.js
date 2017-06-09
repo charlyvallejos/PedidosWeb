@@ -24,6 +24,8 @@
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
             $scope.productoTemporal = {};
+            $scope.produ_ma = {};
+            $scope.produ_frac = {};
             $scope.mostrar = false;
            
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
@@ -121,7 +123,21 @@
             $scope.selectProducto = function(prod){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
-                console.log($scope.productoTemporal);
+                //console.log($scope.productoTemporal);
+                $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
+                        .then(function(resp){
+                            $scope.produ_ma = resp.data;
+                            $http.get(apiURL+"?a=get&t=prodfrac&idPro="+prod.id_Producto+"&idFrac="+prod.id_Fraccio)
+                                    .then(function(resp){
+                                        $scope.produ_frac = resp.data;
+                                    })
+                                    .catch(function(resp){
+                                        console.log(resp);
+                                    })
+                        })
+                        .catch(function(resp){
+                            console.log(resp);
+                        })
             };
 
 

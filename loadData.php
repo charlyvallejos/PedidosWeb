@@ -20,10 +20,13 @@ if(isset($_GET)){
         $des = $_GET['des'];
     if(isset($_GET['idCli']))
         $idCli = $_GET['idCli'];
+    if(isset($_GET['idPro']))
+        $idPro = $_GET['idPro'];
+    if(isset($_GET['idFrac']))
+        $idFrac = $_GET['idFrac'];
     
     if(isset($accion) && $accion == 'get')
     {
-
         if(isset($tabla))
         {
             if($tabla == 'ped')
@@ -55,7 +58,22 @@ if(isset($_GET)){
                     if(isset($idCli))
                         echo json_encode($clien_ma->consultaCliente_Id($idCli));
             }
-
+            else if($tabla == 'prodma')
+            {
+                $produ_ma = new Produ_Ma();
+                if(isset($idPro))
+                {
+                    echo json_encode($produ_ma->consultaProducto($idPro));
+                }
+            }
+            else if($tabla == 'prodfrac')
+            {
+                $produ_frac = new Produ_Frac();
+                if(isset($idPro) && isset($idFrac))
+                {
+                    echo json_encode($produ_frac->consultaProdFraccio($idPro, $idFrac));
+                }
+            }
         }
     }
 
