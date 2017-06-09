@@ -98,6 +98,7 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
+                        console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
@@ -120,7 +121,9 @@
 
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
-            $scope.selectProducto = function(prod){
+            $scope.selectProducto = function(prod,formCtrlProducto){
+                
+
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
                 //console.log($scope.productoTemporal);
@@ -140,6 +143,24 @@
                         })
             };
 
+            $scope.borraProductoGrilla = function(prodTemporal){
+                $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
+                //borrar producto de la grilla..........
+            };
+
+            $scope.agregarProductoGrilla = function(event,prodTemporal){
+                if(event.which === 13 )
+                {
+                    $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
+
+                    /*IF si ya exite lo edito */
+                    scope.$scope.pedidoTemporal.Productos[$scope.index].Cantidad = prodTemporal.Cantidad;
+
+                    /*sino, lo agrego al array temporal de pedidoTemporal.Productos */
+
+                }
+                event.preventDefault();
+            };
 
 
             /////////////////////////////////////////
@@ -185,5 +206,3 @@
             }
 
         });
-
-///ASDKJASDJASGHDJAGDKJAGDJKSGA
