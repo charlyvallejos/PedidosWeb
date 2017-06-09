@@ -41,6 +41,11 @@
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
                 <input type="text" id="PrecioProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio_Lista">
             </div>
+            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+                <select name="estadoProd" id="" class="form-control" disabled>
+                    <option value="CAR" ng-model="productoTemporal.Estado">CAR</option>
+                </select>
+            </div>
 
         </div>
     </div>
