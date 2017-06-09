@@ -19,6 +19,22 @@ class Produ_Ma{
         }
     }
     
+    public function consultaDescripcion($des){
+        $sql = "CALL Produ_Ma_Cons_Descri(:descripcion)";
+        try
+        {
+            $conectar = Conexion::conectar();
+            $query = $conectar->prepare($sql);
+            $query->bindParam(':descripcion', $des, PDO::PARAM_STR);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            
+            $ex->getMessage();
+        }
+        
+    }
+    
     
 }
 
