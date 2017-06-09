@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2017 a las 15:12:33
+-- Tiempo de generación: 09-06-2017 a las 13:46:19
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -24,87 +24,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
-  IFNULL(id,0) AS id,
-  IFNULL(Codigo_Cliente,'') AS Codigo_Cliente,
-  IFNULL(Razon_Social,'') AS Razon_Social,
-  IFNULL(Nombre_Fantasia, '') AS Nombre_Fantasia,
-  IFNULL(Domicilio, '') AS Domicilio,
-  IFNULL(Codigo_Postal, '') AS Codigo_Postal,
-  IFNULL(Localidad,'') AS Localidad,
-  IFNULL(Provincia, 0) AS Provincia,
-  IFNULL(Domicilio_Entrega, '') AS Domicilio_Entrega,
-  IFNULL(Codigo_Postal_Entrega, 0) AS Codigo_Postal_Entrega,
-  IFNULL(Localidad_Entrega,'') AS Localidad_Entrega,
-  IFNULL(Provincia_Entrega, 0) AS Provincia_Entrega,
-  IFNULL(Domicilio_Cobro, '') AS Domicilio_Cobro,
-  IFNULL(Codigo_Postal_Cobro, 0) AS Codigo_Postal_Cobro,
-  IFNULL(Localidad_Cobro,'') AS Localidad_Cobro,
-  IFNULL(Provincia_Cobro, 0) AS Provincia_Cobro,
-  IFNULL(Id_Reparto, 0) AS Id_Reparto,
-  IFNULL(Id_Zona, 0) AS Id_Zona,
-  IFNULL(Telefonos, '') AS Telefonos,
-  IFNULL(Fax, '') AS Fax,
-  IFNULL(Tipo_Iva, '') AS Tipo_Iva,
-  IFNULL(Nro_Cuit, '') AS Nro_Cuit,
-  IFNULL(Nro_Ing_Brutos, '') Nro_Ing_Brutos,
-  IFNULL(Id_Categoria_Ing_Br, 0) AS Id_Categoria_Ing_Br,
-  IFNULL(Comision, 0) AS Comision,
-  IFNULL(Id_Lista_Precio, 0) AS Id_Lista_Precio,
-  IFNULL(Estado, '') AS Estado,
-  IFNULL(Id_Condicion_Vta, 0) AS Id_Condicion_Vta,
-  IFNULL(Id_Agrupacion, 0) AS Id_Agrupacion,
-  IFNULL(Codigo_Vendedor, 0) AS Codigo_Vendedor,
-  IFNULL(Contacto, '') AS Contacto,
-  IFNULL(Nivel_Habil, 0) AS Nivel_Habil,
-  IFNULL(Id_Reparto_Entrega, 0) AS Id_Reparto_Entrega,
-  IFNULL(Id_Reparto_Cobro, 0) AS Id_Reparto_Cobro,
-  IFNULL(Dcto, 0) AS Dcto,
-  IFNULL(Credito, 0) AS Credito,
-  IFNULL(Protocolo, 0) AS Protocolo,
-  IFNULL(Nro_Sedronar, '') AS Nro_Sedronar,
-  IFNULL(DATE_FORMAT(Fecha_Vto_Sedro,'%d/%m/%Y'),'01/01/1990') AS Fecha_Vto_Sedro,
-  IFNULL(DATE_FORMAT(Fecha_Alta, '%d/%m/%Y'),'01/01/1990') AS Fecha_Alta,
-  IFNULL(Remito, 0) AS Remito ,
-  IFNULL(Dcto_Pago_Ef, 0) AS Dcto_Pago_Ef,
-  IFNULL(eMail, '') AS eMail,
-  IFNULL(eMailProtocolos, '') AS eMailProtocolos,
-  IFNULL(Id_Usuario, 0) AS Id_Usuario,
-  IFNULL(DATE_FORMAT(Fecha_Operacion,'%d/%m/%Y'),'01/01/1990') AS Fecha_Operacion,
-  IFNULL(Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
-  IFNULL(Id_Transporte,0) AS Id_Transporte,
-  IFNULL(Convenio,0) AS Convenio,
-  IFNULL(Afip,'') AS Afip,
-  IFNULL(Grupo_Cotiza,0) AS Grupo_Cotiza,
-  IFNULL(Estado_Deudor,0) AS Estado_Deudor,
-  IFNULL(DATE_FORMAT(Fecha_Estado_Deudor, '%d/%m/%Y'),'') AS Fecha_Estado_Deudor,
-  IFNULL(DATE_FORMAT(Fecha_Facturar_Hasta,'%d/%m/%Y'),'') AS Fecha_Facturar_Hasta,
-  IFNULL(Imprime_Nc_Dcto, 0) AS Imprime_Nc_Dcto,
-  IFNULL(Id_Trans_Clien,0) AS Id_Trans_Clien,
-  IFNULL(Motivo,'') AS Motivo,
-  IFNULL(Id_Pais, 0) AS Id_Pais,
-  IFNULL(DATE_FORMAT(Fecha_Vto_Psico,'%d/%m/%Y'),'') AS Fecha_Vto_Psico,
-  IFNULL(Prefijo_Telefono_1,'') AS Prefijo_Telefono_1,
-  IFNULL(Telefono_1, '') AS Telefono_1,
-  IFNULL(Prefijo_Telefono_2,'') AS Prefijo_Telefono_2,
-  IFNULL(Telefono_2, '') AS Telefono_2,
-  IFNULL(Prefijo_Telefono_3,'') AS Prefijo_Telefono_3,
-  IFNULL(Telefono_3, '') AS Telefono_3,
-  IFNULL(Prefijo_Fax_1,'') AS Prefijo_Fax_1,
-  IFNULL(Fax_1, '') AS Fax_1,
-  IFNULL(Prefijo_Fax_2,'') AS Prefijo_Fax_2,
-  IFNULL(Fax_2, '') AS Fax_2,
-  IFNULL(Prefijo_Celular,'') AS Prefijo_Celular,
-  IFNULL(Celular, '') AS Celular,
-  IFNULL(Director_Tecnico, '') AS Director_Tecnico,
-  IFNULL(Pasar_Importe, 0) AS Pasar_Importe,
-  IFNULL(Grupo_Sedro, 0) AS Grupo_Sedro,
-  IFNULL(Genera_Factura_PDF,0) AS Genera_Factura_PDF,
-  IFNULL(Email_Factura_PDF,'') as Email_Factura_PDF
-FROM Clien_Ma$$
-
-
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Igual_Id` (IN `_ID` INT)  SELECT
   IFNULL(id,0) AS id,
   IFNULL(Codigo_Cliente,'') AS Codigo_Cliente,
@@ -184,86 +103,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Igual_Id` (IN `_ID` INT)  
   IFNULL(Email_Factura_PDF,'') as Email_Factura_PDF
 FROM Clien_Ma
 WHERE id = _ID$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Igual_Descri` (IN `_DESCRIPCION` VARCHAR(50))  SELECT
-  IFNULL(id,0) AS id,
-  IFNULL(Codigo_Cliente,'') AS Codigo_Cliente,
-  IFNULL(Razon_Social,'') AS Razon_Social,
-  IFNULL(Nombre_Fantasia, '') AS Nombre_Fantasia,
-  IFNULL(Domicilio, '') AS Domicilio,
-  IFNULL(Codigo_Postal, '') AS Codigo_Postal,
-  IFNULL(Localidad,'') AS Localidad,
-  IFNULL(Provincia, 0) AS Provincia,
-  IFNULL(Domicilio_Entrega, '') AS Domicilio_Entrega,
-  IFNULL(Codigo_Postal_Entrega, 0) AS Codigo_Postal_Entrega,
-  IFNULL(Localidad_Entrega,'') AS Localidad_Entrega,
-  IFNULL(Provincia_Entrega, 0) AS Provincia_Entrega,
-  IFNULL(Domicilio_Cobro, '') AS Domicilio_Cobro,
-  IFNULL(Codigo_Postal_Cobro, 0) AS Codigo_Postal_Cobro,
-  IFNULL(Localidad_Cobro,'') AS Localidad_Cobro,
-  IFNULL(Provincia_Cobro, 0) AS Provincia_Cobro,
-  IFNULL(Id_Reparto, 0) AS Id_Reparto,
-  IFNULL(Id_Zona, 0) AS Id_Zona,
-  IFNULL(Telefonos, '') AS Telefonos,
-  IFNULL(Fax, '') AS Fax,
-  IFNULL(Tipo_Iva, '') AS Tipo_Iva,
-  IFNULL(Nro_Cuit, '') AS Nro_Cuit,
-  IFNULL(Nro_Ing_Brutos, '') Nro_Ing_Brutos,
-  IFNULL(Id_Categoria_Ing_Br, 0) AS Id_Categoria_Ing_Br,
-  IFNULL(Comision, 0) AS Comision,
-  IFNULL(Id_Lista_Precio, 0) AS Id_Lista_Precio,
-  IFNULL(Estado, '') AS Estado,
-  IFNULL(Id_Condicion_Vta, 0) AS Id_Condicion_Vta,
-  IFNULL(Id_Agrupacion, 0) AS Id_Agrupacion,
-  IFNULL(Codigo_Vendedor, 0) AS Codigo_Vendedor,
-  IFNULL(Contacto, '') AS Contacto,
-  IFNULL(Nivel_Habil, 0) AS Nivel_Habil,
-  IFNULL(Id_Reparto_Entrega, 0) AS Id_Reparto_Entrega,
-  IFNULL(Id_Reparto_Cobro, 0) AS Id_Reparto_Cobro,
-  IFNULL(Dcto, 0) AS Dcto,
-  IFNULL(Credito, 0) AS Credito,
-  IFNULL(Protocolo, 0) AS Protocolo,
-  IFNULL(Nro_Sedronar, '') AS Nro_Sedronar,
-  IFNULL(DATE_FORMAT(Fecha_Vto_Sedro,'%d/%m/%Y'),'01/01/1990') AS Fecha_Vto_Sedro,
-  IFNULL(DATE_FORMAT(Fecha_Alta, '%d/%m/%Y'),'01/01/1990') AS Fecha_Alta,
-  IFNULL(Remito, 0) AS Remito ,
-  IFNULL(Dcto_Pago_Ef, 0) AS Dcto_Pago_Ef,
-  IFNULL(eMail, '') AS eMail,
-  IFNULL(eMailProtocolos, '') AS eMailProtocolos,
-  IFNULL(Id_Usuario, 0) AS Id_Usuario,
-  IFNULL(DATE_FORMAT(Fecha_Operacion,'%d/%m/%Y'),'01/01/1990') AS Fecha_Operacion,
-  IFNULL(Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
-  IFNULL(Id_Transporte,0) AS Id_Transporte,
-  IFNULL(Convenio,0) AS Convenio,
-  IFNULL(Afip,'') AS Afip,
-  IFNULL(Grupo_Cotiza,0) AS Grupo_Cotiza,
-  IFNULL(Estado_Deudor,0) AS Estado_Deudor,
-  IFNULL(DATE_FORMAT(Fecha_Estado_Deudor, '%d/%m/%Y'),'') AS Fecha_Estado_Deudor,
-  IFNULL(DATE_FORMAT(Fecha_Facturar_Hasta,'%d/%m/%Y'),'') AS Fecha_Facturar_Hasta,
-  IFNULL(Imprime_Nc_Dcto, 0) AS Imprime_Nc_Dcto,
-  IFNULL(Id_Trans_Clien,0) AS Id_Trans_Clien,
-  IFNULL(Motivo,'') AS Motivo,
-  IFNULL(Id_Pais, 0) AS Id_Pais,
-  IFNULL(DATE_FORMAT(Fecha_Vto_Psico,'%d/%m/%Y'),'') AS Fecha_Vto_Psico,
-  IFNULL(Prefijo_Telefono_1,'') AS Prefijo_Telefono_1,
-  IFNULL(Telefono_1, '') AS Telefono_1,
-  IFNULL(Prefijo_Telefono_2,'') AS Prefijo_Telefono_2,
-  IFNULL(Telefono_2, '') AS Telefono_2,
-  IFNULL(Prefijo_Telefono_3,'') AS Prefijo_Telefono_3,
-  IFNULL(Telefono_3, '') AS Telefono_3,
-  IFNULL(Prefijo_Fax_1,'') AS Prefijo_Fax_1,
-  IFNULL(Fax_1, '') AS Fax_1,
-  IFNULL(Prefijo_Fax_2,'') AS Prefijo_Fax_2,
-  IFNULL(Fax_2, '') AS Fax_2,
-  IFNULL(Prefijo_Celular,'') AS Prefijo_Celular,
-  IFNULL(Celular, '') AS Celular,
-  IFNULL(Director_Tecnico, '') AS Director_Tecnico,
-  IFNULL(Pasar_Importe, 0) AS Pasar_Importe,
-  IFNULL(Grupo_Sedro, 0) AS Grupo_Sedro,
-  IFNULL(Genera_Factura_PDF,0) AS Genera_Factura_PDF,
-  IFNULL(Email_Factura_PDF,'') as Email_Factura_PDF
-FROM Clien_Ma
-WHERE Razon_Social like '%_DESCRIPCION%'$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons` ()  BEGIN
          SELECT IFNULL(Nro_Pedido,0) AS Nro_Pedido,
@@ -381,7 +220,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_De_Igual_Nro_Pedido` (IN `_Nr
     IFNULL(Nro_Lote, '') AS Nro_Lote,
     IFNULL(Id_Origen, 0) AS Id_Origen
   FROM Pedid_De
-  WHERE Nro_Pedido = `_Nro_Pedido`
+  WHERE Nro_Pedido = _Nro_Pedido
   ORDER BY Nro_Pedido, Renglon$$
 
 DELIMITER ;
@@ -484,6 +323,19 @@ INSERT INTO `clien_ma` (`Id`, `Codigo_Cliente`, `Razon_Social`, `Nombre_Fantasia
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `fraccio_ma`
+--
+
+CREATE TABLE `fraccio_ma` (
+  `id` int(11) NOT NULL,
+  `Codigo` char(3) DEFAULT NULL,
+  `Detalle` varchar(50) DEFAULT NULL,
+  `Minimo` decimal(12,3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pedid_ca`
 --
 
@@ -578,6 +430,87 @@ CREATE TABLE `pedid_numer` (
   `Numero` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produ_frac`
+--
+
+CREATE TABLE `produ_frac` (
+  `id_Producto` int(11) DEFAULT NULL,
+  `id_Fraccio` int(11) DEFAULT NULL,
+  `Codigo_producto` varchar(9) DEFAULT NULL,
+  `Codigo_Fraccio` varchar(3) DEFAULT NULL,
+  `cruz` bit(1) DEFAULT NULL,
+  `Minimo` decimal(12,3) DEFAULT NULL,
+  `Costo` decimal(12,3) DEFAULT NULL,
+  `id_Ume_Vta` int(11) DEFAULT NULL,
+  `Ume_Vta` varchar(3) DEFAULT NULL,
+  `Ubicacion` varchar(4) DEFAULT NULL,
+  `Descripcion` varchar(50) DEFAULT NULL,
+  `id_Ume_Frac` int(11) DEFAULT NULL,
+  `Ume_Frac` varchar(3) DEFAULT NULL,
+  `Agrupa` varchar(9) DEFAULT NULL,
+  `Factor` decimal(12,3) DEFAULT NULL,
+  `Baja` bit(1) DEFAULT NULL,
+  `Habil_Cot` bit(1) DEFAULT NULL,
+  `Habil_Pre` bit(1) DEFAULT NULL,
+  `Habil_Ped` bit(1) DEFAULT NULL,
+  `Indice` decimal(12,3) DEFAULT NULL,
+  `Cantidad_Pack` decimal(12,3) DEFAULT NULL,
+  `Porc_Minimo` decimal(12,3) DEFAULT NULL,
+  `EnWeb` bit(1) DEFAULT NULL,
+  `Id_Ubicacion` int(11) DEFAULT NULL,
+  `Permitir_Vendedores` bit(1) DEFAULT NULL,
+  `Costo_MP` decimal(12,3) DEFAULT NULL,
+  `Trazabilidad` bit(1) DEFAULT NULL,
+  `Controla_Envase` bit(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produ_ma`
+--
+
+CREATE TABLE `produ_ma` (
+  `id` int(11) NOT NULL,
+  `Codigo_Producto` char(9) DEFAULT NULL,
+  `Descripcion` varchar(50) DEFAULT NULL,
+  `id_Ume_Cpra` int(11) DEFAULT NULL,
+  `Ume_Cpra` varchar(3) DEFAULT NULL,
+  `id_Ume_Vta` int(11) DEFAULT NULL,
+  `Ume_Vta` varchar(3) DEFAULT NULL,
+  `Factor_Conver` decimal(12,3) DEFAULT NULL,
+  `id_Rubro_Cpra` int(11) DEFAULT NULL,
+  `Rubro_Cpra` varchar(11) DEFAULT NULL,
+  `id_Rubro_Vta` int(11) DEFAULT NULL,
+  `Rubro_Vta` varchar(11) DEFAULT NULL,
+  `Costo` decimal(12,3) DEFAULT NULL,
+  `Ubicacion` varchar(4) DEFAULT NULL,
+  `id_Moneda` int(11) DEFAULT NULL,
+  `Codigo_Moneda` varchar(3) DEFAULT NULL,
+  `Minimo` decimal(12,3) DEFAULT NULL,
+  `Tipo_Iva` char(1) DEFAULT NULL,
+  `Id_Tipo` int(11) DEFAULT NULL,
+  `Tipo` char(1) DEFAULT NULL,
+  `senal` char(1) DEFAULT NULL,
+  `Residuo` bit(1) DEFAULT NULL,
+  `Tipo_Ing_Brutos` smallint(6) DEFAULT NULL,
+  `Nadi` varchar(20) DEFAULT NULL,
+  `Porc_Minimo` decimal(12,3) DEFAULT NULL,
+  `Baja` bit(1) DEFAULT NULL,
+  `Sedronar` bit(1) DEFAULT NULL,
+  `Refrigerado` bit(1) DEFAULT NULL,
+  `Id_Marca` int(11) DEFAULT NULL,
+  `Id_Especialidad` int(11) DEFAULT NULL,
+  `Parafarm` bit(1) DEFAULT NULL,
+  `Costo_MP` decimal(12,3) DEFAULT NULL,
+  `Trazabilidad` bit(1) DEFAULT NULL,
+  `Imprime_Envase` bit(1) DEFAULT NULL,
+  `Imprime_Etiq_Cliente` bit(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Índices para tablas volcadas
 --
@@ -589,11 +522,23 @@ ALTER TABLE `clien_ma`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indices de la tabla `fraccio_ma`
+--
+ALTER TABLE `fraccio_ma`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `pedid_numer`
 --
 ALTER TABLE `pedid_numer`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Pedid_Numer_id_uindex` (`id`);
+
+--
+-- Indices de la tabla `produ_ma`
+--
+ALTER TABLE `produ_ma`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
