@@ -15,7 +15,7 @@ class Produ_Ma{
         } 
         catch (PDOException $ex)
         {
-            $ex->getMessage();
+            return $ex->getMessage();
         }
     }
     
@@ -30,7 +30,7 @@ class Produ_Ma{
             return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             
-            $ex->getMessage();
+            return $ex->getMessage();
         }
         
     }

@@ -6,7 +6,7 @@
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
                 <input id="buscarCliente" class="form-control col-md-7 col-xs-12" ng-keyup="consultaClienteDescripcion($event.target.value)" name="buscarCliente" required type="search" autocomplete="off">
             </div><!--
-            --><div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12 clienteSeleccion">
+            --><div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
                 <select id="clienteSeleccion" class="form-control" ng-show="mostrarC" ng-model="clie" ng-options="x.Codigo_Cliente +' - ' + x.Razon_Social  +' - '+ x.Nombre_Fantasia for x in clientes" ng-change="seleccionCliente(clie)">
                         <!--<option ng-repeat="clie in clientes" value="{{clie.Razon_Social}}">{{clie.Codigo_Cliente }}{{clie.Razon_Social}}</option>-->
                 </select>

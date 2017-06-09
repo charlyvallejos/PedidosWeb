@@ -147,8 +147,10 @@
             };
 
             $scope.borraProductoGrilla = function(prodTemporal){
+                console.log(prodTemporal);
+                /*
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
-                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
+                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar
                 if($scope.index > 0)
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
                 else
@@ -156,7 +158,7 @@
                     $scope.resetSeleccionProducto();
                     clienteSeleccion.focus();
                 }
-
+                */
 
             };
 
@@ -227,7 +229,7 @@
                         console.log(resp.data);
                         $scope.clientes = resp.data;
                         $scope.mostrarC = $scope.clientes.length > 0;
-                        $("#clienteSeleccion").attr('size', $scope.clientes.length+1);
+                        $("#clienteSeleccion").attr('size', 5);
                     })
                     .catch(function(){
                         console.log("ERROR");
@@ -258,6 +260,7 @@
                                 console.log(resp.data);
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
+                                $("#productoSeleccion").attr('size', 5);
                             })
                             .catch(function(){
                                 console.log("ERROR");
@@ -276,7 +279,7 @@
                     $scope.productoTemporal = prod;
                     $scope.mostrarP = false;
                 }
-            }
+            };
             
             
             ///////////////////////////////////////////////////////
