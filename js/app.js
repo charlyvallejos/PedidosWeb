@@ -122,7 +122,7 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod,formCtrlProducto){
-                
+
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
@@ -151,15 +151,39 @@
             $scope.agregarProductoGrilla = function(event,prodTemporal){
                 if(event.which === 13 )
                 {
-                    $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
+                    /*Si esta modificando, que despliegue y se posicione en Buscar*/
+                    var encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{id_prod:prodTemporal.Id_Producto,id_fraccio:prodTemporal.Id_Fraccio},true)
+                    if(encontrarProducto.length)
+                    {
 
-                    /*IF si ya exite lo edito */
-                    scope.$scope.pedidoTemporal.Productos[$scope.index].Cantidad = prodTemporal.Cantidad;
+                    }/*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
+                    else
+                    {
+                        pedidoTempora.Productos.push({
+                            Nro_Pedido:prodTemporal.Nro_Pedido,
+                            Id_Producto:prodTemporal.Id_Producto,
+                            Id_Fraccio:prodTemporal.Id_Fraccio,
+                            Cantidad:prodTemporal.Cantidad,
+                            Estado:prodTemporal.Estado,
+                            Codigo_Producto:prodTemporal.Codigo_Producto,
+                            Descripcion_Producto:prodTemporal.Descripcion_Producto,
+                            Fecha_Cotizacion:prodTemporal.Fecha_Cotizacion,
+                            Nro_Cotizacion:prodTemporal.Nro_Cotizacion,
+                            Nro_Despacho:prodTemporal.Nro_Despacho,
+                            Nro_Lote:prodTemporal.Nro_Lote,
+                            Precio:prodTemporal.Precio,
+                            Precio_Lista:prodTemporal.Precio_Lista,
+                            Renglon:prodTemporal.Renglon,
+                            Rubro_Vta:prodTemporal.Rubro_Vta,
+                            UmeVta:prodTemporal.UmeVta,
+                            Id_Origen:prodTemporal.Id_Origen
+                        })
+                    }
 
-                    /*sino, lo agrego al array temporal de pedidoTemporal.Productos */
+
+
 
                 }
-                event.preventDefault();
             };
 
 
