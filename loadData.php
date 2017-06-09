@@ -65,6 +65,9 @@ if(isset($_GET)){
                 {
                     echo json_encode($produ_ma->consultaProducto($idPro));
                 }
+                else if(isset($des)){
+                    echo json_encode($produ_ma->consultaDescripcion($des));
+                }
             }
             else if($tabla == 'prodfrac')
             {
