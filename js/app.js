@@ -101,6 +101,7 @@
                 //Tambien traigo el cliente
 
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
+                    console.log(ped.Nro_Pedido)
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
