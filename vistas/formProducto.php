@@ -38,7 +38,7 @@
                 <label class="control-label" for="RazonSocial">Lista</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
-                <input type="text" id="ListaProd" class="form-control" name="ListaProd" readonly ng-model="productoTemporal.Lista">
+                <input type="text" id="ListaProd" class="form-control" name="ListaProd" readonly ng-model="productoTemporal.Lista_Desc">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Precio</label>

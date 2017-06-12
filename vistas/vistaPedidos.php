@@ -18,7 +18,7 @@ include 'formPedido.php' ?>
                 <div class="col-md-3 col-xs-3">
                     <label for="itemsPerPageForm">Pedidos por pagina</label>
                     <select name="itemsPerPageForm" id="itemsPerPageForm" ng-model="numXpag">
-                        <option value="3">3</option>
+                        <option value="5">5</option>
                         <option value="15">15</option>
                         <option value="30">30</option>
                         <option value="50">50</option>

@@ -42,13 +42,12 @@
             };
 
             /////// PAGINACION --- es para que puedan seleccionar q cantidad x pag///////////
-            $scope.numXpag = 2; //(default)
+            $scope.numXpag = 5; //(default)
             //////////////////////////////
 
             $scope.consultaPedidos = function(){
                 $http.get(apiURL+"?a=get&t=ped")
                     .then(function(resp){
-                        console.log(resp.data);
                         $scope.pedidos = resp.data;
                     })
                     .catch(function(resp){
@@ -98,16 +97,18 @@
                 };
 
 
+
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
 
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
-                        console.log(resp.data);
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
+                        console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
+                                console.log(resp.data);
 
                             })
                             .catch(function(resp){
@@ -130,8 +131,10 @@
 
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
+
                 $scope.productoTemporal = prod;
-                //console.log($scope.productoTemporal);
+                console.log($scope.productoTemporal);
+                /*
                 $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
                         .then(function(resp){
                             $scope.produ_ma = resp.data;
@@ -146,36 +149,27 @@
                         .catch(function(resp){
                             console.log(resp);
                         });
+                        */
             };
 
             $scope.borraProductoGrilla = function(prodTemporal){
-                //console.log(prodTemporal);
-                
+
+
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
+                console.log($scope.index);
                 /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
                 if($scope.index >= 0){
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
-                    $scope.productoTemporal = null;
+                    //$scope.productoTemporal = null;
                     $scope.calculaTotal();
                 }                
                 else
                 {
-                    //$scope.resetSeleccionProducto();
                     $scope.productoTemporal = null;
                     productoSeleccion.focus();
-                }                
+                }
             };
 
-//            $scope.resetSeleccionProducto = function(){
-//                pedidoForm.DescProd.value = '';
-//                pedidoForm.CodProd.value = '';
-//                pedidoForm.RubroProd.value = '';
-//                pedidoForm.UmeVta.value = '';
-//                pedidoForm.ListaProd.value = '';
-//                pedidoForm.PrecioLista.value = '';
-//                pedidoForm.CantProd.value = '';
-//                pedidoForm.PrecioProd = '';
-//            };
             
             $scope.agregarProductoGrilla = function(event,prodTemporal){
                 if(event.which === 13 )
@@ -183,10 +177,8 @@
                     /*Si esta modificando, que despliegue y se posicione en Buscar*/
                     var encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];                    
                     if(encontrarProducto)
-                    {
-                        //console.log(encontrarProducto)
                         $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
-                    }/*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
+                       /*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
                     else
                     {
                         $scope.pedidoTemporal.Productos.push({
@@ -210,6 +202,7 @@
                         });
                     }
                     $scope.productoTemporal = null;
+                    // DESPLEGAR TAMBIEN EL INPUT DE BUSQUEDA
                     $scope.calculaTotal();
 
                 }
@@ -219,6 +212,7 @@
                 $scope.pedidoTemporal.Total_Gravado = 0;
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
                     $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
+                    $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.pedidoTemporal.Total_Gravado,2);
                 });
             };
 
