@@ -5,7 +5,7 @@
                 <label for="inputTotalBruto" class="control-label">Total bruto:</label>
             </div>
             <div  class="col-md-8 col-xs-8 falso-xs-12">
-                <input type="text" class="form-control" id="inputTotalBruto" name="" readonly ng-model="pedidoTemporal.Total_Bruto">
+                <input type="text" class="form-control" id="inputTotalBruto" name="" readonly ng-model="pedidoTemporal.Total_Gravado">
             </div>
             <div class=" col-md-4 col-xs-4 falso-xs-12">
                 <label for="" class="control-label">IVA:</label>

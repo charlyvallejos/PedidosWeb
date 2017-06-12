@@ -1,4 +1,4 @@
-<?php ?>
+ <?php ?>
 <div class="panel panel-default panel_pedido_plus">
     <div class="panel-heading"><a href="" class="agregar"><img src="img/add.png" alt=""></a></div>
     <div class="mensaje ocultar">

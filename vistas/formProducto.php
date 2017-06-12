@@ -3,7 +3,7 @@
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarProducto">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
-                <input id="buscarProducto" class="form-control col-md-7 col-xs-12"  name="buscarProducto" type="search" ng-keyup="consultaProductoDescripcion($event.target.value)" required><br>
+                <input id="buscarProducto" class="form-control col-md-7 col-xs-12"  name="buscarProducto" type="search" ng-keyup="consultaProductoDescripcion($event.target.value)" autocomplete="off" required><br>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
                 <select id="productoSeleccion" class="form-control" ng-show="mostrarP" ng-model="prod" ng-options="x.Codigo_ProductoF  +' - '+ x.Descripcion_Producto for x in productos" ng-change="seleccionProducto(prod)">
@@ -60,7 +60,7 @@
                 <label class="control-label" for="RazonSocial">Cant.</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
-                <input type="text" id="CantProd" class="form-control" name="CantProd" ng-model="productoTemporal.Cantidad" ng-keypress="agregarProductoGrilla($event,productoTemporal)">
+                <input type="text" id="CantProd" class="form-control" name="CantProd" ng-model="productoTemporal.Cantidad" ng-keypress="agregarProductoGrilla($event,productoTemporal)" autocomplete="off">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Precio</label>
