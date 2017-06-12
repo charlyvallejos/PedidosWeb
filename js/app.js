@@ -48,6 +48,7 @@
             $scope.consultaPedidos = function(){
                 $http.get(apiURL+"?a=get&t=ped")
                     .then(function(resp){
+                        console.log(resp.data);
                         $scope.pedidos = resp.data;
                     })
                     .catch(function(resp){
