@@ -110,7 +110,7 @@
                 <label class="control-label" for="RazonSocial">Cond Pago</label>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="CondPago" readonly ng-model="pedidoTempora.Cliente.Condicion_Vta">
             </div>
         </div>
     </div>
