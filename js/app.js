@@ -24,14 +24,14 @@
 
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination']) // aplicacion de angular
 
-        .controller('pedidosController',function($scope,$http){ //controlador pedidos
+        .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
             $scope.productoTemporal = {};
             $scope.produ_ma = {};
             $scope.produ_frac = {};
             $scope.mostrarC = false;
-            $scope.mostrarP = false;
+            $scope.mostrarP = false;            
            
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
@@ -101,8 +101,9 @@
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
 
-                $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
+                $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
+                        console.log(resp.data);
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
@@ -111,7 +112,7 @@
                             })
                             .catch(function(resp){
                                 console.log(resp);
-                            })
+                            });
                     })
                     .catch(function(resp){
                         console.log(resp);
@@ -140,51 +141,55 @@
                                     })
                                     .catch(function(resp){
                                         console.log(resp);
-                                    })
+                                    });
                         })
                         .catch(function(resp){
                             console.log(resp);
-                        })
+                        });
             };
 
             $scope.borraProductoGrilla = function(prodTemporal){
-                console.log(prodTemporal);
-                /*
+                //console.log(prodTemporal);
+                
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
-                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar
-                if($scope.index > 0)
+                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
+                if($scope.index >= 0){
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
+                    $scope.productoTemporal = null;
+                    $scope.calculaTotal();
+                }                
                 else
                 {
-                    $scope.resetSeleccionProducto();
-                    clienteSeleccion.focus();
-                }
-                */
-
+                    //$scope.resetSeleccionProducto();
+                    $scope.productoTemporal = null;
+                    productoSeleccion.focus();
+                }                
             };
 
-            $scope.resetSeleccionProducto = function(){
-                pedidoForm.DescProd.value = '';
-                pedidoForm.CodProd.value = '';
-                pedidoForm.RubroProd.value = '';
-                pedidoForm.UmeVta.value = '';
-                pedidoForm.ListaProd.value = '';
-                pedidoForm.PrecioLista.value = '';
-                pedidoForm.CantProd.value = '';
-                pedidoForm.PrecioProd = '';
-            };
+//            $scope.resetSeleccionProducto = function(){
+//                pedidoForm.DescProd.value = '';
+//                pedidoForm.CodProd.value = '';
+//                pedidoForm.RubroProd.value = '';
+//                pedidoForm.UmeVta.value = '';
+//                pedidoForm.ListaProd.value = '';
+//                pedidoForm.PrecioLista.value = '';
+//                pedidoForm.CantProd.value = '';
+//                pedidoForm.PrecioProd = '';
+//            };
+            
             $scope.agregarProductoGrilla = function(event,prodTemporal){
                 if(event.which === 13 )
                 {
                     /*Si esta modificando, que despliegue y se posicione en Buscar*/
-                    var encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{id_prod:prodTemporal.Id_Producto,id_fraccio:prodTemporal.Id_Fraccio},true)
-                    if(encontrarProducto.length)
+                    var encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];                    
+                    if(encontrarProducto)
                     {
-
+                        //console.log(encontrarProducto)
+                        $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
                     }/*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
                     else
                     {
-                        pedidoTemporal.Productos.push({
+                        $scope.pedidoTemporal.Productos.push({
                             Nro_Pedido:prodTemporal.Nro_Pedido,
                             Id_Producto:prodTemporal.Id_Producto,
                             Id_Fraccio:prodTemporal.Id_Fraccio,
@@ -202,18 +207,19 @@
                             Rubro_Vta:prodTemporal.Rubro_Vta,
                             UmeVta:prodTemporal.UmeVta,
                             Id_Origen:prodTemporal.Id_Origen
-                        })
+                        });
                     }
-
+                    $scope.productoTemporal = null;
                     $scope.calculaTotal();
 
                 }
             };
 
             $scope.calculaTotal = function(){
-                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
+                $scope.pedidoTemporal.Total_Gravado = 0;
+                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
                     $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
-                })
+                });
             };
 
 
@@ -233,7 +239,7 @@
                     })
                     .catch(function(){
                         console.log("ERROR");
-                    })
+                    });
                 }
                 else
                 {
@@ -264,7 +270,7 @@
                             })
                             .catch(function(){
                                 console.log("ERROR");
-                             })                    
+                             });                    
                 }
                 else
                 {
@@ -290,6 +296,6 @@
                 $scope.pedidoTemporal = {};
                 pedidoForm.$setPristine();
                 pedidoForm.$setUntouched();
-            }
+            };
 
         });
