@@ -15,7 +15,8 @@
         clienteSeleccion = $("#clienteSeleccion"),
         productoSeleccion = $("#productoSeleccion"),
         inputCantidad = $("#CantProd"),
-        divMensaje = $(".msg"),
+        divMjeCliente = $(".msgCliente"),
+        divMjeProd = $(".msgProducto"),        
         buscarProducto = $("#buscarProducto");
 
 
@@ -136,8 +137,8 @@
             };
 
             $scope.agregarProductoGrilla = function(event,prodTemporal){
-                if(event.which === 13 )
-                {
+                if(event.which === 13 )                
+                {                    
                     /*Si esta modificando, que despliegue y se posicione en Buscar*/
                     var encontrarProducto = false;
 
@@ -174,24 +175,33 @@
             $scope.clientes = [];
             $scope.clienteSeleccionado = [];
             
-            $scope.consultaClienteDescripcion = function(des){
+            $scope.consultaClienteDescripcion = function(des){                                
                 if(des !== ""){
-                $http.get(apiURL+"?a=get&t=cli&des="+des)
-                    .then(function(resp){
-                        //console.log(resp.data);
-                        $scope.clientes = resp.data;
-                        $scope.mostrarC = $scope.clientes.length > 0;
-                        $("#clienteSeleccion").attr('size', 5);
-                    })
-                    .catch(function(){
-                        console.log("ERROR");
-                    });
+                    //Debe controlar primero que no haya productos cargados en la grilla de productos
+                    //para evitar que modifiquen el cliente habiendo ya productos cargados.
+                    if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
+                        divMjeCliente.hide();
+                        $http.get(apiURL+"?a=get&t=cli&des="+des)
+                            .then(function(resp){
+                                //console.log(resp.data);
+                                $scope.clientes = resp.data;
+                                $scope.mostrarC = $scope.clientes.length > 0;
+                                $("#clienteSeleccion").attr('size', 5);
+                            })
+                            .catch(function(){
+                                console.log("ERROR");
+                            });
+                    }
+                    else
+                    {
+                        divMjeCliente.show();
+                    }
                 }
                 else
                 {
                     $scope.mostrarC = false;
                 }
-
+                
             };
 
             $scope.seleccionCliente = function(clie){                
@@ -208,7 +218,7 @@
             //BUSCADOR DE PRODUCTOS
             $scope.consultaProductoDescripcion = function(des){
                 if($scope.pedidoTemporal.Cliente != null) {
-                    divMensaje.hide();
+                    divMjeProd.hide();
                     if(des !== ""){
                         $http.get(apiURL+"?a=get&t=prodma&des="+des)
                             .then(function(resp){
@@ -229,7 +239,7 @@
                     }
                 }else
                 {
-                    divMensaje.show();
+                    divMjeProd.show();
                 }
             };
             
@@ -248,6 +258,9 @@
                 $('input').val('').removeAttr('checked').removeAttr('selected');
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
+                $scope.pedidoTemporal.Productos = [];
+                divMjeProd.hide();
+                divMjeCliente.hide();
                 pedidoForm.$setPristine();
                 pedidoForm.$setUntouched();
             };
