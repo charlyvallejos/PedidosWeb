@@ -30,6 +30,7 @@ include 'formPedido.php' ?>
                 <tr>
                     <th ng-click="sort('Nro_Pedido')">Nro Pedido</th>
                     <th ng-click="sort('Codigo_Cliente')" class="centrar">Codigo Cliente</th>
+                    <th ng-click="sort('Nombre_Fantasia')">Nombre Fantasía</th>
                     <th ng-click="sort('Fecha_Pedido')" class="centrar">Fecha Pedido</th>
                     <th class="centrar">Codigo Vendedor</th>
                     <th class="centrar">Estado</th>
@@ -39,13 +40,10 @@ include 'formPedido.php' ?>
                     <tr dir-paginate="ped in pedidos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: numXpag" pagination-id="pedid" ng-click="selectPedido(ped)">
                         <td>{{ped.Nro_Pedido}}</td>
                         <td class="centrar">{{ped.Codigo_Cliente}}</td>
+                        <td>{{ped.Nombre_Fantasia}}</td>
                         <td class="centrar">{{ped.Fecha_Pedido}}</td>
                         <td class="centrar">{{ped.Codigo_Vendedor}}</td>
                         <td class="centrar">{{ped.Estado}}</td>
-                        <!--<td class="centrar">
-                            <a href="" class="hola">Editar <img src="img/edit.png" alt="Editar"></a>
-                            <a href="" class="eliminar">Eliminar <img src="img/drop.png" alt="Borrar"></a>
-                        </td>-->
                     </tr>
                 </tbody>
             </table>
