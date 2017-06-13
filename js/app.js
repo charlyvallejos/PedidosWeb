@@ -149,9 +149,8 @@
                         $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
                        /*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
                     else
-                    {
                         $scope.pedidoTemporal.Productos.push(prodTemporal);
-                    }
+
                     $scope.productoTemporal = null;
                     buscarProducto.val('');
                     buscarProducto.focus();
