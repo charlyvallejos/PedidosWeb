@@ -82,15 +82,14 @@ class Clien_Ma
     protected $Email_Factura_PDF;
 
     public function consultaDescripcion($descripcion){
-        //$sql = "CALL Clien_Ma_Igual_Descri(:descripcion)";
-        $sql = "SELECT * FROM Clien_Ma WHERE Razon_Social like '%$descripcion%'";
+        $sql = "CALL Clien_Ma_Igual_Descri(:descripcion)";
+        //$sql = "SELECT * FROM Clien_Ma WHERE Razon_Social like '%$descripcion%'";
         try {
             $conexion = Conexion::conectar();
             $query = $conexion->prepare($sql);
-            //$query->bindParam(':descripcion',$descripcion,PDO::PARAM_STR);
+            $query->bindParam(':descripcion',$descripcion,PDO::PARAM_STR);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
-            //asdkjhasdjksakdasdhajkd
         } catch (PDOException $ex) {
             return $ex->getMessage();
         }

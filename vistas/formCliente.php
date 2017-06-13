@@ -1,5 +1,6 @@
 <div>
 <fieldset><legend>Cliente</legend>
+    <div class="msgCliente ocultar">No se puede modificar el cliente si existen productos cargados</div>
     <div class="item form-group top_search">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
@@ -57,7 +58,7 @@
                 <label class="control-label" for="RazonSocial">Rep</label>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Codigo_Reparto">
             </div>
         </div>
     </div>
@@ -87,15 +88,15 @@
                 <label class="control-label" for="RazonSocial">Trans</label>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Transporte">
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Agrup</label>
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+            <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
+                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Agrupacion">
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="Codigo_Vendedor">Vend</label>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
@@ -110,7 +111,7 @@
                 <label class="control-label" for="RazonSocial">Cond Pago</label>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <input type="text" id="RazonSocial" class="form-control" name="CondPago" readonly ng-model="pedidoTemporal.Cliente.Condicion_Vta">
             </div>
         </div>
     </div>

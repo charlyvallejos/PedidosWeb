@@ -254,3 +254,15 @@ tr.selected td {
     background-color: #0d4035 !important; /* for IE */
 }
 
+.agregar{
+    cursor: hand;
+}
+
+.msgProducto, .msgCliente{
+    background: rgba(24, 118, 98, 0.2);
+    width: 80%;
+    margin-left:10%;
+    margin-bottom:5px;
+    padding:10px;
+    color: #0d4035;
+}

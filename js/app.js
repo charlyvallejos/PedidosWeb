@@ -13,8 +13,11 @@
         btnEditar = $('.editar'),
         btnEliminar = $('.eliminar'),
         clienteSeleccion = $("#clienteSeleccion"),
-        productoSeleccion = $("#productoSeleccion");
-
+        productoSeleccion = $("#productoSeleccion"),
+        inputCantidad = $("#CantProd"),
+        divMjeCliente = $(".msgCliente"),
+        divMjeProd = $(".msgProducto"),        
+        buscarProducto = $("#buscarProducto");
 
 
     btnPlus.on('click',function(e){
@@ -24,14 +27,15 @@
 
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination']) // aplicacion de angular
 
-        .controller('pedidosController',function($scope,$http){ //controlador pedidos
+        .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
             $scope.productoTemporal = {};
+            $scope.pedidoTemporal.Productos = [];
             $scope.produ_ma = {};
             $scope.produ_frac = {};
             $scope.mostrarC = false;
-            $scope.mostrarP = false;
+            $scope.mostrarP = false;            
            
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
@@ -42,7 +46,7 @@
             };
 
             /////// PAGINACION --- es para que puedan seleccionar q cantidad x pag///////////
-            $scope.numXpag = 2; //(default)
+            $scope.numXpag = 5; //(default)
             //////////////////////////////
 
             $scope.consultaPedidos = function(){
@@ -57,60 +61,24 @@
 
             /////////// SELECCIONA PEDIDO
             $scope.selectPedido = function (ped) {
-                $scope.pedidoTemporal = {
-                    Nro_Pedido:ped.Nro_Pedido,
-                    Fecha_Pedido:ped.Fecha_Pedido,
-                    id_Cliente:ped.id_Cliente,
-                    Codigo_Vendedor:ped.Codigo_Vendedor,
-                    Nro_Cotizacion:ped.Nro_Cotizacion,
-                    Nro_Presupuesto:ped.Nro_Presupuesto,
-                    Id_Lista: ped.Id_Lista,
-                    Id_Condicion:ped.Id_Condicion,
-                    Id_Moneda:ped.Id_Moneda,
-                    Cotizacion_Moneda:ped.Cotizacion_Moneda,
-                    Estado:ped.Estado,
-                    Id_Reparto:ped.Id_Reparto,
-                    Nro_orden_compra:ped.Nro_orden_compra,
-                    Id_Tomado_Por:ped.Id_Tomado_Por,
-                    Id_Usuario:ped.Id_Usuario,
-                    Fecha_Operacion:ped.Fecha_Operacion,
-                    Id_Grupo_Cliente:ped.Id_Grupo_Cliente,
-                    Total_Gravado:ped.Total_Gravado,
-                    Total_Exento:ped.Total_Exento,
-                    Total_Producto_Ex:ped.Total_Producto_Ex,
-                    Porc_Iva_Ins:ped.Porc_Iva_Ins,
-                    Iva_Ins:ped.Iva_Ins,
-                    Porc_Iva_NoIns:ped.Porc_Iva_NoIns,
-                    Iva_NoIns:ped.Iva_NoIns,
-                    Porc_IngBr_Cba:ped.Porc_IngBr_Cba,
-                    IngBr_Cba:ped.IngBr_Cba,
-                    Porc_IngBr_Pba:ped.Porc_IngBr_Pba,
-                    IngBr_Pba:ped.IngBr_Pba,
-                    Total_Neto:ped.Total_Neto,
-                    Descuento:ped.Descuento,
-                    Id_Transporte:ped.Id_Transporte,
-                    Generado_Por:ped.Generado_Por,
-                    Porc_IngBr_Mis:ped.Porc_IngBr_Mis,
-                    IngBr_Mis:ped.IngBr_Mis,
-                    Productos:[],
-                    Cliente:[]
-                };
-
+                $scope.pedidoTemporal = ped;
 
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
 
-                $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)
+                $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
+                        console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
+                                //console.log(resp.data);
 
                             })
                             .catch(function(resp){
                                 console.log(resp);
-                            })
+                            });
                     })
                     .catch(function(resp){
                         console.log(resp);
@@ -128,8 +96,10 @@
 
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
+
                 $scope.productoTemporal = prod;
-                //console.log($scope.productoTemporal);
+                console.log($scope.productoTemporal);
+                /*
                 $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
                         .then(function(resp){
                             $scope.produ_ma = resp.data;
@@ -139,135 +109,136 @@
                                     })
                                     .catch(function(resp){
                                         console.log(resp);
-                                    })
+                                    });
                         })
                         .catch(function(resp){
                             console.log(resp);
-                        })
+                        });
+                        */
             };
 
             $scope.borraProductoGrilla = function(prodTemporal){
-                console.log(prodTemporal);
-                /*
+
+
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
-                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar
-                if($scope.index > 0)
+                console.log($scope.index);
+                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
+                if($scope.index >= 0){
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
+                    $scope.productoTemporal = null;
+                    $scope.calculaTotal();
+                }                
                 else
                 {
-                    $scope.resetSeleccionProducto();
-                    clienteSeleccion.focus();
+                    $scope.productoTemporal = null;
+                    buscarProducto.val('');
+                    pedidoForm.buscarProducto.focus();
                 }
-                */
-
             };
 
-            $scope.resetSeleccionProducto = function(){
-                pedidoForm.DescProd.value = '';
-                pedidoForm.CodProd.value = '';
-                pedidoForm.RubroProd.value = '';
-                pedidoForm.UmeVta.value = '';
-                pedidoForm.ListaProd.value = '';
-                pedidoForm.PrecioLista.value = '';
-                pedidoForm.CantProd.value = '';
-                pedidoForm.PrecioProd = '';
-            };
             $scope.agregarProductoGrilla = function(event,prodTemporal){
-                if(event.which === 13 )
-                {
+                if(event.which === 13 )                
+                {                    
                     /*Si esta modificando, que despliegue y se posicione en Buscar*/
-                    var encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{id_prod:prodTemporal.Id_Producto,id_fraccio:prodTemporal.Id_Fraccio},true)
-                    if(encontrarProducto.length)
-                    {
+                    var encontrarProducto = false;
 
-                    }/*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
+                    if($scope.pedidoTemporal.Productos)
+                       encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+
+                    if(encontrarProducto)
+                        $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
+                       /*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
                     else
-                    {
-                        pedidoTemporal.Productos.push({
-                            Nro_Pedido:prodTemporal.Nro_Pedido,
-                            Id_Producto:prodTemporal.Id_Producto,
-                            Id_Fraccio:prodTemporal.Id_Fraccio,
-                            Cantidad:prodTemporal.Cantidad,
-                            Estado:prodTemporal.Estado,
-                            Codigo_Producto:prodTemporal.Codigo_Producto,
-                            Descripcion_Producto:prodTemporal.Descripcion_Producto,
-                            Fecha_Cotizacion:prodTemporal.Fecha_Cotizacion,
-                            Nro_Cotizacion:prodTemporal.Nro_Cotizacion,
-                            Nro_Despacho:prodTemporal.Nro_Despacho,
-                            Nro_Lote:prodTemporal.Nro_Lote,
-                            Precio:prodTemporal.Precio,
-                            Precio_Lista:prodTemporal.Precio_Lista,
-                            Renglon:prodTemporal.Renglon,
-                            Rubro_Vta:prodTemporal.Rubro_Vta,
-                            UmeVta:prodTemporal.UmeVta,
-                            Id_Origen:prodTemporal.Id_Origen
-                        })
-                    }
+                        $scope.pedidoTemporal.Productos.push(prodTemporal);
 
+                    $scope.productoTemporal = null;
+                    buscarProducto.val('');
+                    buscarProducto.focus();
                     $scope.calculaTotal();
 
                 }
             };
 
             $scope.calculaTotal = function(){
-                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
+                $scope.pedidoTemporal.Total_Gravado = 0;
+                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
                     $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
-                })
+                });
+                $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.pedidoTemporal.Total_Gravado,2);
+                $scope.pedidoTemporal.Porc_Iva_Ins = $filter('number')($scope.pedidoTemporal.Porc_Iva_Ins,2);
             };
 
 
             /////////////////////////////////////////
-            // CLIEN_MA
+            // BUSCADOR DE CLIENTES
             $scope.clientes = [];
             $scope.clienteSeleccionado = [];
             
-            $scope.consultaClienteDescripcion = function(des){
+            $scope.consultaClienteDescripcion = function(des){                                
                 if(des !== ""){
-                $http.get(apiURL+"?a=get&t=cli&des="+des)
-                    .then(function(resp){
-                        //console.log(resp.data);
-                        $scope.clientes = resp.data;
-                        $scope.mostrarC = $scope.clientes.length > 0;
-                        $("#clienteSeleccion").attr('size', 5);
-                    })
-                    .catch(function(){
-                        console.log("ERROR");
-                    })
+                    //Debe controlar primero que no haya productos cargados en la grilla de productos
+                    //para evitar que modifiquen el cliente habiendo ya productos cargados.
+                    if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
+                        divMjeCliente.hide();
+                        $http.get(apiURL+"?a=get&t=cli&des="+des)
+                            .then(function(resp){
+                                //console.log(resp.data);
+                                $scope.clientes = resp.data;
+                                $scope.mostrarC = $scope.clientes.length > 0;
+                                $("#clienteSeleccion").attr('size', 5);
+                            })
+                            .catch(function(){
+                                console.log("ERROR");
+                            });
+                    }
+                    else
+                    {
+                        divMjeCliente.show();
+                    }
                 }
                 else
                 {
                     $scope.mostrarC = false;
                 }
-
+                
             };
 
             $scope.seleccionCliente = function(clie){                
-                console.log(clie);
+                //console.log(clie);
                 $scope.mostrarC = true;
                 if(clie !== null){
                     $scope.pedidoTemporal.Cliente = clie;
                     $scope.mostrarC = false;
+                    buscarProducto.focus();
                 }
             };
             
             ////////////////////////////////////////////////////////
             //BUSCADOR DE PRODUCTOS
             $scope.consultaProductoDescripcion = function(des){
-                if(des !== ""){
-                    $http.get(apiURL+"?a=get&t=prodma&des="+des)
+                if($scope.pedidoTemporal.Cliente != null) {
+                    divMjeProd.hide();
+                    if(des !== ""){
+                        $http.get(apiURL+"?a=get&t=prodma&des="+des)
                             .then(function(resp){
-                                console.log(resp.data);
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
-                                $("#productoSeleccion").attr('size', 5);
+                                productoSeleccion.attr('size', 5);
+                                //de ALGUNA manera se tiene q poder usar las PUTAS flechitas
+                                productoSeleccion.focus();
                             })
                             .catch(function(){
-                                console.log("ERROR");
-                             })                    
-                }
-                else
+                                console.log("ERROR consultaProductoDescripcion");
+                            });
+
+                    }
+                    else
+                    {
+                        $scope.mostrarP = false;
+                    }
+                }else
                 {
-                    $scope.mostrarP = false;
+                    divMjeProd.show();
                 }
             };
             
@@ -277,18 +248,20 @@
                 if(prod !== null){
                     $scope.productoTemporal = prod;
                     $scope.mostrarP = false;
+                    inputCantidad.focus();
                 }
             };
-            
-            
+
             ///////////////////////////////////////////////////////
-            
             $scope.resetearForm = function(pedidoForm){
                 $('input').val('').removeAttr('checked').removeAttr('selected');
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
+                $scope.pedidoTemporal.Productos = [];
+                divMjeProd.hide();
+                divMjeCliente.hide();
                 pedidoForm.$setPristine();
                 pedidoForm.$setUntouched();
-            }
+            };
 
         });

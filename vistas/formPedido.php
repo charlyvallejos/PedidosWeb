@@ -1,12 +1,12 @@
-<?php ?>
+ <?php ?>
 <div class="panel panel-default panel_pedido_plus">
-    <div class="panel-heading"><a href="" class="agregar"><img src="img/add.png" alt=""></a></div>
+    <div class="panel-heading agregar"><img src="img/add.png" alt=""></div>
     <div class="mensaje ocultar">
         <div class="error"><p></p></div>
         <div class="exito"><p></p></div>
     </div>
     <div class="panel-body ocultar formData">
-        <form name="pedidoForm" class="form-horizontal form-label-left" novalidate>
+        <form name="pedidoForm" class="form-horizontal form-label-left"  id="pedidoForm" novalidate>
            <div class="row">
             <div class="col-md-8 col-xs-12">
                 <?php include 'formCliente.php' ?><!-- ############# CLIENTE ############ -->
