@@ -14,7 +14,7 @@ if(isset($_GET)){
     if(isset($_GET['logout']))
     {
         $usuario = new Usuario();
-        return $usuario->logout();
+        $usuario->logout();
     }
 
     if(isset($_GET['a']))
