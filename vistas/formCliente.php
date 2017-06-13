@@ -4,7 +4,7 @@
     <div class="item form-group top_search">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
-            <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
+            <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">               
                 <input id="buscarCliente" class="form-control col-md-7 col-xs-12" ng-keyup="consultaClienteDescripcion($event.target.value)" name="buscarCliente" required type="search" autocomplete="off">
             </div><!--
             --><div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">

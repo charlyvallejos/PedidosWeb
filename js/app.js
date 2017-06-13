@@ -24,6 +24,10 @@
         e.preventDefault();
         formUp.slideToggle();
     });
+    
+
+        
+    
 
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination']) // aplicacion de angular
 

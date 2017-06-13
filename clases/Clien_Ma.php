@@ -89,7 +89,7 @@ class Clien_Ma
             $query = $conexion->prepare($sql);
             $query->bindParam(':descripcion',$descripcion,PDO::PARAM_STR);
             $query->execute();
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetchAll();
         } catch (PDOException $ex) {
             return $ex->getMessage();
         }

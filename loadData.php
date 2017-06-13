@@ -24,6 +24,9 @@ if(isset($_GET)){
         $idPro = $_GET['idPro'];
     if(isset($_GET['idFrac']))
         $idFrac = $_GET['idFrac'];
+    if(isset($_GET['term']))
+        $term = $_GET['term'];
+   
     
     if(isset($accion) && $accion == 'get')
     {
@@ -76,8 +79,20 @@ if(isset($_GET)){
                 {
                     echo json_encode($produ_frac->consultaProdFraccio($idPro, $idFrac));
                 }
+            }            
+        }
+    }
+    else
+    {
+        if(isset($term))
+        {
+            $clien_ma = new Clien_Ma();
+                            
+            $sql = $clien_ma->consultaDescripcion($term);
+            foreach ($sql as $dato){// as $dato){ 
+                $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
             }
-            
+            echo json_encode($resultado);
         }
     }
 
