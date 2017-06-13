@@ -1,4 +1,4 @@
-<html>
+<html ng-app="appLogin">
     <head>
         <meta charset="UTF-8">
         <title>Pedidos Web</title>
@@ -121,17 +121,20 @@
                 div.background2:before{ width: 100%; }
             }
         </style>
+        <script src="js/angular.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src= "js/login.js"></script>
     </head>
-    <body>
+<body ng-controller="loginController">
     <!--
 <div class="background"></div>
 <div class="background2"></div>
 -->
 <div class="loginForm">
     <div class="logo_sapo">
-        <img src="../img/logo_saporiti.jpg" alt="Drogueria Saporiti" width="250px" height="90px">
+        <img src="img/logo_saporiti.jpg" alt="Drogueria Saporiti" width="250px" height="90px">
     </div>
-    <form id="formLogin">
+    <form id="formLogin" method="post" novalidate name="formLogin">
         <div class="group">
             <input type="text" class="used"  name="Usuario_Login" ng-model="Login.Usuario_Login"><span class="highlight"></span><span class="bar"></span>
             <label>Usuario</label>
@@ -140,7 +143,7 @@
             <input type="password" name="Clave" ng-model="Login.Clave"><span class="highlight"></span><span class="bar"></span>
             <label>Clave</label>
         </div>
-        <button type="submit" class="buttonui "> <span ng-click="login(formLogin)"> Ingresar </span>
+        <button type="submit" class="buttonui" ng-click="login(formLogin)"> <span> Ingresar </span>
             <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
         </button>
     </form>
@@ -148,8 +151,7 @@
         Si ha olvidado su clave, contactese
     </div>
 </div>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script>$(window, document, undefined).ready(function() {
 
         $('input').blur(function() {

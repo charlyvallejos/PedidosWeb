@@ -1,26 +1,26 @@
 
 /*  menu  */
-nav{
-    background-color: #202D34;
+nav#menu{
+    background-color: rgba(32, 45, 52, 0.89);
+    margin-top:10px;
     height:41px;
-    color:#D6EBA9;
     text-align: center;
     font-size:.9em;
     /* position: fixed; */
     width: 100%;
 }
-nav ul{
+nav#menu ul{
     float: right;
-    margin-right: 310px;
+    margin-right: 370px;
 }
-nav ul li{
+nav#menu ul li{
     float: left;
     list-style-type: none;
-    width: 180px;
+    width: 120px;
 }
-nav ul li a{
+nav#menu ul li a{
     display: block;
-    background-color: #253238;
+    background-color: rgba(32, 45, 52, 0.89);
     color: #23ab8e;
     height: 40px;
     margin-top: 1px;
@@ -30,7 +30,7 @@ nav ul li a{
     border-bottom: #3D5F5F 4px solid;
     text-decoration: none;
 }
-nav ul li a:hover{
+nav#menu ul li a:hover{
     color: #23ab8e;
     border-bottom: #23ab8e 4px solid;
     text-decoration: none;
@@ -265,4 +265,36 @@ tr.selected td {
     margin-bottom:5px;
     padding:10px;
     color: #0d4035;
+}
+
+nav#barra_top {
+    background-color: rgb(191, 43, 55);
+    height:23px;
+    text-align: center;
+    font-size:.7em;
+    position: fixed;
+    width: 100%;
+}
+
+nav#barra_top ul li{
+    float: right;
+    list-style-type: none;
+    width: 110px;
+}
+nav#barra_top ul li a{
+    display: block;
+    color: #c1c1c1;
+    padding-top: 6px;
+    text-transform: uppercase;
+    border-bottom: #c2c2c2 2px solid;
+    text-decoration: none;
+}
+nav#barra_top ul li a:hover{
+    color: white;
+    border-bottom: #23ab8e 2px solid;
+    text-decoration: none;
+}
+
+#cabecera{
+    margin-top:50px !important;
 }

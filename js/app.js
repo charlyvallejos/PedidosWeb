@@ -25,7 +25,7 @@
         formUp.slideToggle();
     });
 
-    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination']) // aplicacion de angular
+    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin']) // aplicacion de angular
 
         .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.pedidos = [];

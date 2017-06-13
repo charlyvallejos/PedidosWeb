@@ -32,8 +32,8 @@ include 'formPedido.php' ?>
                     <th ng-click="sort('Codigo_Cliente')" class="centrar">Codigo Cliente</th>
                     <th ng-click="sort('Nombre_Fantasia')">Nombre Fantasía</th>
                     <th ng-click="sort('Fecha_Pedido')" class="centrar">Fecha Pedido</th>
-                    <th class="centrar">Codigo Vendedor</th>
-                    <th class="centrar">Estado</th>
+                    <th ng-click="sort('Codigo_Vendedor')" class="centrar">Codigo Vendedor</th>
+                    <th ng-click="sort('Estado')" class="centrar">Estado</th>
                 </tr>
                 </thead>
                 <tbody>

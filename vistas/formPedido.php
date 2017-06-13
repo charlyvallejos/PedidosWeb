@@ -30,10 +30,10 @@
                         <div class="col align-self-center">
                             <br> <!-- Si... esto es berreta por ahora -->
                             <br>
-                            <button  type="reset" class="btnCancelar" ng-click="resetearForm(pedidoForm)"><img src="img/btncancel.png" alt="Cancelar" width="24px" height="24px"><span>Cancelar</span></button>
+                            <button type="reset" class="btnCancelar" ng-click="resetearForm(pedidoForm)"><img src="img/btncancel.png" alt="Cancelar" width="24px" height="24px"><span>Cancelar</span></button>
                             <br><br>
                             <br>
-                            <button  type="submit" class="btnGrabar" ng-click="modificarPedido(form)"><img src="img/btngrabar.png" alt="Grabar" width="25px" height="25px"><span>Grabar</span></button>
+                            <button type="submit" class="btnGrabar" ng-click="grabarPedido(pedidoForm)" ng-disabled="pedidoTemporal"><img src="img/btngrabar.png" alt="Grabar" width="25px" height="25px"><span>Grabar</span></button>
                             <br>
                             <br>
                             <br>

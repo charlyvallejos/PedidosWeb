@@ -13,5 +13,4 @@ function actual($seccion){
     <li><a <?php actual('index.php'); ?> href="index.php">Pedidos</a></li>
     <li><a <?php actual('vistaClientes'); ?>href="vistaClientes.php">Clientes</a></li>
     <li><a <?php actual('vistaListados'); ?>href="vistaListados.php">Listados</a></li>
-
 </ul>

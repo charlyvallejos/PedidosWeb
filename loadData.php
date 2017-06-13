@@ -6,6 +6,17 @@ $pedidos = '';
 // $t = table
 
 if(isset($_GET)){
+    if(isset($_GET['login']))
+    {
+        $usuario = new Usuario();
+        return $usuario->login();
+    }
+    if(isset($_GET['logout']))
+    {
+        $usuario = new Usuario();
+        return $usuario->logout();
+    }
+
     if(isset($_GET['a']))
         $accion = $_GET['a'];
     if(isset($_GET['t']))
@@ -80,6 +91,5 @@ if(isset($_GET)){
             
         }
     }
-
 
 }

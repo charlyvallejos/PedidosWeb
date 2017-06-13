@@ -1,26 +1,38 @@
 var apiURL = 'loadData.php';
 var app = angular.module('appLogin', [])
-    .controller('loginController',function($scope,$http) {
-
+    .controller('loginController',function($scope,$http,$window) {
+        $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8;';
         $scope.Login = {};
-        $scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
         $scope.login = function(formLogin){
-            if(formLogin.Usuario_Login.$valid && formLogin.Clave.$valid){
-                $http.post(apiURL+"?login",$scope.Login,$scope.config)
-                    .then(function(resp){
-                    if(resp.data)
-                        $location.path('/PedidosWeb');
-                    else
-                    {
-
-                    }
+                $http({
+                    method:'POST',
+                    url:apiURL+'?login',
+                    data:$.param($scope.Login),
+                    headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8;'}
                 })
-            }
-            else
-            {
+                    .then(function(resp){
+                        if(resp.data)
+                            $window.location.reload();
+                    })
+                    .catch(function(resp){
+                        console.log(resp);
+                    });
+        };
 
-            }
+        $scope.logout = function(){
+            $http({
+                method:'POST',
+                url:apiURL+'?logout',
+                headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8;'}
+            })
+                .then(function(resp){
+                    $window.location.reload();
+                })
+                .catch(function(resp){
+                    console.log(resp);
+                });
         }
+
     });
 

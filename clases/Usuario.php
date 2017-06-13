@@ -9,26 +9,41 @@ class Usuario
     private $Clave;
 
     public function login(){
-        $sql = "SELECT Nombre_Vendedor FROM usuarios WHERE Usuario_Login = :Usuario_Login AND Clave = :Clave";
+        $sql = "SELECT Nombre_Vendedor, Codigo_Vendedor FROM usuarios WHERE Usuario_Login = :Usuario_Login AND Clave = :Clave";
         $conexion = Conexion::conectar();
         $query = $conexion->prepare($sql);
 
-        $usuLogin = $_POST['Usuario_Login'];
-        $usuClave = $_POST['Clave'];
-
-        $query->bindParam(':Usuario_Login',$usuLogin,PDO::PARAM_STR);
-        $query->bindParam(':Clave',$usuClave,PDO::PARAM_STR);
-
-        $query->execute();
-        if($query->rowCount() > 0)
+        if(isset($_POST))
         {
-            $_SESSION['logueado'] = 1;
-            $_SESSION['Nombre_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Nombre_Vendedor'];
-            header('location:index.php');
+
+            $usuLogin = $_POST['Usuario_Login'];
+            $usuClave = $_POST['Clave'];
+
+            $query->bindParam(':Usuario_Login',$usuLogin,PDO::PARAM_STR);
+            $query->bindParam(':Clave',$usuClave,PDO::PARAM_STR);
+
+            $query->execute();
+            if($query->rowCount() > 0)
+            {
+                $_SESSION['logueado'] = 1;
+                $_SESSION['Nombre_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Nombre_Vendedor'];
+                $_SESSION['Codigo_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Codigo_Vendedor'];
+            }
+
+            return true;
         }
         else
-            header('location: formLogin.php?error=1');
+            return false;
+    }
+    public function autenticar(){
+        if(isset($_SESSION['logueado']))
+            return true;
+        else
+            return false;
+    }
 
-        return $query->execute();
+    public function logout(){
+        session_unset();
+        session_destroy();
     }
 }
