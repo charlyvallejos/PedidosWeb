@@ -274,6 +274,7 @@ nav#barra_top {
     font-size:.7em;
     position: fixed;
     width: 100%;
+    z-index: 999;
 }
 
 nav#barra_top ul li{
