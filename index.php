@@ -39,28 +39,6 @@
     <script src="js/dirPagination.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 
-<!--    <script src="./js/pedidos_web.js"></script>-->
-    <script>
-        $("#buscarCliente").autocomplete({
-            source: "loadData.php",
-            select: function(event,ui){
-               var codCliente = [];
-               
-               codCliente = ui.item.value.split('-');
-               console.log(codCliente[0]);
-               angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
-            }
-            
-            //console.log('hola');
-        });
-        
-//        $('#buscarCliente').change(function(event){
-//            if(event.which === 13)
-//            {                
-//                console.log(event.which);
-//            }
-//            console.log(event.which);
-//        })
-    </script>
+<!--    <script src="./js/pedidos_web.js"></script>-->    
     </body>
 </html>

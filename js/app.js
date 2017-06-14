@@ -27,6 +27,16 @@
     });
     
 
+    $("#buscarCliente").autocomplete({
+            source: "loadData.php",
+            select: function(event,ui){
+               var codCliente = [];
+               
+               codCliente = ui.item.value.split('-');
+               console.log(codCliente[0]);
+               angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
+            }                        
+        });
         
     
 
