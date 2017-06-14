@@ -26,6 +26,8 @@ if(isset($_GET)){
         $idFrac = $_GET['idFrac'];
     if(isset($_GET['term']))
         $term = $_GET['term'];
+    if(isset($_GET['cod']))
+        $cod = $_GET['cod'];
    
     
     if(isset($accion) && $accion == 'get')
@@ -57,9 +59,10 @@ if(isset($_GET)){
                     //echo $des;
                     echo json_encode($clien_ma->consultaDescripcion($des));
                 }
-                else
-                    if(isset($idCli))
+                else if(isset($idCli))
                         echo json_encode($clien_ma->consultaCliente_Id($idCli));
+                else if(isset($cod))
+                    echo json_encode($clien_ma->consultaCodigoCliente($cod));
             }
             else if($tabla == 'prodma')
             {

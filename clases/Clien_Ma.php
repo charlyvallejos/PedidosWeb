@@ -107,4 +107,16 @@ class Clien_Ma
             return $ex->getMessage();
         }
     }
+    
+    public function consultaCodigoCliente($codigoCliente){
+        $sql = "SELECT * FROM clien_ma WHERE Codigo_Cliente = '$codigoCliente'";
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare($sql);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_ASSOC);            
+        } catch (PDOException $ex) {
+            $ex->getMessage();
+        }
+    }
 }

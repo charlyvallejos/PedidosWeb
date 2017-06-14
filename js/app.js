@@ -17,7 +17,8 @@
         inputCantidad = $("#CantProd"),
         divMjeCliente = $(".msgCliente"),
         divMjeProd = $(".msgProducto"),        
-        buscarProducto = $("#buscarProducto");
+        buscarProducto = $("#buscarProducto"),
+        buscarCliente = $("#buscarCliente");
 
 
     btnPlus.on('click',function(e){
@@ -207,13 +208,36 @@
                 
             };
 
-            $scope.seleccionCliente = function(clie){                
-                //console.log(clie);
-                $scope.mostrarC = true;
-                if(clie !== null){
-                    $scope.pedidoTemporal.Cliente = clie;
-                    $scope.mostrarC = false;
-                    buscarProducto.focus();
+//            $scope.seleccionCliente = function(clie){                
+//                //console.log(clie);
+//                $scope.mostrarC = true;
+//                if(clie !== null){
+//                    $scope.pedidoTemporal.Cliente = clie;
+//                    $scope.mostrarC = false;
+//                    buscarProducto.focus();
+//                }
+//            };
+            
+            $scope.seleccionCliente = function(cod){
+                if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
+                    divMjeCliente.hide();
+                    if(cod !== null)
+                    {
+                        $http.get(apiURL+"?a=get&t=cli&cod="+cod)
+                                .then(function(resp){
+                                    $scope.pedidoTemporal.Cliente = resp.data;
+                                    buscarCliente.val('');
+                                    buscarProducto.focus();
+                        })
+                                .catch(function(){
+                                    console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
+                        });
+
+                    }
+                }
+                else
+                {
+                    divMjeCliente.show();
                 }
             };
             

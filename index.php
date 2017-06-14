@@ -44,20 +44,23 @@
         $("#buscarCliente").autocomplete({
             source: "loadData.php",
             select: function(event,ui){
+               var codCliente = [];
                
-                console.log(ui.item.value);
+               codCliente = ui.item.value.split('-');
+               console.log(codCliente[0]);
+               angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
             }
             
             //console.log('hola');
         });
         
-        $('#buscarCliente').change(function(event){
-            if(event.which === 13)
-            {                
-                console.log(event.which);
-            }
-            console.log(event.which);
-        })
+//        $('#buscarCliente').change(function(event){
+//            if(event.which === 13)
+//            {                
+//                console.log(event.which);
+//            }
+//            console.log(event.which);
+//        })
     </script>
     </body>
 </html>
