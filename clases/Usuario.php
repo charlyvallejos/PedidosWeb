@@ -12,7 +12,7 @@ class Usuario
         $sql = "SELECT Nombre_Vendedor, Codigo_Vendedor FROM usuarios WHERE Usuario_Login = :Usuario_Login AND Clave = :Clave";
         $conexion = Conexion::conectar();
         $query = $conexion->prepare($sql);
-
+        $ok = array('logueado' => 'false');
         if(isset($_POST))
         {
 
@@ -28,12 +28,13 @@ class Usuario
                 $_SESSION['logueado'] = 1;
                 $_SESSION['Nombre_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Nombre_Vendedor'];
                 $_SESSION['Codigo_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Codigo_Vendedor'];
+                $ok = array('logueado' => 'true');
             }
 
-            return json_encode(true);
+            return json_encode($ok);
         }
         else
-            return json_encode(false);
+            return json_encode($ok);
     }
     public function autenticar(){
         if(isset($_SESSION['logueado']))

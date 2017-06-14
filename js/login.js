@@ -12,12 +12,12 @@ var app = angular.module('appLogin', [])
                     headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8;'}
                 })
                     .then(function(resp){
-                        console.log(resp);
-                        /*if(resp.data)
+                        //console.log(resp);
+                        if(resp.data)
                             $window.location.reload();
                         else
                             console.log('manejar error');
-                            */
+
                     })
                     .catch(function(resp){
                         console.log(resp);

@@ -28,12 +28,12 @@
     
 
     $("#buscarCliente").autocomplete({
-            source: "loadData.php",
+            source: apiURL,
             select: function(event,ui){
                var codCliente = [];
                
                codCliente = ui.item.value.split('-');
-               console.log(codCliente[0]);
+               //console.log(codCliente[0]);
                angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
             }                        
         });
@@ -236,6 +236,7 @@
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
                                     $scope.pedidoTemporal.Cliente = resp.data;
+                                    console.log(resp.data);
                                     buscarCliente.val('');
                                     buscarProducto.focus();
                         })

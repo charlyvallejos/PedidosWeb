@@ -101,9 +101,9 @@ if(isset($_GET)){
         if(isset($term))
         {
             $clien_ma = new Clien_Ma();
-                            
+
             $sql = $clien_ma->consultaDescripcion($term);
-            foreach ($sql as $dato){// as $dato){ 
+            foreach ($sql as $dato){// as $dato){
                 $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
             }
             echo json_encode($resultado);

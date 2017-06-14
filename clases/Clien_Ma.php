@@ -89,7 +89,7 @@ class Clien_Ma
             $query = $conexion->prepare($sql);
             $query->bindParam(':descripcion',$descripcion,PDO::PARAM_STR);
             $query->execute();
-            return $query->fetchAll();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             return $ex->getMessage();
         }
@@ -109,14 +109,16 @@ class Clien_Ma
     }
     
     public function consultaCodigoCliente($codigoCliente){
-        $sql = "SELECT * FROM clien_ma WHERE Codigo_Cliente = '$codigoCliente'";
+        //$sql = "SELECT * FROM clien_ma WHERE Codigo_Cliente = '$codigoCliente'";
+        $sql = "CALL Clien_Ma_Igual_Codigo(:codigo)";
         try{
             $conexion = Conexion::conectar();
             $query = $conexion->prepare($sql);
+            $query->bindParam(':codigo',$codigoCliente,PDO::PARAM_STR,7);
             $query->execute();
             return $query->fetch(PDO::FETCH_ASSOC);            
         } catch (PDOException $ex) {
-            $ex->getMessage();
+            return $ex->getMessage();
         }
     }
 }
