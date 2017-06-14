@@ -30,10 +30,10 @@ class Usuario
                 $_SESSION['Codigo_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Codigo_Vendedor'];
             }
 
-            return true;
+            return json_encode(true);
         }
         else
-            return false;
+            return json_encode(false);
     }
     public function autenticar(){
         if(isset($_SESSION['logueado']))
