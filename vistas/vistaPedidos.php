@@ -1,4 +1,4 @@
-<div ng-controller="pedidosController">
+<div ng-controller="pedidosController" Id="vistaPedidos">
 <?php
 
 $titulo = "Pedidos Saporiti";

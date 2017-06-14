@@ -35,6 +35,11 @@ if(isset($_GET)){
         $idPro = $_GET['idPro'];
     if(isset($_GET['idFrac']))
         $idFrac = $_GET['idFrac'];
+    if(isset($_GET['term']))
+        $term = $_GET['term'];
+    if(isset($_GET['cod']))
+        $cod = $_GET['cod'];
+   
     
     if(isset($accion) && $accion == 'get')
     {
@@ -65,9 +70,10 @@ if(isset($_GET)){
                     //echo $des;
                     echo json_encode($clien_ma->consultaDescripcion($des));
                 }
-                else
-                    if(isset($idCli))
+                else if(isset($idCli))
                         echo json_encode($clien_ma->consultaCliente_Id($idCli));
+                else if(isset($cod))
+                    echo json_encode($clien_ma->consultaCodigoCliente($cod));
             }
             else if($tabla == 'prodma')
             {
@@ -87,8 +93,20 @@ if(isset($_GET)){
                 {
                     echo json_encode($produ_frac->consultaProdFraccio($idPro, $idFrac));
                 }
+            }            
+        }
+    }
+    else
+    {
+        if(isset($term))
+        {
+            $clien_ma = new Clien_Ma();
+                            
+            $sql = $clien_ma->consultaDescripcion($term);
+            foreach ($sql as $dato){// as $dato){ 
+                $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
             }
-            
+            echo json_encode($resultado);
         }
     }
 
