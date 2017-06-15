@@ -195,6 +195,7 @@
 	top: 0;
 	left: 0;
 	cursor: default;
+	text-align: left;
 }
 .ui-menu {
 	list-style: none;
@@ -980,14 +981,14 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid #fbd850;
+	border: 1px solid #23ab8e;
 	background: #ffffff url("images/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
-	color: #eb8f00;
+	color: #187662;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
-	border: #fbd850;
+	border: #fe00d8;
 	background-color: #eb8f00;
 }
 .ui-state-active a,
@@ -1002,12 +1003,12 @@ a.ui-button:active,
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #fed22f;
+	border: 1px solid #fe00d8;
 	background: #ffe45c url("images/ui-bg_highlight-soft_75_ffe45c_1x100.png") 50% top repeat-x;
 	color: #363636;
 }
 .ui-state-checked {
-	border: 1px solid #fed22f;
+	border: 1px solid #fe00d8;
 	background: #ffe45c;
 }
 .ui-state-highlight a,
