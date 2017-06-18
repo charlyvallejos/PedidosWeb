@@ -39,6 +39,8 @@ if(isset($_GET)){
         $term = $_GET['term'];
     if(isset($_GET['cod']))
         $cod = $_GET['cod'];
+    if(isset($_GET['codVend']))
+        $codVend = $_GET['codVend'];
    
     
     if(isset($accion) && $accion == 'get')
@@ -49,10 +51,12 @@ if(isset($_GET)){
             {
                 $pedid_ca = new Pedid_Ca();
 
-                if(!isset($nroPedido))
-                    echo json_encode($pedid_ca->consultaTodos());
+                if(isset($nroPedido))
+                    echo json_encode($pedid_ca->consultaPedido($nroPedido));                    
+                else if(isset($codVend))
+                    echo json_encode($pedid_ca->consultaTodosxCodVend($codVend));
                 else
-                    echo json_encode($pedid_ca->consultaPedido($nroPedido));
+                    echo json_encode($pedid_ca->consultaTodos());
 
             }
             else if($tabla == 'pedide')
@@ -85,6 +89,12 @@ if(isset($_GET)){
                 else if(isset($des)){
                     echo json_encode($produ_ma->consultaDescripcion($des));
                 }
+                else if(isset($cod))
+                {
+                    $codigoProducto = substr($cod, 0, 6)."000";
+                    $codigoFraccio = substr($cod, 6);
+                    echo json_encode ($produ_ma->consultaCodigoProducto($codigoProducto, $codigoFraccio));
+                }
             }
             else if($tabla == 'prodfrac')
             {
@@ -98,15 +108,31 @@ if(isset($_GET)){
     }
     else
     {
-        if(isset($term))
+        if(isset($_GET['cliente']))
         {
-            $clien_ma = new Clien_Ma();
+            if(isset($term))
+            {
+                $clien_ma = new Clien_Ma();
 
-            $sql = $clien_ma->consultaDescripcion($term);
-            foreach ($sql as $dato){// as $dato){
-                $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
+                $sql = $clien_ma->consultaDescripcion($term);
+                foreach ($sql as $dato){// as $dato){
+                    $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
+                }
+                echo json_encode($resultado);
             }
-            echo json_encode($resultado);
+        }
+        else if (isset($_GET['producto']))
+        {
+            if(isset($term))
+            {
+                $produ_ma = new Produ_Ma();
+                
+                $sql = $produ_ma->consultaDescripcion($term);
+                foreach ($sql as $dato){// as $dato){
+                    $resultado[] = $dato['Codigo_ProductoF'].' - '. $dato['Descripcion_Producto'];
+                }
+                echo json_encode($resultado);
+            }
         }
     }
 

@@ -200,9 +200,98 @@ FROM Clien_Ma
   left join agcli_ma on clien_ma.Id_Agrupacion = agcli_ma.Id
 WHERE clien_ma.id = _ID$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons` ()  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Igual_Codigo`(IN `_codigo` VARCHAR(7))
+SELECT
+    IFNULL(clien_ma.id,0) AS id,
+    IFNULL(clien_ma.Codigo_Cliente,'') AS Codigo_Cliente,
+    IFNULL(clien_ma.Razon_Social,'') AS Razon_Social,
+    IFNULL(clien_ma.Nombre_Fantasia, '') AS Nombre_Fantasia,
+    IFNULL(clien_ma.Domicilio, '') AS Domicilio,
+    IFNULL(clien_ma.Codigo_Postal, '') AS Codigo_Postal,
+    IFNULL(clien_ma.Localidad,'') AS Localidad,
+    IFNULL(clien_ma.Provincia, 0) AS Provincia,
+    IFNULL(clien_ma.Domicilio_Entrega, '') AS Domicilio_Entrega,
+    IFNULL(clien_ma.Codigo_Postal_Entrega, 0) AS Codigo_Postal_Entrega,
+    IFNULL(clien_ma.Localidad_Entrega,'') AS Localidad_Entrega,
+    IFNULL(clien_ma.Provincia_Entrega, 0) AS Provincia_Entrega,
+    IFNULL(clien_ma.Domicilio_Cobro, '') AS Domicilio_Cobro,
+    IFNULL(clien_ma.Codigo_Postal_Cobro, 0) AS Codigo_Postal_Cobro,
+    IFNULL(clien_ma.Localidad_Cobro,'') AS Localidad_Cobro,
+    IFNULL(clien_ma.Provincia_Cobro, 0) AS Provincia_Cobro,
+    IFNULL(clien_ma.Id_Reparto, 0) AS Id_Reparto,
+    IFNULL(clien_ma.Id_Zona, 0) AS Id_Zona,
+    IFNULL(clien_ma.Telefonos, '') AS Telefonos,
+    IFNULL(clien_ma.Fax, '') AS Fax,
+    IFNULL(clien_ma.Tipo_Iva, '') AS Tipo_Iva,
+    IFNULL(clien_ma.Nro_Cuit, '') AS Nro_Cuit,
+    IFNULL(clien_ma.Nro_Ing_Brutos, '') Nro_Ing_Brutos,
+    IFNULL(clien_ma.Id_Categoria_Ing_Br, 0) AS Id_Categoria_Ing_Br,
+    IFNULL(clien_ma.Comision, 0) AS Comision,
+    IFNULL(clien_ma.Id_Lista_Precio, 0) AS Id_Lista_Precio,
+    IFNULL(clien_ma.Estado, '') AS Estado,
+    IFNULL(clien_ma.Id_Condicion_Vta, 0) AS Id_Condicion_Vta,
+    IFNULL(clien_ma.Id_Agrupacion, 0) AS Id_Agrupacion,
+    IFNULL(clien_ma.Codigo_Vendedor, 0) AS Codigo_Vendedor,
+    IFNULL(clien_ma.Contacto, '') AS Contacto,
+    IFNULL(clien_ma.Nivel_Habil, 0) AS Nivel_Habil,
+    IFNULL(clien_ma.Id_Reparto_Entrega, 0) AS Id_Reparto_Entrega,
+    IFNULL(clien_ma.Id_Reparto_Cobro, 0) AS Id_Reparto_Cobro,
+    IFNULL(clien_ma.Dcto, 0) AS Dcto,
+    IFNULL(clien_ma.Credito, 0) AS Credito,
+    IFNULL(clien_ma.Protocolo, 0) AS Protocolo,
+    IFNULL(clien_ma.Nro_Sedronar, '') AS Nro_Sedronar,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Vto_Sedro,'%d/%m/%Y'),'01/01/1990') AS Fecha_Vto_Sedro,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Alta, '%d/%m/%Y'),'01/01/1990') AS Fecha_Alta,
+    IFNULL(clien_ma.Remito, 0) AS Remito ,
+    IFNULL(clien_ma.Dcto_Pago_Ef, 0) AS Dcto_Pago_Ef,
+    IFNULL(clien_ma.eMail, '') AS eMail,
+    IFNULL(clien_ma.eMailProtocolos, '') AS eMailProtocolos,
+    IFNULL(clien_ma.Id_Usuario, 0) AS Id_Usuario,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Operacion,'%d/%m/%Y'),'01/01/1990') AS Fecha_Operacion,
+    IFNULL(clien_ma.Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
+    IFNULL(clien_ma.Id_Transporte,0) AS Id_Transporte,
+    IFNULL(clien_ma.Convenio,0) AS Convenio,
+    IFNULL(clien_ma.Afip,'') AS Afip,
+    IFNULL(clien_ma.Grupo_Cotiza,0) AS Grupo_Cotiza,
+    IFNULL(clien_ma.Estado_Deudor,0) AS Estado_Deudor,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Estado_Deudor, '%d/%m/%Y'),'') AS Fecha_Estado_Deudor,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Facturar_Hasta,'%d/%m/%Y'),'') AS Fecha_Facturar_Hasta,
+    IFNULL(clien_ma.Imprime_Nc_Dcto, 0) AS Imprime_Nc_Dcto,
+    IFNULL(clien_ma.Id_Trans_Clien,0) AS Id_Trans_Clien,
+    IFNULL(clien_ma.Motivo,'') AS Motivo,
+    IFNULL(clien_ma.Id_Pais, 0) AS Id_Pais,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Vto_Psico,'%d/%m/%Y'),'') AS Fecha_Vto_Psico,
+    IFNULL(clien_ma.Prefijo_Telefono_1,'') AS Prefijo_Telefono_1,
+    IFNULL(clien_ma.Telefono_1, '') AS Telefono_1,
+    IFNULL(clien_ma.Prefijo_Telefono_2,'') AS Prefijo_Telefono_2,
+    IFNULL(clien_ma.Telefono_2, '') AS Telefono_2,
+    IFNULL(clien_ma.Prefijo_Telefono_3,'') AS Prefijo_Telefono_3,
+    IFNULL(clien_ma.Telefono_3, '') AS Telefono_3,
+    IFNULL(clien_ma.Prefijo_Fax_1,'') AS Prefijo_Fax_1,
+    IFNULL(clien_ma.Fax_1, '') AS Fax_1,
+    IFNULL(clien_ma.Prefijo_Fax_2,'') AS Prefijo_Fax_2,
+    IFNULL(clien_ma.Fax_2, '') AS Fax_2,
+    IFNULL(clien_ma.Prefijo_Celular,'') AS Prefijo_Celular,
+    IFNULL(clien_ma.Celular, '') AS Celular,
+    IFNULL(clien_ma.Director_Tecnico, '') AS Director_Tecnico,
+    IFNULL(clien_ma.Pasar_Importe, 0) AS Pasar_Importe,
+    IFNULL(clien_ma.Grupo_Sedro, 0) AS Grupo_Sedro,
+    IFNULL(clien_ma.Genera_Factura_PDF,0) AS Genera_Factura_PDF,
+    IFNULL(clien_ma.Email_Factura_PDF,'') as Email_Factura_PDF,
+    IFNULL(convt_ma.Descripcion,'') as Condicion_Vta,
+    IFNULL(repar_ma.Codigo,'') as Codigo_Reparto,
+    IFNULL(trans_ma.Razon_Social,'') as Transporte,
+    IFNULL(agcli_ma.Descripcion,'') as Agrupacion
+FROM Clien_Ma
+  LEFT JOIN convt_ma ON clien_ma.Id_Condicion_Vta = convt_ma.Id
+  LEFT JOIN repar_ma on clien_ma.Id_Reparto = repar_ma.Id
+  LEFT JOIN trans_ma on clien_ma.Id_Transporte = trans_ma.Id
+  left join agcli_ma on clien_ma.Id_Agrupacion = agcli_ma.Id
+WHERE clien_ma.Codigo_Cliente = _codigo$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons` ()  
          SELECT IFNULL(Nro_Pedido,0) AS Nro_Pedido,
-                IFNULL(Codigo_Cliente,0) AS Codigo_Cliente,
+                IFNULL(Clien_Ma.Codigo_Cliente,0) AS Codigo_Cliente,
                 IFNULL(id_Cliente,0) AS id_Cliente,
                 IFNULL(Fecha_Pedido,'') AS Fecha_Pedido,
                 IFNULL(Pedid_Ca.Codigo_Vendedor,0) AS Codigo_Vendedor,
@@ -238,7 +327,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons` ()  BEGIN
          FROM Pedid_Ca
                 LEFT JOIN Clien_Ma on Pedid_Ca.id_Cliente = clien_ma.Id
          ORDER BY Pedid_Ca.Id_Reparto;
-  END$$
+  
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Igual_Nro_Pedido` (IN `_Nro_Pedido` INT(11))  SELECT  IFNULL(Nro_Pedido, 0) AS Nro_Pedido,
                 IFNULL(id_Cliente, 0) AS id_Cliente,
@@ -357,6 +446,27 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons_Descri` (IN `_Descrip
     INNER JOIN fraccio_ma on (produ_frac.id_Fraccio = fraccio_ma.id)
     left join uni_med on produ_ma.id_Ume_Vta = uni_med.id
   WHERE produ_ma.descripcion like CONCAT('%',_Descripcion,'%')$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons_Codigo`(IN `_CodigoProducto` VARCHAR(9), IN `_CodigoFraccio` VARCHAR(3))
+    NO SQL
+SELECT produ_ma.*,
+    produ_frac.Id_Producto,
+    produ_frac.Id_Fraccio,
+    produ_frac.Ume_Vta,
+    CONCAT(substring(produ_frac.Codigo_producto,1,6), produ_frac.Codigo_Fraccio) AS Codigo_ProductoF,
+    CONCAT(CONCAT(IFNULL(Produ_Ma.Descripcion, ''),' ', 
+    IFNULL(produ_frac.Descripcion, '')),' ',
+    IFNULL(fraccio_ma.Detalle, '')) AS Descripcion_Producto,
+    produ_frac.Baja,
+    /*--------------------------*/
+    IFNULL(TRIM(PRODU_MA.Rubro_Vta),'') AS Rubro_Vta,
+    IFNULL(uni_med.Unidad,'') AS UmeVta,
+    case produ_frac.baja when 1 then 'BAJ' else 'CAR' end as Estado_PF
+    /* aca tendria q traer tambien los datos de precio, precio lista y lo que falte para el control */
+FROM produ_ma inner join produ_frac on (produ_ma.id = produ_frac.id_Producto) INNER JOIN fraccio_ma on (produ_frac.id_Fraccio = fraccio_ma.id)           
+    left join uni_med on produ_ma.id_Ume_Vta = uni_med.id
+WHERE produ_frac.Codigo_producto = _Codigo_Producto
+AND produ_frac.Codigo_Fraccio = _Codigo_Fraccio$$
 
 DELIMITER ;
 

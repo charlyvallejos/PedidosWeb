@@ -47,7 +47,7 @@ class Pedid_Ca{
         {
             $e->getMessage();
         }
-    }
+    }    
     public function consultaPedido($NroPedido){
         try{
             $conexion = Conexion::conectar();
@@ -64,6 +64,20 @@ class Pedid_Ca{
 
 
             return $r;
+        }catch(PDOException $e)
+        {
+            $e->getMessage();
+        }
+    }
+    
+    public function consultaTodosxCodVend($codVend){
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare("CALL Pedid_Ca_Cons_CodVend(:CodigoVendedor)");
+            $query->bindParam(':CodigoVendedor', $codVend, PDO::PARAM_INT);
+            $query->execute();
+            $this->CantidadPedidos = $query->rowCount();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e)
         {
             $e->getMessage();

@@ -1,9 +1,8 @@
 <div ng-controller="pedidosController" Id="vistaPedidos">
 <?php
 include 'formPedido.php' ?>
-    <!-------------------------------------------------------------------------------------------------------------------->
-
-    <div class="panel panel_pedido" ng-init="consultaPedidos()">
+<!-------------------------------------------------------------------------------------------------------------------->
+    <div class="panel panel_pedido" ng-init="consultaPedidos(<?php echo $_SESSION['Codigo_Vendedor']; ?>)">
         <div class="panel-body">
                <!--<div ng-show="pedidos.length == 0" class='error'>NO HAY REGISTRO DE PEDIDOS</div>-->
                 <div class="row">
