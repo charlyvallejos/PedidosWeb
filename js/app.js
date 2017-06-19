@@ -78,7 +78,7 @@
             $scope.consultaPedidos = function(codVend){
                 //console.log(codVend);
                 $http.get(apiURL+"?a=get&t=ped&codVend="+codVend)
-                    .then(function(resp){                        
+                    .then(function(resp){
                         $scope.pedidos = resp.data;
                     })
                     .catch(function(resp){
@@ -120,12 +120,9 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod,formCtrlProducto){
-
-
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
-
                 $scope.productoTemporal = prod;
-                console.log($scope.productoTemporal);
+                //console.log($scope.productoTemporal);
                 /*
                 $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
                         .then(function(resp){
@@ -191,6 +188,30 @@
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
                     $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
                 });
+
+                $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
+
+                if($scope.Iva_IngBr != null)
+                {
+                    $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.Iva_IngBr.Bruto,2);
+                    if($scope.Iva_IngBr.Iva_Ins > 0)
+                        $scope.pedidoTemporal.Porc_Iva_Ins = $scope.Iva_IngBr.Porc_Iva_Ins;
+                    else
+                        $scope.pedidoTemporal.Porc_Iva_NoIns = $scope.Iva_IngBr.Porc_Iva_NoIns;
+
+                    $scope.pedidoTemporal.Iva_Ins = $scope.Iva_IngBr.Iva_Ins;
+                    $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
+
+                    $scope.pedidoTemporal.Total_Exento =  $scope.Iva_IngBr.Total_Prod_Exento;
+                    $scope.pedidoTemporal.Porc_Cba = $scope.Iva_IngBr.Porc_Cba;
+                    $scope.pedidoTemporal.IngBr_Cba = $scope.Iva_IngBr.IngBr_Cba;
+                    $scope.pedidoTemporal.IngBr_Pba = $scope.Iva_IngBr.IngBr_Pba0 + $scope.Iva_IngBr.IngBr_Pba1;
+                    $scope.pedidoTemporal.Porc_IngBr_Mis = $scope.Iva_IngBr.Porc_IngBr_Mis;
+                    $scope.pedidoTemporal.IngBr_Mis = $scope.Iva_IngBr.IngBr_Mis;
+                    $scope.pedidoTemporal.SubTotal = $scope.Iva_IngBr.SubTotal;
+
+                }
+
                 $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.pedidoTemporal.Total_Gravado,2);
                 $scope.pedidoTemporal.Porc_Iva_Ins = $filter('number')($scope.pedidoTemporal.Porc_Iva_Ins,2);
             };
@@ -275,7 +296,6 @@
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
                                 productoSeleccion.attr('size', 5);
-                                //de ALGUNA manera se tiene q poder usar las PUTAS flechitas
                                 productoSeleccion.focus();
                             })
                             .catch(function(){
@@ -312,7 +332,7 @@
                     {
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                                 .then(function(resp){
-                                    //console.log(resp.data);
+                                    console.log(resp.data);
                                     $scope.productoTemporal = resp.data;
                                     buscarProducto.val('');
                                     inputCantidad.focus();

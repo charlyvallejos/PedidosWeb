@@ -11,10 +11,10 @@
                 <label for="" class="control-label">IVA:</label>
             </div>
             <div  class="col-md-4 col-xs-4 falso-xs-12">
-                <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Porc_Iva_Ins">
+                <input type="text" class="form-control" readonly ng-model="{{pedidoTemporal.Porc_Iva_Ins + pedidoTemporal.Porc_Iva_NoIns | number:2}}">
             </div>
             <div  class="col-md-4 col-xs-4 falso-xs-12">
-                <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Iva_Ins">
+                <input type="text" class="form-control" readonly ng-model="{{pedidoTemporal.Iva_Ins + pedidoTemporal.Iva_NoIns | number:2}}">
             </div>
             <div class=" col-md-4 col-xs-4 falso-xs-12">
                 <label for="" class="control-label">Exento:</label>
@@ -27,20 +27,20 @@
                 <label for="" class="control-label">IB CBA:</label>
             </div>
             <div  class="col-md-3 col-xs-3 falso-xs-12">
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" readonly ng-model="pedidoTemporal.IngBr_Cba">
             </div>
             <div  class="col-md-5 col-xs-5 falso-xs-12">
-                <input type="text" class="form-control"  readonly>
+                <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Cba">
             </div>
 
             <div class=" col-md-4 col-xs-4 falso-xs-12">
                 <label for="" class="control-label">IB PBA:</label>
             </div>
             <div  class="col-md-3 col-xs-3 falso-xs-12">
-                <input type="text" class="form-control"  readonly>
+                <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.Porc_IngBr_Pba">
             </div>
             <div  class="col-md-5 col-xs-5 falso-xs-12">
-                <input type="text" class="form-control"  readonly>
+                <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Pba">
             </div>
             <br> <!-- linea -->
             <div class=" col-md-4 col-xs-4 falso-xs-12">

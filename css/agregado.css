@@ -284,15 +284,15 @@ nav#barra_top ul li{
 }
 nav#barra_top ul li a{
     display: block;
-    color: #c1c1c1;
+    color: #ffffff;
     padding-top: 6px;
     text-transform: uppercase;
-    border-bottom: #c2c2c2 2px solid;
+    border-bottom: #23ab8e 2px solid;
     text-decoration: none;
 }
 nav#barra_top ul li a:hover{
-    color: white;
-    border-bottom: #23ab8e 2px solid;
+    color: #2bd6b2;
+    border-bottom: #1b856f 2px solid;
     text-decoration: none;
 }
 

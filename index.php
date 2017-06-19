@@ -17,8 +17,8 @@
     <body>
             <nav id="barra_top">
                 <ul ng-controller="loginController">
-                    <li><a href=""><?php if(isset($_SESSION['Nombre_Vendedor'])) echo $_SESSION['Nombre_Vendedor'] ?></a></li>
-                    <li><a href="" ng-click="logout()"><?php if(isset($_SESSION['Nombre_Vendedor'])) echo 'Cerrar Sesión'?></a></li>
+                    <li><a href=""><span class="glyphicon glyphicon-user " aria-hidden="true"></span> <?php if(isset($_SESSION['Nombre_Vendedor'])) echo $_SESSION['Nombre_Vendedor'] ?></a></li>
+                    <li><a href="" ng-click="logout()"><span class="glyphicon glyphicon-log-out " aria-hidden="true"></span> <?php if(isset($_SESSION['Nombre_Vendedor'])) echo 'Cerrar Sesión'?></a></li>
                 </ul>
             </nav>
 
