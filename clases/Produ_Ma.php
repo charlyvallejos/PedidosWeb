@@ -31,8 +31,23 @@ class Produ_Ma{
         } catch (PDOException $ex) {
             
             return $ex->getMessage();
+        }        
+    }
+    
+    public function consultaCodigoProducto($codigoProducto, $codigoFraccio)
+    {
+        $sql = "CALL Produ_Ma_Cons_Codigo(:CodigoProducto,:CodigoFraccio)";
+        try
+        {
+            $conectar = Conexion::conectar();
+            $query = $conectar->prepare($sql);
+            $query->bindParam(':CodigoProducto', $codigoProducto, PDO::PARAM_STR,9);
+            $query->bindParam(':CodigoFraccio', $codigoFraccio, PDO::PARAM_STR,3);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            $ex->getMessage();
         }
-        
     }
     
     

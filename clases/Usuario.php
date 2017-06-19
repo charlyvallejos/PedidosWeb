@@ -24,10 +24,11 @@ class Usuario
 
             $query->execute();
             if($query->rowCount() > 0)
-            {
+            { 
+                $resultado = $query->fetch(PDO::FETCH_ASSOC);
                 $_SESSION['logueado'] = 1;
-                $_SESSION['Nombre_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Nombre_Vendedor'];
-                $_SESSION['Codigo_Vendedor'] = $query->fetch(PDO::FETCH_ASSOC)['Codigo_Vendedor'];
+                $_SESSION['Nombre_Vendedor'] = $resultado['Nombre_Vendedor'];
+                $_SESSION['Codigo_Vendedor'] = $resultado['Codigo_Vendedor'];
                 $ok = array('logueado' => 'true');
             }
 

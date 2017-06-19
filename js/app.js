@@ -28,7 +28,7 @@
     
 
     $("#buscarCliente").autocomplete({
-            source: apiURL,
+            source: apiURL+"?cliente",
             select: function(event,ui){
                var codCliente = [];
                
@@ -37,6 +37,17 @@
                angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
             }                        
         });
+        
+     $("#buscarProducto").autocomplete({
+         source: apiURL+"?producto",
+         select: function(event,ui){
+               var codProducto = [];
+               
+               codProducto = ui.item.value.split('-');
+               //console.log(codCliente[0]);
+               angular.element($('#vistaPedidos')).scope().seleccionProducto(codProducto[0]);
+            }
+     });
         
     
 
@@ -51,7 +62,7 @@
             $scope.produ_frac = {};
             $scope.mostrarC = false;
             $scope.mostrarP = false;            
-           
+            
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -64,9 +75,10 @@
             $scope.numXpag = 5; //(default)
             //////////////////////////////
 
-            $scope.consultaPedidos = function(){
-                $http.get(apiURL+"?a=get&t=ped")
-                    .then(function(resp){
+            $scope.consultaPedidos = function(codVend){
+                //console.log(codVend);
+                $http.get(apiURL+"?a=get&t=ped&codVend="+codVend)
+                    .then(function(resp){                        
                         $scope.pedidos = resp.data;
                     })
                     .catch(function(resp){
@@ -84,7 +96,7 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
-                        console.log(resp.data);
+                        //console.log(resp.data);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
@@ -255,7 +267,7 @@
             ////////////////////////////////////////////////////////
             //BUSCADOR DE PRODUCTOS
             $scope.consultaProductoDescripcion = function(des){
-                if($scope.pedidoTemporal.Cliente != null) {
+                if($scope.pedidoTemporal.Cliente !== null) {
                     divMjeProd.hide();
                     if(des !== ""){
                         $http.get(apiURL+"?a=get&t=prodma&des="+des)
@@ -281,14 +293,45 @@
                 }
             };
             
+//            $scope.seleccionProducto = function(prod){
+//                //console.log(prod);
+//                $scope.mostrarP = false;
+//                if(prod !== null){
+//                    $scope.productoTemporal = prod;
+//                    $scope.mostrarP = false;
+//                    inputCantidad.focus();
+//                }
+//            };
+            
             $scope.seleccionProducto = function(prod){
-                //console.log(prod);
-                $scope.mostrarP = false;
-                if(prod !== null){
-                    $scope.productoTemporal = prod;
-                    $scope.mostrarP = false;
-                    inputCantidad.focus();
+                console.log(prod);
+                if($scope.pedidoTemporal.Cliente !== undefined)
+                {
+                    divMjeProd.hide();
+                    if(prod !== null)
+                    {
+                        $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
+                                .then(function(resp){
+                                    //console.log(resp.data);
+                                    $scope.productoTemporal = resp.data;
+                                    buscarProducto.val('');
+                                    inputCantidad.focus();
+                                })
+                                .catch(function(){
+                                    console.log("ERROR BUSQUEDA PRODUCTO POR CODIGO");
+                                });
+                    }
                 }
+                else
+                {
+                    divMjeProd.show();
+                }
+//                $scope.mostrarP = false;
+//                if(prod !== null){
+//                    $scope.productoTemporal = prod;
+//                    $scope.mostrarP = false;
+//                    inputCantidad.focus();
+//                   }
             };
 
             ///////////////////////////////////////////////////////
