@@ -41,6 +41,8 @@ if(isset($_GET)){
         $cod = $_GET['cod'];
     if(isset($_GET['codVend']))
         $codVend = $_GET['codVend'];
+    if(isset($_GET['idListaCa']))
+        $idListaCa = $_GET['idListaCa'];
    
     
     if(isset($accion) && $accion == 'get')
@@ -103,7 +105,15 @@ if(isset($_GET)){
                 {
                     echo json_encode($produ_frac->consultaProdFraccio($idPro, $idFrac));
                 }
-            }            
+            }
+            else if($tabla == 'listade')
+            {
+                $lista_de = new Lista_De();
+                if(isset($idPro) && isset($idFrac) && isset($idListaCa))
+                {
+                    echo json_encode($lista_de->consultaListaPrecio($idPro, $idFrac,$idListaCa));
+                }
+            }
         }
     }
     else

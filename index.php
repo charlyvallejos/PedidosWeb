@@ -13,6 +13,11 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
         <link rel="stylesheet" href="css/agregado.css">
+        <link rel="stylesheet" href="css/input_radio.css">
+        <script>
+            var CodVendedor = "<?php echo $_SESSION['Codigo_Vendedor'] ?>";
+        </script>
+
     </head>
     <body>
             <nav id="barra_top">

@@ -299,3 +299,20 @@ nav#barra_top ul li a:hover{
 #cabecera{
     margin-top:50px !important;
 }
+
+.produ_normales{
+    background: transparent;
+    color: #393939;
+}
+
+.produ_sedronar{
+    background:lightgreen;
+    color:darkblue;
+}
+
+.produ_sico{
+    background: rgba(220, 220, 0, 0.21) !important;
+    color: #b40000;
+    font-weight: bold;
+}
+

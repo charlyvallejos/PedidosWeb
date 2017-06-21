@@ -1,4 +1,18 @@
 <div>
+    <!-- Modal -->
+
+    <div class="modal fade alert-modal in" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-codCli>
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body" ng-model="clie">
+                    <p>El cliente ingresado no se corresponde al vendedor actual, desea continuar de todas formas?</p>
+                    <a href="" class="btn btn-primary" ng-click="seleccionClienteModal()">Si</a>
+                    <a href="" class="btn btn-secondary" data-dismiss="modal">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <fieldset><legend>Cliente</legend>
     <div class="msgCliente ocultar">No se puede modificar el cliente si existen productos cargados</div>
     <div class="item form-group top_search">
@@ -6,8 +20,8 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">               
                 <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" required type="search" autocomplete="off">
-            </div><!--
-            --><div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
+            </div>
+            <div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
                 <select id="clienteSeleccion" class="form-control" ng-show="mostrarC" ng-model="clie" ng-options="x.Codigo_Cliente +' - ' + x.Razon_Social  +' - '+ x.Nombre_Fantasia for x in clientes" ng-change="seleccionCliente(clie)">
                         <!--<option ng-repeat="clie in clientes" value="{{clie.Razon_Social}}">{{clie.Codigo_Cliente }}{{clie.Razon_Social}}</option>-->
                 </select>

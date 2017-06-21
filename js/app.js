@@ -18,7 +18,9 @@
         divMjeCliente = $(".msgCliente"),
         divMjeProd = $(".msgProducto"),        
         buscarProducto = $("#buscarProducto"),
-        buscarCliente = $("#buscarCliente");
+        buscarCliente = $("#buscarCliente"),
+        modalCliente = $("#modalCliente"),
+        RubroProdInput = $("#RubroProd");
 
 
     btnPlus.on('click',function(e){
@@ -27,7 +29,7 @@
     });
     
 
-    $("#buscarCliente").autocomplete({
+    buscarCliente.autocomplete({
             source: apiURL+"?cliente",
             select: function(event,ui){
                var codCliente = [];
@@ -38,7 +40,7 @@
             }                        
         });
         
-     $("#buscarProducto").autocomplete({
+     buscarProducto.autocomplete({
          source: apiURL+"?producto",
          select: function(event,ui){
                var codProducto = [];
@@ -220,7 +222,7 @@
             };
 
             $scope.calculaIngBrutos = function(cliente,productos){
-                if(productos.count() > 0){
+                if(productos.length > 0){
                     //IVA y CM
                     //.....
 
@@ -284,10 +286,17 @@
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
-                                    $scope.pedidoTemporal.Cliente = resp.data;
-                                    console.log(resp.data);
-                                    buscarCliente.val('');
-                                    buscarProducto.focus();
+                                    if(CodVendedor === resp.data.Codigo_Vendedor)
+                                    {
+                                        $scope.pedidoTemporal.Cliente = resp.data;
+                                        buscarCliente.val('');
+                                        buscarProducto.focus();
+                                    }
+                                    else
+                                    {
+                                            modalCliente.attr('data-codCli',cod);
+                                            modalCliente.modal('show');
+                                    }
                         })
                                 .catch(function(){
                                     console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
@@ -300,7 +309,28 @@
                     divMjeCliente.show();
                 }
             };
-            
+
+
+            $scope.seleccionClienteModal = function(){
+                modalCliente.modal('hide');
+                var cod = modalCliente.attr('data-codCli');
+                    if(cod !== null)
+                    {
+                        $http.get(apiURL+"?a=get&t=cli&cod="+cod)
+                            .then(function(resp){
+                                    $scope.pedidoTemporal.Cliente = resp.data;
+                                    buscarCliente.val('');
+                                    buscarProducto.focus();
+                            })
+                            .catch(function(){
+                                console.log('ERROR BUSQUEDA CLIENTE MODAL');
+                            });
+
+                    }
+                    else
+                        console.log('ERROR BUSQUEDA CLIENTE MODAL');
+            };
+
             ////////////////////////////////////////////////////////
             //BUSCADOR DE PRODUCTOS
             $scope.consultaProductoDescripcion = function(des){
@@ -312,7 +342,7 @@
                                 console.log(resp.data);
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
-                                productoSeleccion.attr('size', 5);
+                                //productoSeleccion.attr('size', 5);
                                 productoSeleccion.focus();
                             })
                             .catch(function(){
@@ -341,7 +371,6 @@
 //            };
             
             $scope.seleccionProducto = function(prod){
-                console.log(prod);
                 if($scope.pedidoTemporal.Cliente !== undefined)
                 {
                     divMjeProd.hide();
@@ -349,8 +378,14 @@
                     {
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                                 .then(function(resp){
-                                    console.log(resp.data);
                                     $scope.productoTemporal = resp.data;
+                                    $scope.poneColorRubro(resp.data.Rubro_Color);
+
+                                    $http.get(apiURL+"?a=get&t=listade&idPro="+$scope.productoTemporal.Id_Producto+"&idFrac="+$scope.productoTemporal.Id_Fraccio+"&idListaCa="+$scope.pedidoTemporal.Cliente.Id_Lista_Precio)
+                                        .then(function(resp){
+                                           $scope.productoTemporal.Precio_Lista = resp.data[0].Precio_Lista;
+                                        });
+
                                     buscarProducto.val('');
                                     inputCantidad.focus();
                                 })
@@ -369,6 +404,38 @@
 //                    $scope.mostrarP = false;
 //                    inputCantidad.focus();
 //                   }
+            };
+
+
+///////////////truchisimo
+            $scope.poneColorRubro = function(color){
+              if(color == "0")
+              {
+                  if(RubroProdInput.hasClass('produ_sedronar'))
+                      RubroProdInput.removeClass('produ_sedronar');
+                  if(RubroProdInput.hasClass('produ_sico'))
+                      RubroProdInput.removeClass('produ_sico');
+
+                  RubroProdInput.addClass('produ_normales');
+              }
+              else if(color == "1")
+              {
+                  if(RubroProdInput.hasClass('produ_normales'))
+                      RubroProdInput.removeClass('produ_normales');
+                  if(RubroProdInput.hasClass('produ_sico'))
+                      RubroProdInput.removeClass('produ_sico');
+
+                  RubroProdInput.addClass('produ_sedronar');
+              }
+              else if(color == "2")
+              {
+                  if(RubroProdInput.hasClass('produ_normales'))
+                      RubroProdInput.removeClass('produ_normales');
+                  if(RubroProdInput.hasClass('produ_sedronar'))
+                      RubroProdInput.removeClass('produ_sedronar');
+
+                  RubroProdInput.addClass('produ_sico');
+              }
             };
 
             ///////////////////////////////////////////////////////
