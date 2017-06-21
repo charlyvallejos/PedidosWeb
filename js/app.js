@@ -195,12 +195,15 @@
                 {
                     $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.Iva_IngBr.Bruto,2);
                     if($scope.Iva_IngBr.Iva_Ins > 0)
-                        $scope.pedidoTemporal.Porc_Iva_Ins = $scope.Iva_IngBr.Porc_Iva_Ins;
+                    {
+                        $scope.pedidoTemporal.Porc_Iva = $scope.Iva_IngBr.Porc_Iva_Ins;
+                        $scope.pedidoTemporal.Iva = $scope.Iva_IngBr.Iva_Ins;
+                    }
                     else
-                        $scope.pedidoTemporal.Porc_Iva_NoIns = $scope.Iva_IngBr.Porc_Iva_NoIns;
-
-                    $scope.pedidoTemporal.Iva_Ins = $scope.Iva_IngBr.Iva_Ins;
-                    $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
+                    {
+                        $scope.pedidoTemporal.Porc_Iva = $scope.Iva_IngBr.Porc_Iva_NoIns;
+                        $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
+                    }
 
                     $scope.pedidoTemporal.Total_Exento =  $scope.Iva_IngBr.Total_Prod_Exento;
                     $scope.pedidoTemporal.Porc_Cba = $scope.Iva_IngBr.Porc_Cba;
@@ -209,14 +212,27 @@
                     $scope.pedidoTemporal.Porc_IngBr_Mis = $scope.Iva_IngBr.Porc_IngBr_Mis;
                     $scope.pedidoTemporal.IngBr_Mis = $scope.Iva_IngBr.IngBr_Mis;
                     $scope.pedidoTemporal.SubTotal = $scope.Iva_IngBr.SubTotal;
+                    $scope.pedidoTemporal.Descuento = $scope.Iva_IngBr.Descuento;
+                    $scope.pedidoTemporal.Total_Neto = $scope.Iva_IngBr.Total_Neto;
 
                 }
 
-                $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.pedidoTemporal.Total_Gravado,2);
-                $scope.pedidoTemporal.Porc_Iva_Ins = $filter('number')($scope.pedidoTemporal.Porc_Iva_Ins,2);
             };
 
+            $scope.calculaIngBrutos = function(cliente,productos){
+                if(productos.count() > 0){
+                    //IVA y CM
+                    //.....
 
+
+                    //IVA
+                    //......
+
+
+                    //CALCULO DE IIBB
+                    //......
+                }
+            };
             /////////////////////////////////////////
             // BUSCADOR DE CLIENTES
             $scope.clientes = [];
@@ -293,6 +309,7 @@
                     if(des !== ""){
                         $http.get(apiURL+"?a=get&t=prodma&des="+des)
                             .then(function(resp){
+                                console.log(resp.data);
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
                                 productoSeleccion.attr('size', 5);

@@ -11,10 +11,10 @@
                 <label for="" class="control-label">IVA:</label>
             </div>
             <div  class="col-md-4 col-xs-4 falso-xs-12">
-                <input type="text" class="form-control" readonly ng-model="{{pedidoTemporal.Porc_Iva_Ins + pedidoTemporal.Porc_Iva_NoIns | number:2}}">
+                <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Porc_Iva">
             </div>
             <div  class="col-md-4 col-xs-4 falso-xs-12">
-                <input type="text" class="form-control" readonly ng-model="{{pedidoTemporal.Iva_Ins + pedidoTemporal.Iva_NoIns | number:2}}">
+                <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Iva">
             </div>
             <div class=" col-md-4 col-xs-4 falso-xs-12">
                 <label for="" class="control-label">Exento:</label>

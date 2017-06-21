@@ -129,7 +129,7 @@ if(isset($_GET)){
                 
                 $sql = $produ_ma->consultaDescripcion($term);
                 foreach ($sql as $dato){// as $dato){
-                    $resultado[] = $dato['Codigo_ProductoF'].' - '. $dato['Descripcion_Producto'];
+                    $resultado[] = $dato['Codigo_Producto'].' - '. $dato['Descripcion_Producto'];
                 }
                 echo json_encode($resultado);
             }
