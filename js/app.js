@@ -10,8 +10,6 @@
 
     var formUp = $('.formData'),
         btnPlus = $('.agregar'),
-        btnEditar = $('.editar'),
-        btnEliminar = $('.eliminar'),
         clienteSeleccion = $("#clienteSeleccion"),
         productoSeleccion = $("#productoSeleccion"),
         inputCantidad = $("#CantProd"),
@@ -20,7 +18,9 @@
         buscarProducto = $("#buscarProducto"),
         buscarCliente = $("#buscarCliente"),
         modalCliente = $("#modalCliente"),
-        RubroProdInput = $("#RubroProd");
+        RubroProdInput = $("#RubroProd"),
+        modalRadio = $("#modalRadio");
+
 
 
     btnPlus.on('click',function(e){
@@ -58,12 +58,15 @@
         .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
+
             $scope.productoTemporal = {};
             $scope.pedidoTemporal.Productos = [];
+
             $scope.produ_ma = {};
             $scope.produ_frac = {};
             $scope.mostrarC = false;
-            $scope.mostrarP = false;            
+            $scope.mostrarP = false;
+            $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "0";
             
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
@@ -91,6 +94,7 @@
             /////////// SELECCIONA PEDIDO
             $scope.selectPedido = function (ped) {
                 $scope.pedidoTemporal = ped;
+                //console.log(ped);
 
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
@@ -124,6 +128,7 @@
             $scope.selectProducto = function(prod,formCtrlProducto){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
+
                 //console.log($scope.productoTemporal);
                 /*
                 $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
@@ -164,12 +169,16 @@
 
             $scope.agregarProductoGrilla = function(event,prodTemporal){
                 if(event.which === 13 )                
-                {                    
+                {
+
                     /*Si esta modificando, que despliegue y se posicione en Buscar*/
                     var encontrarProducto = false;
 
-                    if($scope.pedidoTemporal.Productos)
-                       encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+                    if($scope.pedidoTemporal.Productos.length > 0)
+                    {
+                        console.log(prodTemporal);
+                        encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+                    }
 
                     if(encontrarProducto)
                         $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
@@ -251,7 +260,7 @@
                                 //console.log(resp.data);
                                 $scope.clientes = resp.data;
                                 $scope.mostrarC = $scope.clientes.length > 0;
-                                $("#clienteSeleccion").attr('size', 5);
+                                clienteSeleccion.attr('size', 5);
                             })
                             .catch(function(){
                                 console.log("ERROR");
@@ -439,8 +448,8 @@
             };
 
             ///////////////////////////////////////////////////////
-            $scope.resetearForm = function(pedidoForm){
-                $('input').val('').removeAttr('checked').removeAttr('selected');
+            $scope.resetearFormulario = function(pedidoForm){
+                $('input').val('').removeAttr('selected');
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
                 $scope.pedidoTemporal.Productos = [];
@@ -450,4 +459,27 @@
                 pedidoForm.$setUntouched();
             };
 
+            $scope.changeRadio = function(){
+                modalRadio.modal('show');
+            };
+
+            $scope.radioChangeSi = function(){
+                $scope.pedidoTemporal.Cliente = {};
+                $scope.pedidoTemporal.Productos = [];
+
+                $scope.pedidoTemporal.Total_Gravado = 0.00;
+                $scope.pedidoTemporal.Total_Exento = 0.00;
+                $scope.pedidoTemporal.Total_Neto = 0.00;
+
+
+                modalRadio.modal('hide');
+                $scope.Generado_Por = $scope.pedidoTemporal.Generado_Por;
+                return true;
+            };
+
+            $scope.radioChangeNo = function(){
+                modalRadio.modal('hide');
+                $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por;
+                return false;
+            }
         });

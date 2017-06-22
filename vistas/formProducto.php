@@ -62,7 +62,7 @@
                 <label class="control-label" for="CantProd">Cant.</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
-                <input type="text" id="CantProd" class="form-control" name="CantProd"  ng-model="productoTemporal.Cantidad" ng-keypress="agregarProductoGrilla($event,productoTemporal)" autocomplete="off">
+                <input type="text" id="CantProd" class="form-control" name="CantProd"  ng-model="productoTemporal.Cantidad" ng-keydown="agregarProductoGrilla($event,productoTemporal)" autocomplete="off">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Precio</label>
