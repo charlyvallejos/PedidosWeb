@@ -28,8 +28,8 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <p>Perderá los datos cargados, continúa?</p>
-                                <a href="" class="btn-1" ng-click="radioChangeSi()">Si</a>
-                                <a href="" class="btn-0" ng-click="radioChangeNo()">No</a>
+                                <button class="btn-1" ng-click="radioChangeSi()">Si</button>
+                                <button class="btn-0" ng-click="radioChangeNo()">No</button>
                             </div>
                         </div>
                     </div>
@@ -72,16 +72,16 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button class="btn-0" href="#" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
+                        <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" href="#" ng-click="grabarPedido(pedidoForm)" ng-disabled="pedidoTemporal.Productos.length == 0">Grabar</button>
+                        <button class="btn-1" ng-click="grabarPedido(pedidoForm)" ng-disabled="pedidoTemporal.Productos.length == 0">Grabar</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" href="#" ng-click="imprimirPedido(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Imprimir</button>
+                        <button class="btn-1" ng-click="imprimirPedido(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Imprimir</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" href="#" ng-click="historial(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Historial</button>
+                        <button class="btn-1" ng-click="historial(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Historial</button>
                     </div>
 
                 </div>

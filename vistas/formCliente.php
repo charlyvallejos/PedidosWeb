@@ -6,8 +6,8 @@
             <div class="modal-content">
                 <div class="modal-body" ng-model="clie">
                     <p>El cliente ingresado no se corresponde al vendedor actual, desea continuar de todas formas?</p>
-                    <a href="" class="btn-1" ng-click="seleccionClienteModal()">Si</a>
-                    <a href="" class="btn-0" data-dismiss="modal">No</a>
+                    <button class="btn-1" ng-click="seleccionClienteModal()">Si</button>
+                    <button class="btn-0" data-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
