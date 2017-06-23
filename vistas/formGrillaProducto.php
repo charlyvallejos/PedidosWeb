@@ -1,4 +1,4 @@
-<fieldset><legend>Grilla Producto</legend>
+<fieldset class="grillaProd"><legend>Grilla Producto</legend>
     <table data-mostrar class="table table-striped">
         <thead>
         <tr>

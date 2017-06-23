@@ -389,7 +389,8 @@
                                 .then(function(resp){
                                     $scope.productoTemporal = resp.data;
                                     $scope.poneColorRubro(resp.data.Rubro_Color);
-
+                                    //// aca es donde tendria q calcular bien elprecio del producto
+                                    ///  segun como esta en
                                     $http.get(apiURL+"?a=get&t=listade&idPro="+$scope.productoTemporal.Id_Producto+"&idFrac="+$scope.productoTemporal.Id_Fraccio+"&idListaCa="+$scope.pedidoTemporal.Cliente.Id_Lista_Precio)
                                         .then(function(resp){
                                            $scope.productoTemporal.Precio_Lista = resp.data[0].Precio_Lista;
@@ -415,7 +416,9 @@
 //                   }
             };
 
+            $scope.Precio_Producto = function(id_prod,id_frac,id_listaCa,idMoneda,id_cli){
 
+            };
 ///////////////truchisimo
             $scope.poneColorRubro = function(color){
               if(color == "0")
@@ -452,6 +455,7 @@
                 $('input').val('').removeAttr('selected');
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
+                $scope.pedidoTemporal.Generado_Por = "0";
                 $scope.pedidoTemporal.Productos = [];
                 divMjeProd.hide();
                 divMjeCliente.hide();
@@ -460,20 +464,15 @@
             };
 
             $scope.changeRadio = function(){
-                modalRadio.modal('show');
+                if($scope.pedidoTemporal.Nro_Pedido != undefined)
+                    modalRadio.modal('show');
             };
 
             $scope.radioChangeSi = function(){
-                $scope.pedidoTemporal.Cliente = {};
-                $scope.pedidoTemporal.Productos = [];
-
-                $scope.pedidoTemporal.Total_Gravado = 0.00;
-                $scope.pedidoTemporal.Total_Exento = 0.00;
-                $scope.pedidoTemporal.Total_Neto = 0.00;
-
-
+                var gen = $scope.pedidoTemporal.Generado_Por;
+                $scope.pedidoTemporal = {};
                 modalRadio.modal('hide');
-                $scope.Generado_Por = $scope.pedidoTemporal.Generado_Por;
+                $scope.pedidoTemporal.Generado_Por = gen;
                 return true;
             };
 

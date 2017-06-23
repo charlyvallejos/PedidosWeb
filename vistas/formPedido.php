@@ -70,6 +70,19 @@
                         </div>
                     </div>
                 </div>
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label for="trans" class="control-label">Transporte:</label>
+                        </div>
+                        <div class="col-xs-9">
+                            <select name="transportista" id="trans" class="form-control">
+                                <option value="SPA">SPA</option>
+                                <option value="VIA1">VIA1</option>
+                            </select>
+                        </div>
+                    </div>
+
                 <div class="row">
                     <div class="col-xs-12">
                         <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
