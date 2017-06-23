@@ -60,6 +60,7 @@
 .funkyradio input[type="radio"]:checked ~ label,
 .funkyradio input[type="checkbox"]:checked ~ label {
     color: #1b856f;
+    font-weight: bold;
 }
 
 .funkyradio input[type="radio"]:checked ~ label:before,

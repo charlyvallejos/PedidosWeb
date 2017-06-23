@@ -80,6 +80,8 @@ if(isset($_GET)){
                         echo json_encode($clien_ma->consultaCliente_Id($idCli));
                 else if(isset($cod))
                     echo json_encode($clien_ma->consultaCodigoCliente($cod));
+                else
+                    echo json_encode($clien_ma->consulta_todos());
             }
             else if($tabla == 'prodma')
             {

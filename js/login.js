@@ -31,7 +31,8 @@ var app = angular.module('appLogin', [])
                 headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8;'}
             })
                 .then(function(resp){
-                    $window.location.reload();
+                    console.log($window.location.host);
+                    //$window.location.reload();
                 })
                 .catch(function(resp){
                     console.log(resp);

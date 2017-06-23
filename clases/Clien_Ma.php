@@ -81,6 +81,19 @@ class Clien_Ma
     protected $Genera_Factura_PDF;
     protected $Email_Factura_PDF;
 
+    public function consulta_todos(){
+        $sql = "CALL Clien_Ma_Cons()";
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $ex)
+        {
+            return $ex->getMessage();
+        }
+    }
+
     public function consultaDescripcion($descripcion){
         $sql = "CALL Clien_Ma_Igual_Descri(:descripcion)";
         //$sql = "SELECT * FROM Clien_Ma WHERE Razon_Social like '%$descripcion%'";
