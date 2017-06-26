@@ -494,3 +494,12 @@ ul.nav li:nth-child(3)  {
 .logo{
     margin-top:10px !important;
 }
+.importante{
+    color:#a52626 !important;
+}
+.margin-top{
+    margin-top:-5px !important;
+}
+.bold{
+    font-weight: bold;
+}

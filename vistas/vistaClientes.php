@@ -1,5 +1,6 @@
 <div ng-controller="clientesController" Id="vistaCliente">
     <?php
+    include 'formClienteConsulta.php';
     ?>
     <!-------------------------------------------------------------------------------------------------------------------->
     <div class="panel panel_pedido" ng-init="consultaClientes()">

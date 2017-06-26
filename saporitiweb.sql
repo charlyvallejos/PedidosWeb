@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2017 a las 22:25:22
+-- Tiempo de generación: 26-06-2017 a las 22:01:31
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -26,6 +26,97 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
     IFNULL(clien_ma.id,0) AS id,
+    IFNULL(clien_ma.Codigo_Cliente,'') AS Codigo_Cliente,
+    IFNULL(clien_ma.Razon_Social,'') AS Razon_Social,
+    IFNULL(clien_ma.Nombre_Fantasia, '') AS Nombre_Fantasia,
+    IFNULL(clien_ma.Domicilio, '') AS Domicilio,
+    IFNULL(clien_ma.Codigo_Postal, '') AS Codigo_Postal,
+    IFNULL(clien_ma.Localidad,'') AS Localidad,
+    IFNULL(TRIM(provi_ma.descripcion), 0) AS Provincia,
+    IFNULL(clien_ma.Domicilio_Entrega, '') AS Domicilio_Entrega,
+    IFNULL(clien_ma.Codigo_Postal_Entrega, 0) AS Codigo_Postal_Entrega,
+    IFNULL(clien_ma.Localidad_Entrega,'') AS Localidad_Entrega,
+    IFNULL(trim(Provi3.descripcion), 0) AS Provincia_Entrega,
+    IFNULL(clien_ma.Domicilio_Cobro, '') AS Domicilio_Cobro,
+    IFNULL(clien_ma.Codigo_Postal_Cobro, 0) AS Codigo_Postal_Cobro,
+    IFNULL(clien_ma.Localidad_Cobro,'') AS Localidad_Cobro,
+    IFNULL(trim(Provi2.descripcion), 0) AS Provincia_Cobro,
+    IFNULL(repar_ma.Codigo, '') AS Codigo_Reparto,
+    IFNULL(trim(zonas_ma.Descripcion), '') AS Zona,
+    CONCAT(IFNULL(TRIM(clien_ma.Telefonos), ''),IFNULL(TRIM(clien_ma.Prefijo_Telefono_1),''),' ',IFNULL(TRIM(clien_ma.Telefono_1), ''),' ',
+           IFNULL(TRIM(clien_ma.Prefijo_Telefono_2),''),' ',IFNULL(TRIM(clien_ma.Telefono_2), ''),' ',IFNULL(TRIM(clien_ma.Prefijo_Telefono_3),''),' ',IFNULL(TRIM(clien_ma.Telefono_3), '')) AS Telefono,
+    IFNULL(clien_ma.Fax, '') AS Fax,
+    IFNULL(Tipo_Iva.Descripcion, '') AS Tipo_Iva,
+    IFNULL(clien_ma.Nro_Cuit, '') AS Nro_Cuit,
+    IFNULL(clien_ma.Nro_Ing_Brutos, '') Nro_Ing_Brutos,
+    IFNULL(trim(cat_ing_br.Descripcion), '') AS Categoria_Ing_Br,
+    IFNULL(clien_ma.Comision, 0) AS Comision,
+    IFNULL(trim(lista_ca.Descripcion), '') AS Lista_Precio,
+    case IFNULL(clien_ma.Estado, '') when 'I' then 'INACTIVO' WHEN 'A' THEN 'ACTIVO' WHEN 'B' THEN 'BAJA' END AS Estado,
+    IFNULL(trim(convt_ma.Descripcion), '') AS Condicion_Vta,
+    IFNULL(trim(agcli_ma.Descripcion), 0) AS Agrupacion,
+    IFNULL(vende_ma.Codigo_Vendedor, 0) AS Codigo_Vendedor,
+    IFNULL(vende_ma.Nombre_Vendedor, 0) AS Nombre_Vendedor,
+    IFNULL(clien_ma.Contacto, '') AS Contacto,
+    IFNULL(clien_ma.Nivel_Habil, 0) AS Nivel_Habil,
+    IFNULL(Repar2.Codigo, 0) AS Reparto_Entrega,
+    IFNULL(Repar3.Codigo, 0) AS Reparto_Cobro,
+    IFNULL(clien_ma.Dcto, 0) AS Dcto,
+    IFNULL(clien_ma.Credito, 0) AS Credito,
+    IFNULL(clien_ma.Protocolo, 0) AS Protocolo,
+    IFNULL(clien_ma.Nro_Sedronar, '') AS Nro_Sedronar,
+    IFNULL(DATE_FORMAT(clien_ma.Fecha_Vto_Sedro, '%d/%m/%Y'),'01/01/1900') AS Fecha_Vto_Sedro,
+    IFNULL(date_format(clien_ma.Fecha_Alta,'%d/%m/%Y'),'01/01/1900') AS Fecha_Alta,
+    IFNULL(clien_ma.Remito, 0) AS Remito,
+    IFNULL(clien_ma.Dcto_Pago_Ef, 0) AS Dcto_Pago_Ef,
+    IFNULL(clien_ma.eMail, '') AS eMail,
+    IFNULL(clien_ma.eMailProtocolos, '') AS eMailProtocolos,
+    IFNULL(clien_ma.Id_Usuario, 0) AS Id_Usuario,
+    IFNULL(date_format(clien_ma.Fecha_Operacion,'%d/%m/%Y'),'01/01/1900') AS Fecha_Operacion,
+    IFNULL(clien_ma.Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
+    IFNULL(trim(trans_ma.Razon_Social),'') AS Transporte,
+    IFNULL(clien_ma.Convenio,0) AS Convenio,
+    case IFNULL(clien_ma.Afip,'') when 'A' then 'ACTIVO' ELSE 'NO ACTIVO' END AS Afip,
+    IFNULL(clien_ma.Grupo_Cotiza,0) AS Grupo_Cotiza,
+    case IFNULL(clien_ma.Estado_Deudor,0) when 1 THEN 'DEUD. X VTAS.' WHEN 2 THEN 'DEUD. EN GESTION JUD.' WHEN 3 THEN 'DEUD. INCOBRABLES' END AS Estado_Deudor,
+    IFNULL(date_format(clien_ma.Fecha_Estado_Deudor,'%d/%m/%Y'),'01/01/1900') AS Fecha_Estado_Deudor,
+    IFNULL(date_format(clien_ma.Fecha_Facturar_Hasta,'%d/%m/%Y'),'01/01/1900') AS Fecha_Facturar_Hasta,
+    IFNULL(clien_ma.Imprime_Nc_Dcto, 0) AS Imprime_Nc_Dcto,
+    IFNULL(clien_ma.Id_Trans_Clien,0) AS Id_Trans_Clien,
+    IFNULL(clien_ma.Motivo,'') AS Motivo,
+    IFNULL(trim(pais_ma.Nombre), 0) AS Pais,
+    IFNULL(date_format(clien_ma.Fecha_Vto_Psico,'%d/%m/%Y'),'01/01/1900') AS Fecha_Vto_Psico,
+    IFNULL(clien_ma.Prefijo_Fax_1,'') AS Prefijo_Fax_1,
+    IFNULL(clien_ma.Fax_1, '') AS Fax_1,
+    IFNULL(clien_ma.Prefijo_Fax_2,'') AS Prefijo_Fax_2,
+    IFNULL(clien_ma.Fax_2, '') AS Fax_2,
+    IFNULL(clien_ma.Prefijo_Celular,'') AS Prefijo_Celular,
+    IFNULL(clien_ma.Celular, '') AS Celular,
+    IFNULL(clien_ma.Director_Tecnico, '') AS Director_Tecnico,
+    IFNULL(clien_ma.Pasar_Importe, 0) AS Pasar_Importe,
+    CASE IFNULL(clien_ma.Grupo_Sedro, 0) WHEN 0 THEN 'INHABILITADOS' WHEN 1 THEN 'PEQUEÑOS OPERADORES' ELSE 'OPERADOR GENERAL' END AS Grupo_Sedro,
+    IFNULL(clien_ma.Genera_Factura_PDF,0) AS Genera_Factura_PDF,
+    IFNULL(clien_ma.Email_Factura_PDF,'') as Email_Factura_PDF
+  FROM Clien_Ma
+    LEFT JOIN provi_ma ON clien_ma.Provincia = provi_ma.provincia
+    LEFT JOIN repar_ma ON clien_ma.Id_Reparto = repar_ma.Id
+    LEFT JOIN zonas_ma on clien_ma.Id_Zona = zonas_ma.Codigo
+    LEFT JOIN cat_ing_br on clien_ma.Id_Categoria_Ing_Br = cat_ing_br.id
+    LEFT JOIN lista_ca on clien_ma.Id_Lista_Precio = lista_ca.Id
+    LEFT JOIN convt_ma on clien_ma.Id_Condicion_Vta = convt_ma.Id
+    LEFT JOIN agcli_ma on clien_ma.Id_Agrupacion = agcli_ma.Id
+    LEFT JOIN trans_ma on clien_ma.Id_Transporte = trans_ma.Id
+    LEFT JOIN pais_ma on clien_ma.Id_Pais = pais_ma.Id
+    left JOIN provi_ma as Provi2 on clien_ma.Provincia_Cobro = Provi2.provincia
+    LEFT JOIN provi_ma as Provi3 on clien_ma.Provincia_Entrega = Provi3.provincia
+    LEFT JOIN repar_ma as Repar2 on clien_ma.Id_Reparto_Cobro = Repar2.Id
+    LEFT JOIN repar_ma as Repar3 on clien_ma.Id_Reparto_Entrega = Repar3.Id
+    LEFT JOIN tipo_iva on clien_ma.Tipo_Iva = Tipo_Iva.Codigo_Iva
+    LEFT JOIN vende_ma on clien_ma.Codigo_Vendedor = vende_ma.Codigo_Vendedor
+  ORDER BY clien_ma.Razon_Social$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons_Codigo` (IN `_CODIGO` INT)  SELECT
+    IFNULL(clien_ma.id,0) AS id,
     IFNULL(Codigo_Cliente,'') AS Codigo_Cliente,
     IFNULL(clien_ma.Razon_Social,'') AS Razon_Social,
     IFNULL(Nombre_Fantasia, '') AS Nombre_Fantasia,
@@ -46,13 +137,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
     CONCAT(IFNULL(TRIM(Telefonos), ''),IFNULL(TRIM(Prefijo_Telefono_1),''),' ',IFNULL(TRIM(Telefono_1), ''),' ',
            IFNULL(TRIM(Prefijo_Telefono_2),''),' ',IFNULL(TRIM(Telefono_2), ''),' ',IFNULL(TRIM(Prefijo_Telefono_3),''),' ',IFNULL(TRIM(Telefono_3), '')) AS Telefono,
     IFNULL(clien_ma.Fax, '') AS Fax,
-    IFNULL(Tipo_Iva, '') AS Tipo_Iva,
+    IFNULL(Tipo_Iva.Descripcion, '') AS Tipo_Iva,
     IFNULL(Nro_Cuit, '') AS Nro_Cuit,
     IFNULL(Nro_Ing_Brutos, '') Nro_Ing_Brutos,
     IFNULL(trim(cat_ing_br.Descripcion), '') AS Categoria_Ing_Br,
     IFNULL(Comision, 0) AS Comision,
     IFNULL(trim(lista_ca.Descripcion), '') AS Lista_Precio,
-    IFNULL(clien_ma.Estado, '') AS Estado,
+    case IFNULL(clien_ma.Estado, '') when 'I' then 'INACTIVO' WHEN 'A' THEN 'ACTIVO' WHEN 'B' THEN 'BAJA' END AS Estado,
     IFNULL(trim(convt_ma.Descripcion), '') AS Condicion_Vta,
     IFNULL(trim(agcli_ma.Descripcion), 0) AS Agrupacion,
     IFNULL(Codigo_Vendedor, 0) AS Codigo_Vendedor,
@@ -72,11 +163,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
     IFNULL(eMailProtocolos, '') AS eMailProtocolos,
     IFNULL(clien_ma.Id_Usuario, 0) AS Id_Usuario,
     IFNULL(date_format(clien_ma.Fecha_Operacion,'%d/%m/%Y'),'01/01/1900') AS Fecha_Operacion,
-  IFNULL(Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
+    IFNULL(Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
     IFNULL(trim(trans_ma.Razon_Social),'') AS Transporte,
     IFNULL(clien_ma.Convenio,0) AS Convenio,
     case IFNULL(Afip,'') when 'A' then 'ACTIVO' ELSE 'NO ACTIVO' END AS Afip,
-  IFNULL(Grupo_Cotiza,0) AS Grupo_Cotiza,
+    IFNULL(Grupo_Cotiza,0) AS Grupo_Cotiza,
     case IFNULL(Estado_Deudor,0) when 1 THEN 'DEUD. X VTAS.' WHEN 2 THEN 'DEUD. EN GESTION JUD.' WHEN 3 THEN 'DEUD. INCOBRABLES' END AS Estado_Deudor,
     IFNULL(date_format(Fecha_Estado_Deudor,'%d/%m/%Y'),'01/01/1900') AS Fecha_Estado_Deudor,
     IFNULL(date_format(Fecha_Facturar_Hasta,'%d/%m/%Y'),'01/01/1900') AS Fecha_Facturar_Hasta,
@@ -104,19 +195,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
     IFNULL(Genera_Factura_PDF,0) AS Genera_Factura_PDF,
     IFNULL(Email_Factura_PDF,'') as Email_Factura_PDF
   FROM Clien_Ma
-  LEFT JOIN provi_ma ON clien_ma.Provincia = provi_ma.provincia
-  LEFT JOIN repar_ma ON clien_ma.Id_Reparto = repar_ma.Id
-  LEFT JOIN zonas_ma on clien_ma.Id_Zona = zonas_ma.Codigo
-  LEFT JOIN cat_ing_br on clien_ma.Id_Categoria_Ing_Br = cat_ing_br.id
-  LEFT JOIN lista_ca on clien_ma.Id_Lista_Precio = lista_ca.Id
-  LEFT JOIN convt_ma on clien_ma.Id_Condicion_Vta = convt_ma.Id
-  LEFT JOIN agcli_ma on clien_ma.Id_Agrupacion = agcli_ma.Id
-  LEFT JOIN trans_ma on clien_ma.Id_Transporte = trans_ma.Id
-  LEFT JOIN pais_ma on clien_ma.Id_Pais = pais_ma.Id
-  left JOIN provi_ma as Provi2 on clien_ma.Provincia_Cobro = Provi2.provincia
-  LEFT JOIN provi_ma as Provi3 on clien_ma.Provincia_Entrega = Provi3.provincia
-  LEFT JOIN repar_ma as Repar2 on clien_ma.Id_Reparto_Cobro = Repar2.Id
-  LEFT JOIN repar_ma as Repar3 on clien_ma.Id_Reparto_Entrega = Repar3.Id
+    LEFT JOIN provi_ma ON clien_ma.Provincia = provi_ma.provincia
+    LEFT JOIN repar_ma ON clien_ma.Id_Reparto = repar_ma.Id
+    LEFT JOIN zonas_ma on clien_ma.Id_Zona = zonas_ma.Codigo
+    LEFT JOIN cat_ing_br on clien_ma.Id_Categoria_Ing_Br = cat_ing_br.id
+    LEFT JOIN lista_ca on clien_ma.Id_Lista_Precio = lista_ca.Id
+    LEFT JOIN convt_ma on clien_ma.Id_Condicion_Vta = convt_ma.Id
+    LEFT JOIN agcli_ma on clien_ma.Id_Agrupacion = agcli_ma.Id
+    LEFT JOIN trans_ma on clien_ma.Id_Transporte = trans_ma.Id
+    LEFT JOIN pais_ma on clien_ma.Id_Pais = pais_ma.Id
+    left JOIN provi_ma as Provi2 on clien_ma.Provincia_Cobro = Provi2.provincia
+    LEFT JOIN provi_ma as Provi3 on clien_ma.Provincia_Entrega = Provi3.provincia
+    LEFT JOIN repar_ma as Repar2 on clien_ma.Id_Reparto_Cobro = Repar2.Id
+    LEFT JOIN repar_ma as Repar3 on clien_ma.Id_Reparto_Entrega = Repar3.Id
+    LEFT JOIN tipo_iva on clien_ma.Tipo_Iva = Tipo_Iva.Codigo_Iva
+WHERE clien_ma.Codigo_Cliente = _CODIGO
   ORDER BY clien_ma.Razon_Social$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Igual_Codigo` (IN `_CODIGO` CHAR(7))  SELECT
@@ -2775,6 +2868,76 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`Id_Usuario`, `Usuario_Login`, `Clave`, `Nombre_Vendedor`, `Codigo_Vendedor`) VALUES
 (1, 'noenoe', 'blabla', 'Noe', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vende_ma`
+--
+
+CREATE TABLE `vende_ma` (
+  `Codigo_Vendedor` int(11) NOT NULL,
+  `Nombre_Vendedor` varchar(50) DEFAULT NULL,
+  `Comision` decimal(12,3) DEFAULT NULL,
+  `Nro_Legajo` smallint(6) DEFAULT NULL,
+  `Interior` bit(1) DEFAULT NULL,
+  `Estado` char(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `vende_ma`
+--
+
+INSERT INTO `vende_ma` (`Codigo_Vendedor`, `Nombre_Vendedor`, `Comision`, `Nro_Legajo`, `Interior`, `Estado`) VALUES
+(1, 'VARNI NORBERTO ANIBAL', '1.000', 8004, b'1111111111111111111111111111111', 'CAR'),
+(2, 'STEFANO GABRIEL', '1.000', 8231, b'1111111111111111111111111111111', 'CAR'),
+(3, 'DE GUZMAN MARIA VICTORIA', '1.000', 8186, b'1111111111111111111111111111111', 'CAR'),
+(4, 'BALIAN CARLOS', '1.000', 8236, b'1111111111111111111111111111111', 'CAR'),
+(5, 'MORINIGO REBECA', '1.000', 8233, b'1111111111111111111111111111111', 'CAR'),
+(6, 'YUSSO ARIEL', '1.000', 8130, b'1111111111111111111111111111111', 'CAR'),
+(7, 'DESACTIVADA', '0.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(8, 'LAURIA ENZO', '1.000', 8129, b'1111111111111111111111111111111', 'CAR'),
+(9, 'SANTORO MARCELO GABRIEL', '1.000', 8057, b'1111111111111111111111111111111', 'CAR'),
+(10, 'PAVIA MIRIAM', '1.000', 8238, b'1111111111111111111111111111111', 'CAR'),
+(11, 'VARNI WALTER', '1.000', 8146, b'1111111111111111111111111111111', 'CAR'),
+(12, 'MOUZO MIRTA SUSANA', '1.000', 8239, b'1111111111111111111111111111111', 'CAR'),
+(13, 'LUKA MARTIN', '1.000', 8127, b'1111111111111111111111111111111', 'CAR'),
+(14, 'TRASMONTANA BRENDA', '1.000', 8224, b'1111111111111111111111111111111', 'CAR'),
+(15, 'MACRI ARIEL', '1.000', 8173, b'1111111111111111111111111111111', 'CAR'),
+(16, 'MILAN SILVIO OSCAR', '1.000', 8103, b'1111111111111111111111111111111', 'CAR'),
+(17, 'VILLAGRA PEREYRA MARIA EUGENIA', '1.000', 8215, b'1111111111111111111111111111111', 'CAR'),
+(18, 'DESACTIVADA', '1.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(19, 'DESACTIVADA', '1.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(20, 'DESACTIVADA', '1.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(21, 'RUIZ DIAZ ROSANA', '3.000', 8147, b'1111111111111111111111111111111', 'CAR'),
+(24, 'BARONI PEDRO ROBERTO', '1.000', 8158, b'1111111111111111111111111111111', 'CAR'),
+(26, 'BIGLIONE RICARDO', '3.000', 8166, b'1111111111111111111111111111111', 'CAR'),
+(28, 'BURGI JOSE MARIA', '3.000', 8106, b'1111111111111111111111111111111', 'CAR'),
+(29, 'BORDA DEMETRIO', '3.000', 8202, b'1111111111111111111111111111111', 'CAR'),
+(30, 'MIGLIOLI PABLO', '3.000', 8237, b'1111111111111111111111111111111', 'CAR'),
+(99, 'BAJAS', '0.000', 0, b'1111111111111111111111111111111', 'CAR'),
+(98, 'CLIENTES LIBRES', '0.000', 0, b'1111111111111111111111111111111', 'CAR'),
+(31, 'FARIAS MIGUEL ANGEL', '1.000', 8185, b'1111111111111111111111111111111', 'CAR'),
+(32, '', '1.000', 8226, b'1111111111111111111111111111111', 'CAR'),
+(33, 'TORRES DARDO', '3.000', 8193, b'1111111111111111111111111111111', 'CAR'),
+(35, 'HERNANDEZ PABLO DANIEL', '1.000', 8205, b'1111111111111111111111111111111', 'CAR'),
+(38, 'SAN JUAN', '0.000', 0, b'1111111111111111111111111111111', 'CAR'),
+(39, 'DESACTIVADA', '3.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(42, 'MONTERO OSVALDO', '3.000', 8044, b'1111111111111111111111111111111', 'CAR'),
+(43, 'SUAREZ ULISES', '2.500', 999, b'1111111111111111111111111111111', 'CAR'),
+(50, 'DESACTIVADA', '0.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(0, 'DIRECTOS', '0.000', 0, b'1111111111111111111111111111111', 'CAR'),
+(23, 'LUACES CARLOS', '1.000', 8235, b'1111111111111111111111111111111', 'CAR'),
+(22, 'A.C', '1.000', 8102, b'1111111111111111111111111111111', 'CAR'),
+(34, 'TELLO EDUARDO', '1.000', 8218, b'1111111111111111111111111111111', 'CAR'),
+(36, 'RODRIGUEZ SERGIO GABRIEL', '1.000', 8209, b'1111111111111111111111111111111', 'CAR'),
+(37, 'CORDOBA	', '0.000', 8234, b'1111111111111111111111111111111', 'CAR'),
+(40, 'DESACTIVADA', '0.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(41, 'BENITEZ ESTELA MONICA', '0.000', 8131, b'1111111111111111111111111111111', 'CAR'),
+(44, 'DESACTIVADA', '1.000', 0, b'1111111111111111111111111111111', 'BAJ'),
+(25, 'ACOSTA JORGE', '1.000', 8199, b'1111111111111111111111111111111', 'CAR'),
+(27, 'GOLBERT GUSTAVO', '3.000', 8198, b'1111111111111111111111111111111', 'CAR'),
+(70, 'MACY', '0.000', 0, b'1111111111111111111111111111111', 'CAR');
 
 -- --------------------------------------------------------
 
