@@ -120,28 +120,6 @@ th {
     cursor:pointer;
 }
 
-.pagination>li>a{
-    color:#23ab8e !important;
-}
-.pagination li a:hover{
-    color:#23ab8e !important;
-}
-.pagination li:hover{
-    background:#23ab8e !important;
-}
-
-li.active > a, li.active > span{
-    /*background:#202D34 !important;*/
-    /*border-color:#202D34 !important;*/
-    color:#23ab8e !important;
-    cursor:pointer;
-    font-weight: bolder;
-}
-li.active > a:hover, li.active > span:hover{
-    color:#23ab8e !important;
-    font-weight: bolder;
-}
-
 .editar , .eliminar {
     font-weight: bold !important;
 }
@@ -503,3 +481,32 @@ ul.nav li:nth-child(3)  {
 .bold{
     font-weight: bold;
 }
+
+
+.pagination>li>a{
+    color:#23ab8e !important;
+}
+.pagination li a:hover{
+    color:#23ab8e !important;
+}
+.pagination li:hover{
+    background:#23ab8e !important;
+}
+
+li.active > a, li.active > span{
+    color:#23ab8e !important;
+    cursor:pointer;
+    font-weight: bolder;
+
+}
+li.active > a:hover, li.active > span:hover{
+    color:#23ab8e !important;
+    font-weight: bolder;
+
+}
+
+.pagination > li.active > a, .pagination > li.active > span{
+    background-color:rgba(24, 108, 88, 0.16) !important;
+    border-color: rgba(24, 108, 88, 0.16) !important;
+}
+
