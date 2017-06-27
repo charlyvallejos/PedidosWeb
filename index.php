@@ -37,6 +37,7 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/appCliente.js"></script>
+    <script type="text/javascript" src="js/appProducto.js"></script>
     </body>
 </html>
 <?php  } else { include 'vistas/formLogin.php'; } ?>

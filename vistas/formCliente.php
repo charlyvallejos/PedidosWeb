@@ -14,7 +14,7 @@
     </div>
 
 <fieldset><legend>Cliente</legend>
-    <div class="msgCliente ocultar">No se puede modificar el cliente si existen productos cargados</div>
+    <div class="msgCliente ocultar"></div>
     <div class="item form-group top_search">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
@@ -105,10 +105,10 @@
                 <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Transporte">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Agrup</label>
+                <label class="control-label" for="AgrupCli">Agrup</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Agrupacion">
+                <input type="text" id="AgrupCli" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Agrupacion">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
                 <label class="control-label" for="Codigo_Vendedor">Vend</label>

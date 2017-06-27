@@ -46,7 +46,21 @@ class Produ_Ma{
             $query->execute();
             return $query->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
-            $ex->getMessage();
+            return $ex->getMessage();
+        }
+    }
+
+    public function consultaTodos()
+    {
+        $sql = "CALL Produ_Ma_Cons()";
+        try
+        {
+            $conectar = Conexion::conectar();
+            $query = $conectar->prepare($sql);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            return $ex->getMessage();
         }
     }
     

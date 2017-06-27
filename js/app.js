@@ -19,7 +19,8 @@
         buscarCliente = $("#buscarCliente"),
         modalCliente = $("#modalCliente"),
         RubroProdInput = $("#RubroProd"),
-        modalRadio = $("#modalRadio");
+        modalRadio = $("#modalRadio"),
+        AgrupCliInput = $("#AgrupCli");
 
 
 
@@ -53,9 +54,12 @@
         
     
 
-    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente']) // aplicacion de angular
+    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente','appProducto']) // aplicacion de angular
 
         .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
+            $scope.date = new Date();
+            $scope.date = $filter('date')(Date.now(),'dd/MM/yyyy');
+
             $scope.pedidos = [];
             $scope.pedidoTemporal = {};
 
@@ -94,7 +98,7 @@
             /////////// SELECCIONA PEDIDO
             $scope.selectPedido = function (ped) {
                 $scope.pedidoTemporal = ped;
-                //console.log(ped);
+                console.log(ped);
 
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
@@ -150,10 +154,8 @@
 
             $scope.borraProductoGrilla = function(prodTemporal){
 
-
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
-                console.log($scope.index);
-                /*si esta en la grilla lo borra, sino despliega el control de producto y se posiciona en buscar*/
+
                 if($scope.index >= 0){
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
                     $scope.productoTemporal = null;
@@ -171,26 +173,28 @@
                 if(event.which === 13 )                
                 {
 
-                    /*Si esta modificando, que despliegue y se posicione en Buscar*/
-                    var encontrarProducto = false;
+                    if(prodTemporal.Estado !== "BAJ"){
 
-                    if($scope.pedidoTemporal.Productos.length > 0)
-                    {
-                        console.log(prodTemporal);
-                        encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+                        var encontrarProducto = false;
+
+                        if($scope.pedidoTemporal.Productos.length > 0)
+                        {
+                            encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+                        }
+
+                        if(encontrarProducto)
+                            $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
+                        else
+                        {
+                            prodTemporal.Estado = "CAR";
+                            $scope.pedidoTemporal.Productos.push(prodTemporal);
+                        }
+
+                        $scope.productoTemporal = null;
+                        buscarProducto.val('');
+                        buscarProducto.focus();
+                        $scope.calculaTotal();
                     }
-
-                    if(encontrarProducto)
-                        $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
-                       /*Si esta agregando, que haga un push al array de grilla, despliegue y se posicione en Buscar*/
-                    else
-                        $scope.pedidoTemporal.Productos.push(prodTemporal);
-
-                    $scope.productoTemporal = null;
-                    buscarProducto.val('');
-                    buscarProducto.focus();
-                    $scope.calculaTotal();
-
                 }
             };
 
@@ -268,6 +272,7 @@
                     }
                     else
                     {
+                        divMjeCliente.text = "No se puede modificar el cliente si existen productos cargados";
                         divMjeCliente.show();
                     }
                 }
@@ -295,16 +300,38 @@
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
-                                    if(CodVendedor === resp.data.Codigo_Vendedor)
+                                    if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
                                     {
-                                        $scope.pedidoTemporal.Cliente = resp.data;
-                                        buscarCliente.val('');
-                                        buscarProducto.focus();
+                                        if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
+                                        {
+                                            if(CodVendedor == resp.data.Codigo_Vendedor)
+                                            {
+                                                $scope.poneColorAgrup(resp.data.Id_Agrupacion);
+
+                                                $scope.pedidoTemporal.Cliente = resp.data;
+                                                buscarCliente.val('');
+                                                buscarProducto.focus();
+                                            }
+                                            else
+                                            {
+                                                modalCliente.attr('data-codCli',cod);
+                                                modalCliente.modal('show');
+                                            }
+                                        }
+                                        else
+                                        {
+                                            divMjeCliente.text("");
+                                            divMjeCliente.append("Este cliente no dispone permiso de compra");
+                                            divMjeCliente.fadeIn(5);
+                                            divMjeCliente.fadeOut(6000);
+                                        }
                                     }
                                     else
                                     {
-                                            modalCliente.attr('data-codCli',cod);
-                                            modalCliente.modal('show');
+                                        divMjeCliente.text("");
+                                        divMjeCliente.append("Este cliente se encuentra inhabilitado, su fecha de psicotrópicos caduco");
+                                        divMjeCliente.fadeIn(5);
+                                        divMjeCliente.fadeOut(6000);
                                     }
                         })
                                 .catch(function(){
@@ -315,11 +342,26 @@
                 }
                 else
                 {
-                    divMjeCliente.show();
+                    divMjeCliente.text("");
+                    divMjeCliente.append("No se puede modificar el cliente si existen productos cargados");
+                    divMjeCliente.fadeIn(5);
+                    divMjeCliente.fadeOut(6000);
                 }
             };
 
+            $scope.poneColorAgrup = function(idAgrup){
+                if(idAgrup == 2)
+                {
+                    if(!AgrupCliInput.hasClass('colorAgrup'))
+                        AgrupCliInput.addClass('colorAgrup');
+                }
+                else
+                {
+                    if(AgrupCliInput.hasClass('colorAgrup'))
+                        AgrupCliInput.removeClass('colorAgrup');
+                }
 
+            };
             $scope.seleccionClienteModal = function(){
                 modalCliente.modal('hide');
                 var cod = modalCliente.attr('data-codCli');
@@ -348,7 +390,6 @@
                     if(des !== ""){
                         $http.get(apiURL+"?a=get&t=prodma&des="+des)
                             .then(function(resp){
-                                console.log(resp.data);
                                 $scope.productos = resp.data;
                                 $scope.mostrarP = $scope.productos.length > 0;
                                 //productoSeleccion.attr('size', 5);
@@ -389,12 +430,9 @@
                                 .then(function(resp){
                                     $scope.productoTemporal = resp.data;
                                     $scope.poneColorRubro(resp.data.Rubro_Color);
-                                    //// aca es donde tendria q calcular bien elprecio del producto
-                                    ///  segun como esta en
-                                    $http.get(apiURL+"?a=get&t=listade&idPro="+$scope.productoTemporal.Id_Producto+"&idFrac="+$scope.productoTemporal.Id_Fraccio+"&idListaCa="+$scope.pedidoTemporal.Cliente.Id_Lista_Precio)
-                                        .then(function(resp){
-                                           $scope.productoTemporal.Precio_Lista = resp.data[0].Precio_Lista;
-                                        });
+
+                                    //var Precio_Producto = $scope.calculaPrecioProducto($scope.pedidoTemporal.Cliente.Id_Lista_Precio,pedidoTemporal.Id_Moneda,$scope.pedidoTemporal.Cliente.id,$scope.productoTemporal);
+                                    //console.log(Precio_Producto);
 
                                     buscarProducto.val('');
                                     inputCantidad.focus();
@@ -416,7 +454,54 @@
 //                   }
             };
 
-            $scope.Precio_Producto = function(id_prod,id_frac,id_listaCa,idMoneda,id_cli){
+            $scope.calculaPrecioProducto = function(idLista,idMoneda,idCliente,producto){
+
+                var Precio_Producto = null;
+
+                var Lista_De = null;
+                var Moned_De = null;
+                var Moned_De_Costo = null;
+
+                $http.get(apiURL+"?a=get&t=listade&idPro="+idProd+"&idFrac="+idFrac+"&idListaCa="+idLista)
+                    .then(function(resp){
+                        Lista_De  = resp.data;
+                    });
+
+                if(idMoneda == undefined || idMoneda == 0)
+                    idMoneda = 1;
+
+                if((idMoneda == producto.id_Moneda) && idMoneda != 1){
+                    Precio_Producto.Costo = producto.Costo_MP * 1;
+                    Precio_Producto.Precio_Lista = producto.Costo * Lista_De.Porcentaje;
+                }
+                else
+                {
+                    if(idMoneda == 1 || producto.id_Moneda == 1) {
+                        $http.get(apiURL + "?a=get&t=monedde&idMoneda=" + 1)
+                            .then(function (resp) {
+                                Moned_De = resp.data;
+                            });
+                    }
+                    if(idMoneda == 1){
+                        Precio_Producto.Costo = producto.Costo_MP * Moned_De.Valor_Moneda;
+                        Precio_Producto.Precio_Lista = (producto.Costo * Moned_De.Valor_Moneda) * Lista_De.Porcentaje;
+                    }
+                    else if(producto.id_Moneda == 1)
+                    {
+                        Precio_Producto.Costo = producto.Costo_MP / Moned_De.Valor_Moneda;
+                        Precio_Producto.Precio_Lista = producto.Costo * Lista_De.Porcentaje;
+                    }
+                    else
+                    {
+                        //if()
+                    }
+                }
+
+
+
+
+
+
 
             };
 ///////////////truchisimo
@@ -464,7 +549,8 @@
             };
 
             $scope.changeRadio = function(){
-                if($scope.pedidoTemporal.Nro_Pedido != undefined)
+
+                if($scope.pedidoTemporal.Nro_Pedido != undefined || $scope.pedidoTemporal.Cliente != undefined)
                     modalRadio.modal('show');
             };
 

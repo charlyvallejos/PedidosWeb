@@ -71,17 +71,28 @@
                     </div>
                 </div>
 
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <label for="trans" class="control-label">Transporte:</label>
-                        </div>
-                        <div class="col-xs-9">
-                            <select name="transportista" id="trans" class="form-control">
-                                <option value="SPA">SPA</option>
-                                <option value="VIA1">VIA1</option>
-                            </select>
-                        </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label for="trans" class="control-label">Transporte:</label>
                     </div>
+                    <div class="col-xs-9">
+                        <select name="transportista" id="trans" class="form-control">
+                            <option value="pedidoTemporal.Id_Transporte">SPA</option>
+                            <option value="pedidoTemporal.Id_Transporte">VIA1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-show="pedidoTemporal.Generado_Por == 1">
+                    <div class="col-xs-3">
+                        <label for="moneda" class="control-label">Moneda:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <select name="moneda" id="moneda" class="form-control">
+                            <option value="pedidoTemporal.id_Moneda">PESOS</option>
+                            <option value="pedidoTemporal.id_Moneda">DOLAR</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -90,14 +101,18 @@
                     <div class="col-md-12">
                         <button class="btn-1" ng-click="grabarPedido(pedidoForm)" ng-disabled="pedidoTemporal.Productos.length == 0">Grabar</button>
                     </div>
-                    <div class="col-md-12">
+                </div>
+                <!--
+                <div class="row">
+                    <div class="col-md-6">
                         <button class="btn-1" ng-click="imprimirPedido(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Imprimir</button>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <button class="btn-1" ng-click="historial(pedidoForm)" ng-disabled="pedidoTemporal.Nro_Pedido == undefined">Historial</button>
                     </div>
 
                 </div>
+                -->
             </div>
 
 

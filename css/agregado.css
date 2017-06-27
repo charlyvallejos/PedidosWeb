@@ -328,7 +328,7 @@ button[disabled]{
 }
 
 
-#trans{
+#trans, #moneda{
     background:transparent;
     margin:5px 0 5px 0;
     font-weight:bold;
@@ -510,3 +510,12 @@ li.active > a:hover, li.active > span:hover{
     border-color: rgba(24, 108, 88, 0.16) !important;
 }
 
+
+#modalRadio{
+    z-index: 9999999;
+}
+
+
+.colorAgrup{
+    background: rgba(180, 0, 0, 0.16) !important;
+}

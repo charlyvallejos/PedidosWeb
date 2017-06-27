@@ -99,6 +99,8 @@ if(isset($_GET)){
                     $codigoFraccio = substr($cod, 6);
                     echo json_encode ($produ_ma->consultaCodigoProducto($codigoProducto, $codigoFraccio));
                 }
+                else
+                    echo json_encode ($produ_ma->consultaTodos());
             }
             else if($tabla == 'prodfrac')
             {
