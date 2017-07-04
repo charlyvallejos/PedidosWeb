@@ -121,6 +121,12 @@
                 div.background2{ margin-top: -10%; }
                 div.background2:before{ width: 100%; }
             }
+
+            #mensjLog p{
+                color:black;
+                background: rgba(233, 233, 233, 0.46);
+                line-height: 3;
+            }
         </style>
         <script src="js/angular.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -148,7 +154,11 @@
             <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
         </button>
     </form>
+
     <div class="powered">
+        <div id="mensjLog">
+            <p>Ingrese una nueva clave</p>
+        </div>
         Si ha olvidado su clave, contactese
     </div>
 </div>

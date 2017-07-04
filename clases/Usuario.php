@@ -19,6 +19,9 @@ class Usuario
             $usuLogin = $_POST['Usuario_Login'];
             $usuClave = $_POST['Clave'];
 
+            $usuClave = base64_encode($usuClave);
+            $usuClave = sha1($usuClave);
+
             $query->bindParam(':Usuario_Login',$usuLogin,PDO::PARAM_STR);
             $query->bindParam(':Clave',$usuClave,PDO::PARAM_STR);
 
@@ -47,5 +50,34 @@ class Usuario
     public function logout(){
         session_unset();
         session_destroy();
+    }
+    public function Igual_User(){
+        $sql = "SELECT Nombre_Vendedor, Codigo_Vendedor FROM usuarios WHERE Usuario_Login = :Usuario_Login AND Clave = :Clave";
+        $conexion = Conexion::conectar();
+        $query = $conexion->prepare($sql);
+        $ok = array('logueado' => 'false');
+        if(isset($_POST)) {
+
+            $usuLogin = $_POST['Usuario_Login'];
+            $usuClave = $_POST['Clave'];
+
+            $usuClave = base64_encode($usuClave);
+            $usuClave = sha1($usuClave);
+
+            $query->bindParam(':Usuario_Login',$usuLogin,PDO::PARAM_STR);
+            $query->bindParam(':Clave',$usuClave,PDO::PARAM_STR);
+
+            return $query->execute() > 0 ? true : false;
+        }
+        else
+            return false;
+    }
+    public function modificarClave(){
+        if(isset($_POST)) {
+
+            $usuLogin = $_POST['Usuario_Login'];
+            $usuClave = $_POST['Clave'];
+
+        }
     }
 }

@@ -292,7 +292,19 @@
 //                    buscarProducto.focus();
 //                }
 //            };
-            
+
+            $scope.listadoPedido = function(){
+
+                    $http.get(apiURL+"?a=get&t=ped&codVend="+codVend+"desde="+$scope.fechaDesde+"hasta="+$scope.fechaHasta)
+                        .then(function(resp){
+                            $scope.pedidos = resp.data;
+                        })
+                        .catch(function(resp){
+                            console.log(resp);
+                        });
+
+            };
+
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();

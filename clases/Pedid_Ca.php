@@ -45,7 +45,7 @@ class Pedid_Ca{
             return $conexion->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }    
     public function consultaPedido($NroPedido){
@@ -66,7 +66,7 @@ class Pedid_Ca{
             return $r;
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
     
@@ -80,10 +80,24 @@ class Pedid_Ca{
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
-    
+    public function consultaTodos_Fecha($codVend,$fechaDesde,$fechaHasta){
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare("CALL Pedid_Ca_Entre_Fechas(:CodigoVendedor,:Desde,:Hasta)");
+            $query->bindParam(':CodigoVendedor', $codVend, PDO::PARAM_INT);
+            $query->bindParam(':Desde', $fechaDesde);
+            $query->bindParam(':Hasta', $fechaHasta);
+            $query->execute();
+            $this->CantidadPedidos = $query->rowCount();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }catch(PDOException $e)
+        {
+            return $e->getMessage();
+        }
+    }
     public function consultaPedidoLimitado($inicio, $fin){
         $sql = "SELECT * FROM Pedid_Ca LIMIT $inicio, $fin";
 
@@ -94,7 +108,7 @@ class Pedid_Ca{
             return $query->fetchALL(PDO::FETCH_ASSOC);
             
         } catch (PDOException $e) {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
             
@@ -222,7 +236,7 @@ class Pedid_Ca{
 
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
 
@@ -242,7 +256,7 @@ class Pedid_Ca{
             return $conexion->execute();
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
 
