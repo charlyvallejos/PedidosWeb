@@ -127,6 +127,9 @@
                 background: rgba(233, 233, 233, 0.46);
                 line-height: 3;
             }
+            .hide{
+                display: none !important;
+            }
         </style>
         <script src="js/angular.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -150,13 +153,17 @@
             <input type="password" name="Clave" ng-model="Login.Clave"><span class="highlight"></span><span class="bar"></span>
             <label>Clave</label>
         </div>
+        <div class="group">
+            <input type="password" name="Clave" ng-model="Login.Clave"><span class="highlight"></span><span class="bar"></span>
+            <label>Repetir Clave</label>
+        </div>
         <button type="submit" class="buttonui" ng-click="login(formLogin)"> <span> Ingresar </span>
             <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
         </button>
     </form>
 
     <div class="powered">
-        <div id="mensjLog">
+        <div id="mensjLog" class="hide">
             <p>Ingrese una nueva clave</p>
         </div>
         Si ha olvidado su clave, contactese

@@ -8,6 +8,11 @@ var app = angular.module('appLogin', [])
         $scope.login = function(formLogin){
             if($.trim($scope.Login.Clave).length > 0 && $.trim($scope.Login.Usuario_Login).length > 0)
             {
+                    if(mensjLog.is(":visible"))
+                    {
+
+                    }
+                    else
                     if($scope.Login.Clave == "saporiti")
                     {
                         $http({
@@ -19,8 +24,7 @@ var app = angular.module('appLogin', [])
                             .then(function(resp){
                                 if(resp.data) {
                                     $window.location.reload();
-                                    console.log(resp.data);
-                                    //mensjLog.html("<p>Ingrese una nueva contraseña</p>");
+                                    mensjLog.show();
                                 }
                                 else
                                     console.log('manejar error');
