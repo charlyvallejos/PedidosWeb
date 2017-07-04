@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2017 a las 22:01:31
+-- Tiempo de generación: 04-07-2017 a las 14:31:51
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -115,7 +115,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons` ()  SELECT
     LEFT JOIN vende_ma on clien_ma.Codigo_Vendedor = vende_ma.Codigo_Vendedor
   ORDER BY clien_ma.Razon_Social$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons_Codigo` (IN `_CODIGO` INT)  SELECT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons_Codigo` (IN `_CODIGO` INT(11))  SELECT
     IFNULL(clien_ma.id,0) AS id,
     IFNULL(Codigo_Cliente,'') AS Codigo_Cliente,
     IFNULL(clien_ma.Razon_Social,'') AS Razon_Social,
@@ -146,6 +146,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Clien_Ma_Cons_Codigo` (IN `_CODIGO`
     case IFNULL(clien_ma.Estado, '') when 'I' then 'INACTIVO' WHEN 'A' THEN 'ACTIVO' WHEN 'B' THEN 'BAJA' END AS Estado,
     IFNULL(trim(convt_ma.Descripcion), '') AS Condicion_Vta,
     IFNULL(trim(agcli_ma.Descripcion), 0) AS Agrupacion,
+    IFNULL(trim(agcli_ma.Id), 0) AS Id_Agrupacion,
     IFNULL(Codigo_Vendedor, 0) AS Codigo_Vendedor,
     IFNULL(Contacto, '') AS Contacto,
     IFNULL(Nivel_Habil, 0) AS Nivel_Habil,
@@ -540,6 +541,48 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons` ()  BEGIN
   END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons_CodVend` (IN `_Codigo` INT(11))  BEGIN
+              SELECT IFNULL(Nro_Pedido,0) AS Nro_Pedido,
+                     IFNULL(Codigo_Cliente,0) AS Codigo_Cliente,
+                     IFNULL(id_Cliente,0) AS id_Cliente,
+                     IFNULL(Fecha_Pedido,'') AS Fecha_Pedido,
+                     IFNULL(Pedid_Ca.Codigo_Vendedor,0) AS Codigo_Vendedor,
+                     IFNULL(Nro_Cotizacion,0) AS Nro_Cotizacion,
+                     IFNULL(Nro_Presupuesto,0) AS Nro_Presupuesto,
+                     IFNULL(Id_Lista,0) AS Id_Lista,
+                     IFNULL(Id_Condicion,0) AS Id_Condicion,
+                     IFNULL(Id_Moneda,0) AS id_Moneda,
+                     IFNULL(Cotizacion_Moneda,0) AS Cotizacion_Moneda,
+                     IFNULL(Pedid_Ca.Estado,'') AS Estado,
+                     IFNULL(Pedid_Ca.Id_Reparto,0) AS Id_Reparto,
+                     IFNULL(Nro_Orden_Compra,'') AS Nro_Orden_Compra,
+                     IFNULL(Id_Tomado_Por,0) AS Id_Tomado_Por,
+                     IFNULL(Pedid_Ca.Id_Usuario,0) AS id_Usuario,
+                     IFNULL(Pedid_Ca.Fecha_Operacion,'') AS Fecha_Operacion,
+                     IFNULL(Pedid_Ca.Id_Grupo_Cliente,0) AS Id_Grupo_Cliente,
+                     IFNULL(Total_Gravado,0) AS Total_Gravado,
+                     IFNULL(Total_Exento,0) AS Total_Exento,
+                     IFNULL(Total_Producto_Ex,0) AS Total_Producto_Ex,
+                     IFNULL(Porc_Iva_Ins,0) AS Porc_Iva_Ins,
+                     IFNULL(Iva_Ins,0) AS Iva_Ins,
+                     IFNULL(Porc_Iva_NoIns,0) AS Porc_Iva_NoIns,
+                     IFNULL(Iva_NoIns,0) AS Iva_NoIns,
+                     IFNULL(Porc_IngBr_Cba,0) AS Porc_IngBr_Cba,
+                     IFNULL(IngBr_Pba,0) AS IngBr_Pba,
+                     IFNULL(Total_Neto,0) AS Total_Neto,
+                     IFNULL(Descuento,0) AS Descuento,
+                     IFNULL(Pedid_Ca.Id_Transporte,'') AS Id_Transporte,
+                     IFNULL(Generado_Por, 0) AS Generado_Por,
+                     IFNULL(Porc_IngBr_Mis,0) AS Porc_IngBr_Mis,
+                     IFNULL(IngBr_Mis,0) AS IngBr_Mis,
+                     IFNULL(Clien_Ma.Nombre_Fantasia,'') AS Nombre_Fantasia
+              FROM Pedid_Ca
+                     LEFT JOIN Clien_Ma on Pedid_Ca.id_Cliente = clien_ma.Id
+              WHERE clien_ma.Codigo_Vendedor = `_Codigo`
+                    -- AND Fecha_Pedido >= CURDATE()
+              ORDER BY Pedid_Ca.Id_Reparto;
+       END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Entre_Fechas` (IN `_CodVend` INT, IN `_Desde` DATETIME, IN `_Hasta` DATETIME)  BEGIN
     SELECT IFNULL(Nro_Pedido,0) AS Nro_Pedido,
            IFNULL(Codigo_Cliente,0) AS Codigo_Cliente,
            IFNULL(id_Cliente,0) AS id_Cliente,
@@ -576,8 +619,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Cons_CodVend` (IN `_Codigo
            IFNULL(Clien_Ma.Nombre_Fantasia,'') AS Nombre_Fantasia
     FROM Pedid_Ca
       LEFT JOIN Clien_Ma on Pedid_Ca.id_Cliente = clien_ma.Id
-    WHERE clien_ma.Codigo_Vendedor = `_Codigo`
-    ORDER BY Pedid_Ca.Id_Reparto;
+    WHERE pedid_ca.Fecha_Pedido >= `_Desde` and pedid_ca.Fecha_Pedido <= _Hasta
+           and pedid_ca.Codigo_Vendedor = _CodVend
+    ORDER BY Pedid_Ca.Fecha_Pedido;
   END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Pedid_Ca_Igual_Nro_Pedido` (IN `_Nro_Pedido` INT(11))  SELECT  IFNULL(Nro_Pedido, 0) AS Nro_Pedido,
@@ -684,6 +728,21 @@ VALUES (_Nro_Pedido, _Renglon, _id_Producto, _id_Fraccio,
   _Codigo_Producto, _Cantidad, _Precio,
   _Precio_Lista, _Estado, _Nro_Cotizacion, _Fecha_Cotizacion,_Nro_Despacho,_Nro_Lote,_Id_Origen)$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons` ()  select
+    CONCAT(substring(produ_frac.Codigo_producto,1,6), produ_frac.Codigo_Fraccio) AS Codigo_Producto,
+    CONCAT(ltrim(rtrim(IfNull(Produ_Ma.Descripcion,''))),' ',ltrim(rtrim(IfNull(Produ_Frac.Descripcion,''))),ltrim(rtrim((IFNull(Fraccio_Ma.Detalle,'')))))  AS Descripcion_Producto,
+    produ_frac.Ume_Vta,
+    produ_frac.Minimo,
+    rubro_ma.Descripcion as Rubro_Vta,
+    lista_de.Precio
+  from produ_frac
+    inner join produ_ma on produ_frac.id_Producto = produ_ma.id
+    inner join fraccio_ma on produ_frac.id_Fraccio = fraccio_ma.id
+    inner join rubro_ma on produ_ma.id_Rubro_Vta = rubro_ma.Id
+    inner join lista_de on produ_frac.id_Producto = lista_de.Id_Producto and produ_frac.id_Fraccio = lista_de.Id_Fraccio
+  WHERE lista_de.Id_Lista_Ca = 2
+  order by Descripcion_Producto$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons_Codigo` (IN `_Codigo_Producto` VARCHAR(9), IN `_Codigo_Fraccio` VARCHAR(3))  SELECT produ_ma.*,
     produ_frac.Id_Producto,
     produ_frac.Id_Fraccio,
@@ -701,7 +760,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Produ_Ma_Cons_Codigo` (IN `_Codigo_
   /* aca tendria q traer tambien los datos de precio, precio lista y lo que falte para el control */
     /*--------------------------*/
     ifnull(Tipo_Iva,'') Tipo_Iva,
-    ifnull(Tipo_Ing_Brutos,0) Tipo_Ing_Brutos
+    ifnull(Tipo_Ing_Brutos,0) Tipo_Ing_Brutos,
+    ifnull(id_Moneda,1) id_Moneda,
+    ifnull(produ_frac.Costo_MP,0) Costo_MP
 
   FROM produ_ma inner join produ_frac on (produ_ma.id = produ_frac.id_Producto) INNER JOIN fraccio_ma on (produ_frac.id_Fraccio = fraccio_ma.id)
     left join uni_med on produ_ma.id_Ume_Vta = uni_med.id
@@ -928,13 +989,13 @@ INSERT INTO `clien_ma` (`Id`, `Codigo_Cliente`, `Razon_Social`, `Nombre_Fantasia
 (4580, '0012033', 'ZZJAVIER OSCAR BESCOS', 'ZZFARMACIA SANTA MAGDALENA', 'SANTA MAGDALENA 668/70', '1277', 'CIUDAD DE BUENOS AIRES', 2, 'SANTA MAGDALENA 668/70-DE 8:00 A 15:00', '1277', 'CIUDAD DE BUENOS AIRES', 2, 'DEPOSITA', '1277', 'CIUDAD DE BUENOS AIRES', 2, 1, 3011, '4301-8461', '', 'RI', '20249142817    ', '106425208      ', 11, '0.000', 15, 'B', 16, 1, 12, 'JAVIER', 1, 1, 1, '0.000', '1000.000', b'1111111111111111111111111111111', '          ', '1990-01-01 00:00:00', '2001-10-26 00:00:00', b'1111111111111111111111111111111', '3.000', 'farmaciasantamagdalena@hotmail.com', 'farmaciasantamagdalena@hotmail.com', 215, '2015-11-30 15:49:27', 4580, 576, b'1111111111111111111111111111111', 'A', 1, 1, '2003-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '43026607  ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (5957, '0008390', 'ZZNOEMI B GAMBOA', 'ZZFARMACIA SAN RAMON II', 'SANTO DOMINGO 2425', '1293', 'CIUDAD DE BUENOS AIRES', 2, 'SANTO DOMINGO 2425 DE 8:00 A 12.00 HRS', '1293', 'CIUDAD DE BUENOS AIRES', 2, 'DEPOSITA', '1293', 'CIUDAD DE BUENOS AIRES', 2, 1, 3011, '4302-6607', '4302-6607', 'RI', '27104966468    ', '928978-10      ', 11, '0.000', 15, 'B', 31, 1, 12, 'PABLO', 1, 1, 1, '0.000', '1000.000', b'1111111111111111111111111111111', '          ', '1990-01-01 00:00:00', '1993-12-21 00:00:00', b'1111111111111111111111111111111', '3.000', 'farmaciasanramonii@hotmail.com', 'farmaciasanramonii@hotmail.com', 86, '2016-08-25 15:56:01', 5957, 576, b'1111111111111111111111111111111', 'A', 1, 1, '2003-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (7760, '0013111', 'MARIELA INES CAMILETTI', 'FARMACIA MOPELLA', 'GAONA 1953', '1706', 'HAEDO', 1, 'PTE.PERON (EX GAONA) 1953 H: 9 A 13 Y 16.3 A 20 ', '1706', 'HAEDO', 1, 'PTE.PERON (EX GAONA) 1953--8:30 A 13 / 16:30 A 19', '1706', 'HAEDO', 1, 148, 106900, '4659-3209', '', 'RI', '27231290538    ', '27231290538    ', 7, '0.000', 2, 'I', 10, 1, 10, 'MARIELA', 1, 148, 148, '0.000', '300.000', b'1111111111111111111111111111111', '          ', '2012-01-24 00:00:00', '2003-09-18 00:00:00', b'1111111111111111111111111111111', '3.000', 'farmaciamopella@yahoo.com.ar', 'farmaciamopella@yahoo.com.ar', 215, '2015-10-09 11:50:17', 7760, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2003-09-18 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
-(8498, '0000665', 'FARMACIA SUR S.R.L.', 'FARMACIA SUR', 'AV SAENZ 1181', '1437', 'CIUDAD DE BUENOS AIRES', 2, 'AV SAENZ 1181 H: 10.00 A 15.00', '1437', 'CIUDAD DE BUENOS AIRES', 2, 'AV SAENZ 1181', '1437', 'CIUDAD DE BUENOS AIRES', 2, 179, 3400, '4919-0509', '4919-0509', 'RI', '30564319593    ', '283821-04      ', 11, '0.000', 2, 'A', 14, 1, 12, 'NOEMI', 1, 179, 179, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '1990-01-01 12:00:00', '1993-12-09 12:00:00', b'1111111111111111111111111111111', '3.000', '', '', 96, '2015-10-26 17:20:50', 8498, 576, b'1111111111111111111111111111111', 'A', 1, 1, '2003-04-16 12:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 12:00:00', '     ', '49199683  ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', 'MARIA MARTA GUERRI                                ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
+(8498, '0000665', 'FARMACIA SUR S.R.L.', 'FARMACIA SUR', 'AV SAENZ 1181', '1437', 'CIUDAD DE BUENOS AIRES', 2, 'AV SAENZ 1181 H: 10.00 A 15.00', '1437', 'CIUDAD DE BUENOS AIRES', 2, 'AV SAENZ 1181', '1437', 'CIUDAD DE BUENOS AIRES', 2, 179, 3400, '4919-0509', '4919-0509', 'RI', '30564319593    ', '283821-04      ', 11, '0.000', 2, 'A', 14, 1, 12, 'NOEMI', 1, 179, 179, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '1990-01-01 12:00:00', '1993-12-09 12:00:00', b'1111111111111111111111111111111', '3.000', '', '', 96, '2015-10-26 17:20:50', 8498, 576, b'1111111111111111111111111111111', 'A', 1, 1, '2003-04-16 12:00:00', '2017-06-25 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 12:00:00', '     ', '49199683  ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', 'MARIA MARTA GUERRI                                ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (9967, '0010403', 'FARMACIA HAEDO S.C.S.', 'FARMACIA HAEDO', 'CASEROS 2', '1706', 'HAEDO   ***', 1, 'CASEROS 2 H: 9 A 20', '1706', 'HAEDO   ***', 1, 'DEPOSITA', '1706', 'HAEDO   ***', 1, 148, 106900, '4650-7031/4659-0580/4460-1444', '', 'RI', '30690132210    ', '30690132210    ', 7, '0.000', 18, 'I', 16, 1, 10, 'CARLOS', 1, 148, 148, '0.000', '500.000', b'1111111111111111111111111111111', '          ', '2011-01-06 00:00:00', '1999-01-18 00:00:00', b'1111111111111111111111111111111', '3.000', '', 'mariana.currarello@centraloeste.com.ar', 0, '2016-08-12 17:09:10', 15245, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2003-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (10173, '0009875', 'MODERNA FARMACIA S.C.S.', 'FARMACIA MODERNA', '25 DE MAYO 139', '1708', 'MORON', 1, '25 DE MAYO 139 H: 9 A 20 ', '1708', 'MORON', 1, 'DEPOSITA', '1708', 'MORON', 1, 148, 107100, '4629-8598/4489-0951', '', 'RI', '30697049017    ', '30697049017    ', 7, '0.000', 18, 'I', 16, 1, 10, 'PATRICIA', 1, 148, 148, '0.000', '500.000', b'1111111111111111111111111111111', '          ', '2011-03-02 00:00:00', '1998-06-03 00:00:00', b'1111111111111111111111111111111', '3.000', '', 'laura.aveni@centraloeste.com.ar', 0, '2016-08-12 17:09:10', 15245, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2003-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (10664, '0012919', 'CENTRAL OESTE RAMOS EN FORMACION', 'FARMACIA CENTRAL OESTE RAMOS', 'AVDA DE MAYO 889', '1704', 'RAMOS MEJIA', 1, 'AVDA DE MAYO 889 H: 9 A 20 ', '1704', 'RAMOS MEJIA', 1, 'DEPOSITA', '1704', 'RAMOS MEJIA', 1, 148, 106900, '4654-5793', '', 'RI', '30708277920    ', '30708277920    ', 7, '0.000', 18, 'I', 16, 1, 10, 'MARIANO', 1, 148, 148, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '2011-01-06 00:00:00', '2003-05-29 00:00:00', b'1111111111111111111111111111111', '3.000', '', '', 0, '2016-07-12 14:56:55', 15245, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2003-05-29 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (10797, '0013671', 'CENTRAL OESTE ITUZAINGO S.C.S', 'CENTRAL OESTE ITUZAINGO', 'LAS HERAS 381', '1714', 'ITUZAINGO', 1, 'LAS HERAS 381', '1714', 'ITUZAINGO', 1, 'DEPOSITA', '1714', 'ITUZAINGO', 1, 183, 107700, '4624-4774/5522', '', 'RI', '30708787058    ', '30708787058    ', 7, '0.000', 18, 'I', 16, 1, 13, 'ANALIA', 1, 183, 183, '0.000', '1000.000', b'1111111111111111111111111111111', '          ', '2011-03-02 00:00:00', '2004-10-12 00:00:00', b'1111111111111111111111111111111', '3.000', '', 'dario.aguilera@centraloeste.com.ar', 0, '2016-08-12 17:09:10', 15245, 620, b'1111111111111111111111111111111', 'A', 1, 1, '2004-10-12 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (13276, '0002097', 'UNION OBRERA METALURGICA DE LA REPUB ARG', 'FARMACIA SINDICAL', 'ADOLFO ALSINA 477', '1702', 'CIUDADELA', 1, 'SAAVEDRA 3845', '1702', 'CIUDADELA', 1, 'SAAVEDRA 3845--9 A 12 / 17 A 19', '1702', 'CIUDADELA', 1, 148, 106500, '4653-8704/1854', '4653-8704/1854', 'EX', '30503220047    ', '0              ', 8, '0.000', 2, 'A', 14, 1, 4, 'ARIEL CRUCES', 1, 148, 148, '0.000', '500.000', b'1111111111111111111111111111111', '          ', '1990-01-01 00:00:00', '1993-12-16 00:00:00', b'1111111111111111111111111111111', '3.000', '', '', 96, '2016-11-11 10:15:05', 13276, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2003-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '46471564  ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', 'CRISTIAN ANGEL SPRITZ                             ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
-(13694, '0014679', 'FARMACIA CALDARELLI S.C.S', 'FARMACIA CALDARELLI', 'AV SAN MARTIN 1631', '1704', 'RAMOS MEJIA', 1, 'AV SAN MARTIN 1631 H: 9 A 12 Y 16.3 A 20', '1704', 'RAMOS MEJIA', 1, 'AV SAN MARTIN 1631', '1704', 'RAMOS MEJIA', 1, 148, 106700, '4654-3802', '', 'RI', '30709957933    ', '30709957933    ', 7, '0.000', 2, 'A', 10, 1, 10, 'JUAN', 1, 148, 148, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '2012-05-15 00:00:00', '2007-05-21 00:00:00', b'1111111111111111111111111111111', '3.000', '', 'nikjua@hotmail.com', 215, '2015-10-09 11:56:40', 13694, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2007-05-21 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
+(13694, '0014679', 'FARMACIA CALDARELLI S.C.S', 'FARMACIA CALDARELLI', 'AV SAN MARTIN 1631', '1704', 'RAMOS MEJIA', 1, 'AV SAN MARTIN 1631 H: 9 A 12 Y 16.3 A 20', '1704', 'RAMOS MEJIA', 1, 'AV SAN MARTIN 1631', '1704', 'RAMOS MEJIA', 1, 148, 106700, '4654-3802', '', 'RI', '30709957933    ', '30709957933    ', 7, '0.000', 2, 'A', 10, 1, 10, 'JUAN', 1, 148, 148, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '2012-05-15 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', '3.000', '', 'nikjua@hotmail.com', 215, '2015-10-09 11:56:40', 13694, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2007-05-21 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '     ', '          ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (14764, '0016071', 'FARMACIA TOMKINSOM 2995 SCS', 'FARMACIA TOMKINSOM 2995 SCS', 'INTENDENTE TOMKISOM 2995', '1643', 'BECCAR', 1, 'INTENDENTE TOMKISOM 2995', '1643', 'BECCAR', 1, 'GRAL.URQUIZA 1757', '1642', 'FLORIDA', 1, 185, 100700, '', '', 'RI', '30710866038    ', '30710866038    ', 7, '0.000', 2, 'I', 20, 1, 13, 'SERGIO', 1, 185, 185, '0.000', '500.000', b'1111111111111111111111111111111', '          ', '2012-04-12 00:00:00', '2012-04-12 00:00:00', b'1111111111111111111111111111111', '3.000', '', '', 86, '2016-09-29 10:15:54', 3236, 620, b'1111111111111111111111111111111', 'A', 1, 1, '2012-04-12 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', 621, '', 200, '1900-01-01 00:00:00', '011  ', '47230319  ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', '                                                  ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (14765, '0016072', 'MONTIEL GUMERCINDO', 'FARMACIA MONTY', 'GOBERNADOR BARREYRO 826', '3360', 'OBERA', 14, 'GOBERNADOR BARREYRO 826', '3360', 'OBERA', 14, 'GOBERNADOR BARREYRO 826', '3360', 'OBERA', 14, 202, 410200, '', '', 'RI', '23075566999    ', '23075566999-24 ', 7, '0.000', 2, 'I', 21, 1, 34, 'X', 1, 202, 202, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '2012-04-16 00:00:00', '2012-04-16 00:00:00', b'1111111111111111111111111111111', '3.000', 'x', 'x', 86, '2013-09-16 11:40:13', 14765, 668, b'1111111111111111111111111111111', 'A', 3, 1, '2012-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '03755', '405029    ', '     ', '          ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', 'carlos horacio zalazar                            ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
 (14766, '0016073', 'FIOTEK MARIA JULIETA SOFIA', 'FARMACIA FIOTEK', '46 978 E/14 Y 15', '1900', 'LA PLATA', 1, 'JUAN DE MANUEL DE ROSAS 325', '1864', 'ALEJANDRO KORN/SAN VICENTE', 1, 'JUAN DE MANUEL DE ROSAS 325', '1864', 'ALEJANDRO KORN/SAN VICENTE', 1, 172, 120300, '', '', 'RI', '27282121633    ', '27282121633    ', 7, '0.000', 2, 'I', 10, 1, 10, 'JULIETA', 1, 172, 172, '0.000', '0.000', b'1111111111111111111111111111111', '          ', '2012-04-16 00:00:00', '2012-04-16 00:00:00', b'1111111111111111111111111111111', '3.000', 'x', 'x', 215, '2012-11-07 15:07:32', 14766, 620, b'1111111111111111111111111111111', 'A', 2, 1, '2012-04-16 00:00:00', '1900-01-01 00:00:00', b'1111111111111111111111111111111', -1, '', 200, '1900-01-01 00:00:00', '02225', '422543    ', '0221 ', '5719553   ', '', '          ', '     ', '          ', '     ', '          ', '     ', '          ', 'maria julieta sofia fiotek                        ', b'1111111111111111111111111111111', 0, b'1111111111111111111111111111111', ''),
@@ -2867,7 +2928,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id_Usuario`, `Usuario_Login`, `Clave`, `Nombre_Vendedor`, `Codigo_Vendedor`) VALUES
-(1, 'noenoe', 'blabla', 'Noe', 12);
+(1, 'noenoe', 'c1dfc0e73bb503797c4a5ad218e5f7be3a4f9438', 'Noe', 12);
 
 -- --------------------------------------------------------
 
