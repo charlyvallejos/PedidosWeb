@@ -40,6 +40,7 @@
     <script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/appCliente.js"></script>
     <script type="text/javascript" src="js/appProducto.js"></script>
+    <script src="https://code.angularjs.org/1.3.0-rc.2/angular-messages.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 

@@ -54,7 +54,7 @@
         
     
 
-    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente','appProducto']) // aplicacion de angular
+    var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente','appProducto','ngMessages']) // aplicacion de angular
 
         .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.date = new Date();

@@ -11,14 +11,23 @@ if(isset($_GET)){
         $usuario = new Usuario();
         if($_POST['Clave'] == "saporiti")
         {
-            if(isset($_GET['modif']))
-            {
-                if($usuario->Igual_User());
-                echo json_encode(array("ok" => true));
-            }
+                if($usuario->Igual_User())
+                    echo json_encode(array("ok" => true));
+                else
+                    echo json_encode(array("ok" => false));
+
         }
         else
-            return $usuario->login();
+        {
+            if(isset($_GET['modif']))
+            {
+                if($usuario->modificarClave());
+                    echo $usuario->login();
+            }
+            else
+                echo $usuario->login();
+        }
+
 
     }
     if(isset($_GET['logout']))

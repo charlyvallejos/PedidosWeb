@@ -5,6 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
         <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
         <link href="css/login.css" rel="stylesheet">
+
+        <script src="js/angular.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src= "js/login.js"></script>
+        <script src="https://code.angularjs.org/1.3.0-rc.2/angular-messages.js"></script>
         <style>
             * { box-sizing:border-box; }
 
@@ -128,12 +133,9 @@
                 line-height: 3;
             }
             .hide{
-                display: none !important;
+                display: none;
             }
         </style>
-        <script src="js/angular.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src= "js/login.js"></script>
     </head>
 <body ng-controller="loginController">
     <!--
@@ -144,34 +146,41 @@
     <div class="logo_sapo">
         <img src="img/logo_saporiti.jpg" alt="Drogueria Saporiti" width="250px" height="90px">
     </div>
-    <form id="formLogin" method="post" novalidate name="formLogin">
+    <div>
+        <p ng-model="msj" style="color:black">{{msj}}</p>
+    </div>
+    <form id="formLogin" method="post" novalidate name="formLogin" ng-submit="submit(formLogin.$valid,formLogin)">
         <div class="group">
-            <input type="text" class="used"  name="Usuario_Login" ng-model="Login.Usuario_Login"><span class="highlight"></span><span class="bar"></span>
+            <div ng-messages="Login.Usuario_Login.$error" ng-messages-include="vistas/messages.html"></div>
+            <input type="text" class="used"  name="Usuario_Login" ng-model="Login.Usuario_Login" required><span class="highlight"></span><span class="bar"></span>
             <label>Usuario</label>
         </div>
         <div class="group">
-            <input type="password" name="Clave" ng-model="Login.Clave"><span class="highlight"></span><span class="bar"></span>
+            <input type="password" name="Clave" ng-model="Login.Clave" id="Clave"><span class="highlight" required></span><span class="bar"></span>
             <label>Clave</label>
+            <div ng-messages="Login.Clave.$error" ng-messages-include="vistas/messages.html"></div>
         </div>
-        <div class="group">
-            <input type="password" name="Clave" ng-model="Login.Clave"><span class="highlight"></span><span class="bar"></span>
+        <div class="group hide inputRepClave">
+            <input type="password" name="repetirClave" id="repetirClave" ng-model="Login.Clave_Repetir" required compare-to="Login.Clave" required><span class="highlight"></span><span class="bar"></span>
             <label>Repetir Clave</label>
+            <div ng-messages="Clave_Repetir.$error" ng-messages-include="vistas/messages.html"></div>
         </div>
-        <button type="submit" class="buttonui" ng-click="login(formLogin)"> <span> Ingresar </span>
+        <button type="submit" class="buttonui""> <span> Ingresar </span>
             <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
         </button>
+
     </form>
 
     <div class="powered">
-        <div id="mensjLog" class="hide">
-            <p>Ingrese una nueva clave</p>
-        </div>
         Si ha olvidado su clave, contactese
     </div>
+    <div id="mensjLog">
+    </div>
+
 </div>
 
-<script>$(window, document, undefined).ready(function() {
 
+<script>$(window, document, undefined).ready(function() {
         $('input').blur(function() {
             var $this = $(this);
             if ($this.val())
@@ -204,8 +213,17 @@
             $(this).removeClass('is-active');
         });
 
+
+//------------------------------------------------------------------//
+
+        $mensjLog = $("#mensjLog");
+        $repetirClave = $("#repetirClave");
+        $clave = $("#Clave");
+        $divinputRepClave = $('.inputRepClave');
+
     });
 
 </script>
+
 </body>
 </html>
