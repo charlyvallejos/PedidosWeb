@@ -28,9 +28,17 @@
         e.preventDefault();
         formUp.slideToggle();
     });
-    
+
+    function padLeft(nr, n, str){
+        return new Array(n-String(nr).length+1).join(str||'0')+nr;
+    }
+    //or as a Number prototype method:
+    Number.prototype.padLeft = function (n,str){
+        return new Array(n-String(this).length+1).join(str||'0')+this;
+    };
 
     buscarCliente.autocomplete({
+
             source: apiURL+"?cliente",
             select: function(event,ui){
                var codCliente = [];
@@ -52,7 +60,9 @@
             }
      });
         
-    
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// APLICACION ANGULAR ///////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente','appProducto','ngMessages']) // aplicacion de angular
 
@@ -70,6 +80,9 @@
             $scope.produ_frac = {};
             $scope.mostrarC = false;
             $scope.mostrarP = false;
+
+            $scope.clienteBuscado = "";
+
             $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "0";
             
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
@@ -248,6 +261,7 @@
                     //......
                 }
             };
+
             /////////////////////////////////////////
             // BUSCADOR DE CLIENTES
             $scope.clientes = [];
@@ -283,16 +297,6 @@
                 
             };
 
-//            $scope.seleccionCliente = function(clie){                
-//                //console.log(clie);
-//                $scope.mostrarC = true;
-//                if(clie !== null){
-//                    $scope.pedidoTemporal.Cliente = clie;
-//                    $scope.mostrarC = false;
-//                    buscarProducto.focus();
-//                }
-//            };
-
             $scope.listadoPedido = function(){
 
                     $http.get(apiURL+"?a=get&t=ped&codVend="+codVend+"desde="+$scope.fechaDesde+"hasta="+$scope.fechaHasta)
@@ -304,7 +308,64 @@
                         });
 
             };
+            $scope.seleccionClienteCodigo = function(event){
+              if(event.which === 13 && $scope.clienteBuscado != "" && !isNaN($scope.clienteBuscado))
+              {
+                  while($scope.clienteBuscado.length < 7)
+                    $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
 
+                  $http.get(apiURL+"?a=get&t=cli&cod="+$scope.clienteBuscado)
+                      .then(function(resp){
+                          console.log(resp.data);
+                          if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
+                          {
+                              if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
+                              {
+                                  if(CodVendedor == resp.data.Codigo_Vendedor)
+                                  {
+                                      $scope.poneColorAgrup(resp.data.Id_Agrupacion);
+
+                                      $scope.pedidoTemporal.Cliente = resp.data;
+                                      $scope.traeObservaciones();
+                                      buscarCliente.val('');
+                                      buscarProducto.focus();
+                                  }
+                                  else
+                                  {
+                                      modalCliente.attr('data-codCli',$scope.clienteBuscado);
+                                      modalCliente.modal('show');
+                                  }
+                              }
+                              else
+                              {
+                                  divMjeCliente.text("");
+                                  divMjeCliente.append("Este cliente no dispone permiso de compra");
+                                  divMjeCliente.fadeIn(5);
+                                  divMjeCliente.fadeOut(6000);
+                              }
+                          }
+                          else
+                          {
+                              divMjeCliente.text("");
+                              divMjeCliente.append("Este cliente se encuentra inhabilitado, su fecha de psicotrópicos caduco");
+                              divMjeCliente.fadeIn(5);
+                              divMjeCliente.fadeOut(6000);
+                          }
+                      })
+                      .catch(function(){
+                          console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
+                      });
+
+              }
+            };
+
+            $scope.traeObservaciones = function(){
+                var id = $scope.pedidoTemporal.Cliente.id;
+
+
+
+
+            };
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();
@@ -312,6 +373,7 @@
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
+
                                     if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
                                     {
                                         if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
@@ -394,44 +456,6 @@
                         console.log('ERROR BUSQUEDA CLIENTE MODAL');
             };
 
-            ////////////////////////////////////////////////////////
-            //BUSCADOR DE PRODUCTOS
-            $scope.consultaProductoDescripcion = function(des){
-                if($scope.pedidoTemporal.Cliente !== null) {
-                    divMjeProd.hide();
-                    if(des !== ""){
-                        $http.get(apiURL+"?a=get&t=prodma&des="+des)
-                            .then(function(resp){
-                                $scope.productos = resp.data;
-                                $scope.mostrarP = $scope.productos.length > 0;
-                                //productoSeleccion.attr('size', 5);
-                                productoSeleccion.focus();
-                            })
-                            .catch(function(){
-                                console.log("ERROR consultaProductoDescripcion");
-                            });
-
-                    }
-                    else
-                    {
-                        $scope.mostrarP = false;
-                    }
-                }else
-                {
-                    divMjeProd.show();
-                }
-            };
-            
-//            $scope.seleccionProducto = function(prod){
-//                //console.log(prod);
-//                $scope.mostrarP = false;
-//                if(prod !== null){
-//                    $scope.productoTemporal = prod;
-//                    $scope.mostrarP = false;
-//                    inputCantidad.focus();
-//                }
-//            };
-            
             $scope.seleccionProducto = function(prod){
                 if($scope.pedidoTemporal.Cliente !== undefined)
                 {
@@ -516,6 +540,8 @@
 
 
             };
+
+
 ///////////////truchisimo
             $scope.poneColorRubro = function(color){
               if(color == "0")
@@ -547,7 +573,6 @@
               }
             };
 
-            ///////////////////////////////////////////////////////
             $scope.resetearFormulario = function(pedidoForm){
                 $('input').val('').removeAttr('selected');
                 formUp.slideUp();

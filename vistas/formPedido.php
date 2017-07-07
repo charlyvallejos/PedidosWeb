@@ -118,6 +118,31 @@
 
 
             </div>
+
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <fieldset><legend>Observaciones</legend>
+                        <div class="item form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+                                    <label class="control-label" for="RazonSocial">Observaciones imprimir</label>
+                                </div>
+                                <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
+                                    <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Obs_No_Imprimir"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+                                    <label class="control-label" for="RazonSocial">Observaciones no imprimir</label>
+                                </div>
+                                <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
+                                    <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Obs_No_Imprimir"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     <?php include 'formGrillaProducto.php' ?> <!--######### Grilla ######### -->

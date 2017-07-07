@@ -19,7 +19,7 @@
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">               
-                <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" required type="search" autocomplete="off">
+                <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" ng-model="clienteBuscado" required type="search" autocomplete="off" ng-keydown="seleccionClienteCodigo($event)">
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
                 <select id="clienteSeleccion" class="form-control" ng-show="mostrarC" ng-model="clie" ng-options="x.Codigo_Cliente +' - ' + x.Razon_Social  +' - '+ x.Nombre_Fantasia for x in clientes" ng-change="seleccionCliente(clie)">
@@ -82,7 +82,7 @@
                 <label class="control-label" for="RazonSocial">Obs Imp</label>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_Imprimir"></textarea>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
                 <label class="control-label" for="RazonSocial">Obs No Imp</label>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly>
+                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_No_Imprimir"></textarea>
             </div>
         </div>
     </div>
