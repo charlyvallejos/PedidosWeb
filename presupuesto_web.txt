@@ -1,0 +1,38 @@
+Cliente: Drogueria Saporiti
+
+Proyecto
+Aplicación Web - Módulo Pedidos 
+
+-- Sistema de logueo para vendedores mediante usuario y contraseña
+-- Programación, estructura, diseño y maquetación de las secciones:
+	Pedidos
+	Clientes
+	Productos
+	Listados
+-- Gestión de pedidos
+-- Rearmado de base de datos adaptado a web con una actualización diaria en sincronización con la base de datos central. 
+-- Aplicación de escritorio conectado a la base de datos web para cargar pedidos de vendedores a base de datos central.
+
+Detalle y alcance del proyecto:
+
+El vendedor será capaz de cargar, modificar y dar de baja pedidos, cotizaciones y presupuestos.
+Las cotizaciones podrán ser cargadas en pesos o dólares.
+También podrá consultar listado de clientes y productos así como también, la opción de listar pedidos entre las fechas que se elijan
+
+Una vez el vendedor finalice la carga de pedidos del día, deberá confirmar bloqueando de esta forma la carga o modificación de pedidos durante el dia. Luego, estos pedidos serán levantados en la base de datos central mediante una aplicación de escritorio.
+
+Tecnologías a utilizar:
+
+HTML5 +CSS3 + Bootstrap
+Javascript 
+PHP
+Mysql
+C#
+
+Tiempo estimado del proyecto
+
+Entre 12 y 16 semanas
+
+Costo
+
+$
