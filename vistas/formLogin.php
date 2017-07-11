@@ -165,7 +165,7 @@
             <label>Repetir Clave</label>
             <div ng-messages="Clave_Repetir.$error" ng-messages-include="vistas/messages.html"></div>
         </div>
-        <button type="submit" class="buttonui""> <span> Ingresar </span>
+        <button type="submit" class="buttonui"> <span> Ingresar </span>
             <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
         </button>
 
