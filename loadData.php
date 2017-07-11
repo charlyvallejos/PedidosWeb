@@ -67,6 +67,8 @@ if(isset($_GET)){
         $fechaDesde = $_GET['desde'];
     if(isset($_GET['hasta']))
         $fechaHasta = $_GET['hasta'];
+    if(isset($_GET['idMoneda']))
+        $idMoneda = $_GET['idMoneda'];
    
     
     if(isset($accion) && $accion == 'get')
@@ -146,6 +148,18 @@ if(isset($_GET)){
                     echo json_encode($lista_de->consultaListaPrecio($idPro, $idFrac,$idListaCa));
                 }
             }
+            else if($tabla == 'falta')
+            {
+                $falta_ma = new Falta_Ma();
+                if(isset($idPro) && isset($idFrac))
+                    echo json_encode($falta_ma->Igual($idPro,$idFrac));
+            }
+            else if($tabla == 'monedde')
+            {
+                $moned_de = new Moned_De();
+                if(isset($idMoneda))
+                    echo json_encode($moned_de->Moned_De_Igual_Moned_Ca_Ultimo($idMoneda));
+            }
         }
     }
 
@@ -169,7 +183,7 @@ if(isset($_GET)){
             if(isset($term))
             {
                 $produ_ma = new Produ_Ma();
-                
+
                 $sql = $produ_ma->consultaDescripcion($term);
                 foreach ($sql as $dato){// as $dato){
                     $resultado[] = $dato['Codigo_Producto'].' - '. $dato['Descripcion_Producto'];

@@ -331,10 +331,13 @@ button[disabled]{
 #trans, #moneda{
     background:transparent;
     margin:5px 0 5px 0;
-    font-weight:bold;
     cursor: pointer;
+    font-size: 11px;
 }
 
+#trans option, #moneda option{
+    background:transparent;
+}
 
 
 .nav-color{

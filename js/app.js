@@ -20,14 +20,24 @@
         modalCliente = $("#modalCliente"),
         RubroProdInput = $("#RubroProd"),
         modalRadio = $("#modalRadio"),
-        AgrupCliInput = $("#AgrupCli");
-
-
+        AgrupCliInput = $("#AgrupCli"),
+        $radioFR = $("#radioFR"),
+        $radioSF = $("#radioSF"),
+        $radioPed = $("#radioPedido"),
+        $radioCoti = $("#radioCoti"),
+        $radioPresu = $("#radioPresu"),
+        $radioMostro = $("#radioMostra");
 
     btnPlus.on('click',function(e){
         e.preventDefault();
         formUp.slideToggle();
     });
+
+
+// Funcion que encontre por ahi que hace lo un PADLEFT
+// nr: string a utilizar
+// n: cantidad de caracteres
+// str: string que se le agrega (en caso de no pasarle nada agrega '0')
 
     function padLeft(nr, n, str){
         return new Array(n-String(nr).length+1).join(str||'0')+nr;
@@ -41,21 +51,30 @@
 
             source: apiURL+"?cliente",
             select: function(event,ui){
-               var codCliente = [];
+                event.preventDefault();
+                var codCliente = [];
                
                codCliente = ui.item.value.split('-');
                //console.log(codCliente[0]);
+
                angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
             }                        
         });
-        
-     buscarProducto.autocomplete({
+    buscarProducto.autocomplete({
          source: apiURL+"?producto",
          select: function(event,ui){
                var codProducto = [];
                
                codProducto = ui.item.value.split('-');
-               //console.log(codCliente[0]);
+
+             if(!isNaN($scope.clienteBuscado) && $scope.clienteBuscado.length < 7)
+             {
+                 while($scope.clienteBuscado.length < 7)
+                     $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
+
+                 codProducto = $scope.clienteBuscado;
+             }
+
                angular.element($('#vistaPedidos')).scope().seleccionProducto(codProducto[0]);
             }
      });
@@ -80,11 +99,14 @@
             $scope.produ_frac = {};
             $scope.mostrarC = false;
             $scope.mostrarP = false;
-
+            $scope.pedidoTemporal.id_Moneda = 1;
+            $scope.pedidoTemporal.Valor_Moneda = 1;
             $scope.clienteBuscado = "";
 
-            $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "0";
-            
+            $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por;
+
+
+
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -111,7 +133,42 @@
             /////////// SELECCIONA PEDIDO
             $scope.selectPedido = function (ped) {
                 $scope.pedidoTemporal = ped;
-                console.log(ped);
+
+                if($scope.pedidoTemporal.Generado_Por == 0)
+                {
+                    if($scope.pedidoTemporal.Id_Reparto == 45)
+                    {
+                        $radioFR.prop('checked',true);
+                        $scope.pedidoTemporal.Generado_Por = "fr";
+                    }
+                    else if($scope.pedidoTemporal.Id_Reparto == 227)
+                    {
+                        $radioSF.prop('checked',true);
+                        $scope.pedidoTemporal.Generado_Por = "sf";
+                    }
+                    else
+                    {
+                        $radioPed.prop('checked',true);
+                        $scope.pedidoTemporal.Generado_Por = "pedido";
+                    }
+                }
+                else if($scope.pedidoTemporal.Generado_Por == 1)
+                {
+                    $radioCoti.prop('checked',true);
+                    $scope.pedidoTemporal.Generado_Por = "cotizacion";
+                }
+                else if($scope.pedidoTemporal.Generado_Por == 3)
+                {
+                    $scope.pedidoTemporal.Generado_Por = "presupuesto";
+                    $radioPresu.prop('checked',true);
+                }
+                else if($scope.pedidoTemporal.Generado_Por == 2)
+                {
+                    $scope.pedidoTemporal.Generado_Por = "mostrador";
+                    $radioMostro.prop('checked',true);
+                }
+                $scope.Generado_Por = $scope.pedidoTemporal.Generado_Por;
+
 
                 //Traigo el detalle del pedido
                 //Tambien traigo el cliente
@@ -120,11 +177,11 @@
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
                         //console.log(resp.data);
+                        console.log(ped.id_Cliente);
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
-                                //console.log(resp.data);
-
+                                console.log(resp);
                             })
                             .catch(function(resp){
                                 console.log(resp);
@@ -145,26 +202,7 @@
             $scope.selectProducto = function(prod,formCtrlProducto){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
-
-                //console.log($scope.productoTemporal);
-                /*
-                $http.get(apiURL+"?a=get&t=prodma&idPro="+prod.id_producto)
-                        .then(function(resp){
-                            $scope.produ_ma = resp.data;
-                            $http.get(apiURL+"?a=get&t=prodfrac&idPro="+prod.id_Producto+"&idFrac="+prod.id_Fraccio)
-                                    .then(function(resp){
-                                        $scope.produ_frac = resp.data;
-                                    })
-                                    .catch(function(resp){
-                                        console.log(resp);
-                                    });
-                        })
-                        .catch(function(resp){
-                            console.log(resp);
-                        });
-                        */
             };
-
             $scope.borraProductoGrilla = function(prodTemporal){
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
@@ -187,26 +225,95 @@
                 {
 
                     if(prodTemporal.Estado !== "BAJ"){
-
-                        var encontrarProducto = false;
-
-                        if($scope.pedidoTemporal.Productos.length > 0)
+                        /*
+                        if($scope.productoTemporal.Minimo > 0)
                         {
-                            encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
-                        }
+                            var resto = $scope.productoTemporal.Cantidad/$scope.productoTemporal.Minimo;
 
-                        if(encontrarProducto)
-                            $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
-                        else
-                        {
-                            prodTemporal.Estado = "CAR";
-                            $scope.pedidoTemporal.Productos.push(prodTemporal);
-                        }
+                            if($scope.productoTemporal.Minimo != resto)
+                            {
+                                $scope.muestraMsjProducto = true;
+                                $scope.msjProducto = "La cantidad debe ser multiplo de: " + $scope.productoTemporal.Minimo;
+                                $scope.productoTemporal.Cantidad = "";
+                            }
+                            else
+                            {
+                        */
+                                var encontrarProducto = false;
 
-                        $scope.productoTemporal = null;
-                        buscarProducto.val('');
-                        buscarProducto.focus();
-                        $scope.calculaTotal();
+                                if($scope.pedidoTemporal.Productos.length > 0)
+                                {
+                                    encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
+                                }
+                                /*
+                                //Chequear si esta en FALTA
+
+                                $http.get(apiURL+"?a=get&t=falta&idPro="+$scope.productoTemporal.Id_Producto+"idFrac="+$scope.productoTemporal.Id_Fraccio)
+                                    .then(function(resp){
+                                        if(resp.data.falta)
+                                            prodTemporal.Precio = 0;
+                                    })
+                                    .catch(function(){
+                                        console.log("ERROR");
+                                    });
+
+                                if($scope.pedidoTemporal.Generado_Por == "cotizacion")
+                                {
+                                    if(!$scope.productoTemporal.Habil_Cot)
+                                    {
+                                        $scope.muestraMsjProducto = true;
+                                        $scope.msjProducto = "No puede agregar el producto para cotizaciones";
+                                        $scope.productoTemporal = {};
+                                    }
+                                }
+                                else if($scope.pedidoTemporal.Generado_Por == "presupuesto")
+                                {
+                                    if(!$scope.productoTemporal.Habil_Pre)
+                                    {
+                                        $scope.muestraMsjProducto = true;
+                                        $scope.msjProducto = "No puede agregar el producto para presupuestos";
+                                        $scope.productoTemporal = {};
+                                    }
+                                }
+                                else if($scope.pedidoTemporal.Generado_Por == "pedido" || $scope.pedidoTemporal.Generado_Por == "sf" || $scope.pedidoTemporal.Generado_Por == "fr")
+                                {
+                                    if(!$scope.productoTemporal.Habil_Ped)
+                                    {
+                                        $scope.muestraMsjProducto = true;
+                                        $scope.msjProducto = "No puede agregar el producto para pedidos";
+                                        $scope.productoTemporal = {};
+                                    }
+                                }
+                                */
+
+                                if($scope.productoTemporal != null)
+                                {
+                                    if(encontrarProducto)
+                                        $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
+                                    else
+                                    {
+                                        if(prodTemporal.Precio == 0)
+                                            prodTemporal.Estado = "FAL";
+                                        else
+                                            prodTemporal.Estado = "CAR";
+
+                                        prodTemporal.Renglon+= 1; //Ver que esto funcion
+
+                                        //Fecha cotizacion
+                                        //Precio Lista en el caso que sea codigo oferta 7
+
+                                        $scope.pedidoTemporal.Productos.push(prodTemporal);
+                                    }
+
+                                    $scope.productoTemporal = {};
+                                    buscarProducto.val('');
+                                    buscarProducto.focus();
+                                    //$scope.calculaTotal();
+                                }
+
+                            //}
+
+                        //}
                     }
                 }
             };
@@ -308,64 +415,7 @@
                         });
 
             };
-            $scope.seleccionClienteCodigo = function(event){
-              if(event.which === 13 && $scope.clienteBuscado != "" && !isNaN($scope.clienteBuscado))
-              {
-                  while($scope.clienteBuscado.length < 7)
-                    $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
 
-                  $http.get(apiURL+"?a=get&t=cli&cod="+$scope.clienteBuscado)
-                      .then(function(resp){
-                          console.log(resp.data);
-                          if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
-                          {
-                              if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
-                              {
-                                  if(CodVendedor == resp.data.Codigo_Vendedor)
-                                  {
-                                      $scope.poneColorAgrup(resp.data.Id_Agrupacion);
-
-                                      $scope.pedidoTemporal.Cliente = resp.data;
-                                      $scope.traeObservaciones();
-                                      buscarCliente.val('');
-                                      buscarProducto.focus();
-                                  }
-                                  else
-                                  {
-                                      modalCliente.attr('data-codCli',$scope.clienteBuscado);
-                                      modalCliente.modal('show');
-                                  }
-                              }
-                              else
-                              {
-                                  divMjeCliente.text("");
-                                  divMjeCliente.append("Este cliente no dispone permiso de compra");
-                                  divMjeCliente.fadeIn(5);
-                                  divMjeCliente.fadeOut(6000);
-                              }
-                          }
-                          else
-                          {
-                              divMjeCliente.text("");
-                              divMjeCliente.append("Este cliente se encuentra inhabilitado, su fecha de psicotrópicos caduco");
-                              divMjeCliente.fadeIn(5);
-                              divMjeCliente.fadeOut(6000);
-                          }
-                      })
-                      .catch(function(){
-                          console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
-                      });
-
-              }
-            };
-
-            $scope.traeObservaciones = function(){
-                var id = $scope.pedidoTemporal.Cliente.id;
-
-
-
-
-            };
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();
@@ -373,7 +423,7 @@
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
-
+                                    console.log(resp.data);
                                     if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
                                     {
                                         if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
@@ -388,7 +438,7 @@
                                             }
                                             else
                                             {
-                                                modalCliente.attr('data-codCli',cod);
+                                                modalCliente.attr('data-codCli',$scope.clienteBuscado);
                                                 modalCliente.modal('show');
                                             }
                                         }
@@ -462,13 +512,40 @@
                     divMjeProd.hide();
                     if(prod !== null)
                     {
+
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                                 .then(function(resp){
                                     $scope.productoTemporal = resp.data;
+                                    console.log(resp.data);
                                     $scope.poneColorRubro(resp.data.Rubro_Color);
+                                    console.log($scope.pedidoTemporal.id_Moneda);
+                                    //Calculo precio_lista
+                                    if($scope.productoTemporal.Precio_Moneda <= 0 && $scope.pedidoTemporal.id_Moneda == 1)
+                                        $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Pesos;
+                                    else if($scope.productoTemporal.Precio_Moneda <= 0 && $scope.pedidoTemporal.id_Moneda == 2)
+                                        $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Pesos * $scope.pedidoTemporal.Valor_Moneda;
+                                    else if($scope.productoTemporal.Precio_Moneda > 0 && ($scope.pedidoTemporal.id_Moneda == 2 && $scope.productoTemporal.id_Moneda == 2))
+                                        $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Moneda;
+                                    else if($scope.productoTemporal.Precio_Moneda > 0 && $scope.pedidoTemporal.id_Moneda == 2)
+                                    {
+                                        var precio = $scope.productoTemporal.Precio_Moneda / $scope.productoTemporal.Valor_Moneda;
+                                        $scope.productoTemporal.Precio_Lista = precio * $scope.pedidoTemporal.Valor_Moneda;
+                                    }
+                                    else if($scope.productoTemporal.Precio_Moneda > 0 && $scope.pedidoTemporal.id_Moneda == 1)
+                                        $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Moneda / $scope.productoTemporal.Valor_Moneda;
 
-                                    //var Precio_Producto = $scope.calculaPrecioProducto($scope.pedidoTemporal.Cliente.Id_Lista_Precio,pedidoTemporal.Id_Moneda,$scope.pedidoTemporal.Cliente.id,$scope.productoTemporal);
-                                    //console.log(Precio_Producto);
+
+                                    //Calculo precio venta
+
+                                    if($scope.productoTemporal.Tipo_Iva != "E")
+                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista) + (parseFloat($scope.productoTemporal.Precio_Lista) * parseFloat($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100);
+                                    else
+                                        $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
+
+                                    console.log($scope.productoTemporal.Precio);
+                                    console.log($scope.pedidoTemporal.Cliente.Porcentaje_Iva);
+                                    $filter('number')(parseFloat($scope.productoTemporal.Precio),3);
+                                    $filter('number')(parseFloat($scope.productoTemporal.Precio_Lista),3);
 
                                     buscarProducto.val('');
                                     inputCantidad.focus();
@@ -489,60 +566,8 @@
 //                    inputCantidad.focus();
 //                   }
             };
+            
 
-            $scope.calculaPrecioProducto = function(idLista,idMoneda,idCliente,producto){
-
-                var Precio_Producto = null;
-
-                var Lista_De = null;
-                var Moned_De = null;
-                var Moned_De_Costo = null;
-
-                $http.get(apiURL+"?a=get&t=listade&idPro="+idProd+"&idFrac="+idFrac+"&idListaCa="+idLista)
-                    .then(function(resp){
-                        Lista_De  = resp.data;
-                    });
-
-                if(idMoneda == undefined || idMoneda == 0)
-                    idMoneda = 1;
-
-                if((idMoneda == producto.id_Moneda) && idMoneda != 1){
-                    Precio_Producto.Costo = producto.Costo_MP * 1;
-                    Precio_Producto.Precio_Lista = producto.Costo * Lista_De.Porcentaje;
-                }
-                else
-                {
-                    if(idMoneda == 1 || producto.id_Moneda == 1) {
-                        $http.get(apiURL + "?a=get&t=monedde&idMoneda=" + 1)
-                            .then(function (resp) {
-                                Moned_De = resp.data;
-                            });
-                    }
-                    if(idMoneda == 1){
-                        Precio_Producto.Costo = producto.Costo_MP * Moned_De.Valor_Moneda;
-                        Precio_Producto.Precio_Lista = (producto.Costo * Moned_De.Valor_Moneda) * Lista_De.Porcentaje;
-                    }
-                    else if(producto.id_Moneda == 1)
-                    {
-                        Precio_Producto.Costo = producto.Costo_MP / Moned_De.Valor_Moneda;
-                        Precio_Producto.Precio_Lista = producto.Costo * Lista_De.Porcentaje;
-                    }
-                    else
-                    {
-                        //if()
-                    }
-                }
-
-
-
-
-
-
-
-            };
-
-
-///////////////truchisimo
             $scope.poneColorRubro = function(color){
               if(color == "0")
               {
@@ -577,7 +602,7 @@
                 $('input').val('').removeAttr('selected');
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
-                $scope.pedidoTemporal.Generado_Por = "0";
+                $scope.pedidoTemporal.Generado_Por = "pedido";
                 $scope.pedidoTemporal.Productos = [];
                 divMjeProd.hide();
                 divMjeCliente.hide();
@@ -586,22 +611,79 @@
             };
 
             $scope.changeRadio = function(){
-
                 if($scope.pedidoTemporal.Nro_Pedido != undefined || $scope.pedidoTemporal.Cliente != undefined)
                     modalRadio.modal('show');
+
             };
 
             $scope.radioChangeSi = function(){
                 var gen = $scope.pedidoTemporal.Generado_Por;
                 $scope.pedidoTemporal = {};
+                $scope.productoTemporal = {};
                 modalRadio.modal('hide');
-                $scope.pedidoTemporal.Generado_Por = gen;
+                if($radioFR.checked)
+                {
+                    $scope.pedidoTemporal.Generado_Por = 0;
+                    $scope.pedidoTemporal.Id_Reparto = 45;
+                }
+                else if($radioSF.checked)
+                {
+                    $scope.pedidoTemporal.Generado_Por = 0;
+                    $scope.pedidoTemporal.Id_Reparto = 227;
+                }else if($radioPed.checked)
+                    $scope.pedidoTemporal.Generado_Por = 0;
+                else if($radioCoti.checked)
+                    $scope.pedidoTemporal.Generado_Por = 1;
+                else if($radioMostro.checked)
+                    $scope.pedidoTemporal.Generado_Por = 2;
+                else if($radioPresu.checked)
+                    $scope.pedidoTemporal.Generado_Por = 3;
+
                 return true;
             };
 
             $scope.radioChangeNo = function(){
                 modalRadio.modal('hide');
                 $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por;
+
+                if($scope.pedidoTemporal.Generado_Por == 0)
+                {
+                    if($radioFR.prop('checked'))
+                        $scope.pedidoTemporal.Id_Reparto = 45;
+                    else if($radioSF.prop('checked',true))
+                        $scope.pedidoTemporal.Id_Reparto = 227;
+                }
+                else if($scope.pedidoTemporal.Generado_Por == "cotizacion")
+                {
+                    $radioCoti.prop('checked',true);
+                }
+                else if($scope.pedidoTemporal.Generado_Por == "presupuesto")
+                {
+                    $radioPresu.prop('checked',true);
+                }
+                else if($scope.pedidoTemporal.Generado_Por == "mostrador")
+                {
+                    $radioMostro.prop('checked',true);
+                }
+
                 return false;
+            };
+
+            $scope.buscaCotizacion = function(idMoneda){
+                $scope.productoTemporal = {};
+                if(idMoneda > 1)
+                {
+                    $http.get(apiURL+"?a=get&t=monedde&idMoneda="+idMoneda)
+                        .then(function(resp){
+                            console.log(resp);
+                            $scope.pedidoTemporal.Valor_Moneda = resp.data.Valor_Moneda;
+                        })
+                        .catch(function(resp){
+                            console.log(resp);
+                        });
+                }
+                else
+                    $scope.pedidoTemporal.Valor_Moneda = 1;
+
             }
         });

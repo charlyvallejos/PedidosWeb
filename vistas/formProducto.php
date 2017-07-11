@@ -42,10 +42,10 @@
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
                 <input type="text" id="ListaProd" class="form-control" name="ListaProd" readonly ng-model="pedidoTemporal.Cliente.Lista">
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Precio</label>
+            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+                <label class="control-label" for="RazonSocial">Precio Lista</label>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
                 <input type="text" id="PrecioProd" class="form-control" name="PrecioLista" readonly ng-model="productoTemporal.Precio_Lista">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
@@ -64,10 +64,10 @@
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
                 <input type="text" id="CantProd" class="form-control" name="CantProd"  ng-model="productoTemporal.Cantidad" ng-keydown="agregarProductoGrilla($event,productoTemporal)" autocomplete="off">
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
                 <label class="control-label" for="RazonSocial">Precio</label>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
                 <input type="text" id="CantProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio">
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
@@ -75,6 +75,11 @@
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
                 <a href=""><img src="img/delete.png" width="44px" height="44px" alt="Borrar" ng-click="borraProductoGrilla(productoTemporal)"></a>
+            </div>
+        </div>
+        <div class="row" ng-show="muestraMsjProducto">
+            <div class="col-md-12">
+                <div id="msjProdu">{{msjProducto}}</div>
             </div>
         </div>
     </div>

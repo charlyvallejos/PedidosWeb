@@ -16,8 +16,8 @@
         <tr dir-paginate="prod in pedidoTemporal.Productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: 5" pagination-id="prod" ng-click="selectProducto(prod)">
             <td>{{prod.Codigo_Producto}}</td>
             <td>{{prod.Descripcion_Producto}}</td>
-            <td>{{prod.Cantidad}}</td>
-            <td>{{prod.Precio}}</td>
+            <td>{{prod.Cantidad | number:3}}</td>
+            <td>{{prod.Precio | number: 3}}</td>
             <td>{{prod.Cantidad * prod.Precio | number: 2}} </td>
             <td>{{prod.Estado}}</td>
             <td>{{prod.Fecha_Cotizacion}}</td>
