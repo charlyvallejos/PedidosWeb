@@ -55,7 +55,6 @@
                 var codCliente = [];
                
                codCliente = ui.item.value.split('-');
-               //console.log(codCliente[0]);
 
                angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
             }                        
@@ -67,13 +66,7 @@
                
                codProducto = ui.item.value.split('-');
 
-             if(!isNaN($scope.clienteBuscado) && $scope.clienteBuscado.length < 7)
-             {
-                 while($scope.clienteBuscado.length < 7)
-                     $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
 
-                 codProducto = $scope.clienteBuscado;
-             }
 
                angular.element($('#vistaPedidos')).scope().seleccionProducto(codProducto[0]);
             }
@@ -415,7 +408,19 @@
                         });
 
             };
+            $scope.seleccionClienteCodigo = function(event){
+                if(event.which === 13){
+                    if(!isNaN($scope.clienteBuscado) && $scope.clienteBuscado.length < 7)
+                    {
+                        while($scope.clienteBuscado.length < 7)
+                            $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
 
+                        var codCliente = $scope.clienteBuscado;
+                        $scope.seleccionCliente(codCliente);
+                    }
+                }
+
+            };
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();
@@ -542,8 +547,6 @@
                                     else
                                         $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
 
-                                    console.log($scope.productoTemporal.Precio);
-                                    console.log($scope.pedidoTemporal.Cliente.Porcentaje_Iva);
                                     $filter('number')(parseFloat($scope.productoTemporal.Precio),3);
                                     $filter('number')(parseFloat($scope.productoTemporal.Precio_Lista),3);
 
@@ -566,7 +569,7 @@
 //                    inputCantidad.focus();
 //                   }
             };
-            
+
 
             $scope.poneColorRubro = function(color){
               if(color == "0")
