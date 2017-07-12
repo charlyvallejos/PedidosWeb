@@ -19,7 +19,7 @@
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarCliente">Buscar:</label>
             <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">               
-                <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" ng-model="clienteBuscado" required type="search" autocomplete="off" ng-keypress="seleccionClienteCodigo($event)">
+                <input id="buscarCliente" class="form-control col-md-7 col-xs-12"  name="buscarCliente" ng-model="clienteBuscado" required type="search" autocomplete="off">
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8 falso-xs-12">
                 <select id="clienteSeleccion" class="form-control" ng-show="mostrarC" ng-model="clie" ng-options="x.Codigo_Cliente +' - ' + x.Razon_Social  +' - '+ x.Nombre_Fantasia for x in clientes" ng-change="seleccionCliente(clie)">

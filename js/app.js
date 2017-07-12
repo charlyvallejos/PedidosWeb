@@ -48,16 +48,14 @@
     };
 
     buscarCliente.autocomplete({
-
             source: apiURL+"?cliente",
             select: function(event,ui){
-                event.preventDefault();
                 var codCliente = [];
-               
+
                codCliente = ui.item.value.split('-');
 
                angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
-            }                        
+            }
         });
     buscarProducto.autocomplete({
          source: apiURL+"?producto",
@@ -238,7 +236,7 @@
                                 {
                                     encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:prodTemporal.Id_Producto,Id_Fraccio:prodTemporal.Id_Fraccio})[0];
                                 }
-                                /*
+
                                 //Chequear si esta en FALTA
 
                                 $http.get(apiURL+"?a=get&t=falta&idPro="+$scope.productoTemporal.Id_Producto+"idFrac="+$scope.productoTemporal.Id_Fraccio)
@@ -249,7 +247,7 @@
                                     .catch(function(){
                                         console.log("ERROR");
                                     });
-
+                                /*
                                 if($scope.pedidoTemporal.Generado_Por == "cotizacion")
                                 {
                                     if(!$scope.productoTemporal.Habil_Cot)
@@ -290,18 +288,18 @@
                                         else
                                             prodTemporal.Estado = "CAR";
 
-                                        prodTemporal.Renglon+= 1; //Ver que esto funcion
+                                        prodTemporal.Renglon+= 1; //Ver que esto funcione
 
                                         //Fecha cotizacion
                                         //Precio Lista en el caso que sea codigo oferta 7
-
+                                        $scope.productoTemporal.Total = parseFloat(prodTemporal.Cantidad,3) * parseFloat(prodTemporal.Precio,3);
                                         $scope.pedidoTemporal.Productos.push(prodTemporal);
                                     }
 
                                     $scope.productoTemporal = {};
                                     buscarProducto.val('');
                                     buscarProducto.focus();
-                                    //$scope.calculaTotal();
+                                    $scope.calculaTotal();
                                 }
 
                             //}
@@ -314,10 +312,12 @@
             $scope.calculaTotal = function(){
                 $scope.pedidoTemporal.Total_Gravado = 0;
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
-                    $scope.pedidoTemporal.Total_Gravado += v.Cantidad * v.Precio;
+                    $scope.pedidoTemporal.Total_Gravado += v.Total;
                 });
 
                 $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
+                var Iva = 0;
+
 
                 if($scope.Iva_IngBr != null)
                 {
@@ -333,21 +333,45 @@
                         $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
                     }
 
+
+                    $scope.pedidoTemporal.Iva = Iva;
                     $scope.pedidoTemporal.Total_Exento =  $scope.Iva_IngBr.Total_Prod_Exento;
-                    $scope.pedidoTemporal.Porc_Cba = $scope.Iva_IngBr.Porc_Cba;
                     $scope.pedidoTemporal.IngBr_Cba = $scope.Iva_IngBr.IngBr_Cba;
+                    $scope.pedidoTemporal.Porc_IngBr_Cba = $scope.Iva_IngBr.Porc_IngBr_Cba;
                     $scope.pedidoTemporal.IngBr_Pba = $scope.Iva_IngBr.IngBr_Pba0 + $scope.Iva_IngBr.IngBr_Pba1;
                     $scope.pedidoTemporal.Porc_IngBr_Mis = $scope.Iva_IngBr.Porc_IngBr_Mis;
                     $scope.pedidoTemporal.IngBr_Mis = $scope.Iva_IngBr.IngBr_Mis;
                     $scope.pedidoTemporal.SubTotal = $scope.Iva_IngBr.SubTotal;
+                    $scope.pedidoTemporal.PorcDcto =  $scope.Iva_IngBr.PorcDcto;
                     $scope.pedidoTemporal.Descuento = $scope.Iva_IngBr.Descuento;
                     $scope.pedidoTemporal.Total_Neto = $scope.Iva_IngBr.Total_Neto;
+
 
                 }
 
             };
 
             $scope.calculaIngBrutos = function(cliente,productos){
+
+                var Porc_Max_CBA = 6;
+                var Porc_Max_PBA = 5;
+                var PF_Pcia_Tipo_0_RI = 2.5;
+                var PF_Pcia_Tipo_0_MT = 3;
+                var Porc_CBA = 3.5;
+                var Porc_Mis = 3.31;
+
+                var Total_Prod_Ex = 0;
+                var Total_Exento = 0;
+                var sLetra = "";
+                var Tot_Gravado_B = 0;
+                var Total_Prod_0 = 0;
+                var Total_Prod_1 = 0;
+                var Total_Bruto = 0;
+                var Iva_B = 0;
+                var Iva_Ins = 0;
+                var Iva_NoIns = 0;
+                var Total_Gravado = 0;
+
                 if(productos.length > 0){
                     //IVA y CM
                     //.....
@@ -355,10 +379,273 @@
 
                     //IVA
                     //......
+                    angular.forEach(productos,function(v,k){
+                        if(v.Tipo_Iva == "G") //PRODUCTO GRAVADO
+                        {
+                            var Precio_SINiva = v.Precio;
+                            switch (cliente.Tipo_Iva){
+                                case 'RI':
+                                case 'NI':
+                                    Total_Gravado += v.Cantidad * v.Precio;
+                                    Iva_Ins += (v.Cantidad * v.Precio ) * cliente.Porcentaje_Iva / 100;
+                                    sLetra="B";
+                                    break;
+                                case 'NC':
+                                    v.Precio += parseFloat((v.Precio * cliente.Porcentaje_Iva / 100),2);
+                                    Total_Exento += v.Cantidad * v.Precio;
+                                    Iva_NoIns += parseFloat(((v.Cantidad * v.Precio) * cliente.Porcentaje_Iva_2 /100),2);
+                                    Tot_Gravado_B += v.Cantidad * Precio_SINiva;
+                                    Iva_B += ((v.Cantidad * Precio_SINiva) * cliente.Porcentaje_Iva / 100);
+                                    sLetra = "B";
+                                    break;
+                                case 'CF':
+                                case 'EX':
+                                case 'MT':
+                                    v.Precio = parseFloat((v.Precio * cliente.Porcentaje_Iva / 100),2);
+                                    Total_Exento += v.Cantidad * v.Precio;
+                                    Tot_Gravado_B += v.Cantidad * Precio_SINiva;
+                                    Iva_B += ((v.Cantidad * Precio_SINiva) * cliente.Porcentaje_Iva / 100);
+                                    sLetra = "B";
+                                    break;
+                                case 'FE':
+                                    Total_Prod_Ex += v.Cantidad * v.Precio;
+                                    sLetra = 'E';
+                                    break;
+                            }
+                        }
+                        else
+                            Total_Prod_Ex += v.Cantidad * v.Precio;
+
+
+                        if(v.Tipo_Ing_Br == 0)
+                            Total_Prod_0 += v.Cantidad * v.Precio;
+                        else
+                            Total_Prod_1 += v.Cantidad * v.Precio;
+
+                        Total_Bruto = Total_Prod_0 + Total_Prod_1;
+
+                    });
+
+                    var Iva_IngBr = {};
+                    Iva_IngBr.Total_Gravado = Total_Gravado;
+                    Iva_IngBr.Total_Exento = Tot_Gravado_B + Iva_B;
+                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex;
+                    Iva_IngBr.Porc_Iva_Ins = parseFloat(cliente.Porcentaje_Iva,2);
+                    Iva_IngBr.Porc_Iva_NoIns = parseFloat(cliente.Porcentaje_Iva_2,2);
+                    Iva_IngBr.Iva_Ins = Iva_NoIns;
+                    Iva_IngBr.IngBr_Cba = 0;
+                    Iva_IngBr.IngBr_Mis = 0;
+                    Iva_IngBr.IngBr_Pba0 = 0;
+                    Iva_IngBr.IngBr_Pba1 = 0;
+                    Iva_IngBr.Iva_NoIns = 0;
+                    Iva_IngBr.PorcDcto = 0;
+                    Iva_IngBr.Descuento = 0;
+                    Iva_IngBr.SubTotal = 0;
+                    Iva_IngBr.Porc_IngBr_Cba = 0;
+                    Iva_IngBr.Impuestos = 0;
+
+
+
+
+                    var Total_Pedido = 0;
+
+                    if(sLetra == "A")
+                        Total_Pedido = Total_Gravado + (Total_Exento / (1 + cliente.Porcentaje_Iva / 100)) + Total_Prod_Ex;
+                    else
+                        Total_Pedido = Total_Gravado + Total_Exento + Total_Prod_Ex;
 
 
                     //CALCULO DE IIBB
                     //......
+
+                    if(productos[0].Id_Producto != 4 && productos[0].Id_Producto != 3880)
+                    {
+                        if(cliente.Convenio)
+                        {
+                            if(cliente.Padron_Reg_Gral != null && cliente.Padron_Reg_Gral > 0)
+                            {
+                                Iva_IngBr.Porc_IngBr_Cba = cliente.Alicuota_Percepcion;
+                                Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
+
+                            }
+                            else
+                            {
+                                Iva_IngBr.Porc_IngBr_Cba = Porc_Max_CBA;
+                                Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
+
+                            }
+
+                            if(cliente.CM_J902)
+                            {
+                                if(cliente.CM_J902 >= 0.1)
+                                {
+                                    switch (cliente.Tipo_Iva)
+                                    {
+                                        case 'RI':
+                                            PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_RI;
+                                            break;
+                                        case 'NI':
+                                        case 'NC':
+                                        case 'EX':
+                                        case 'MT':
+                                            PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_MT;
+                                            break;
+                                        default:
+                                            PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_MT;
+                                            break;
+                                    }
+
+                                    Iva_IngBr.Porc_IngBr_Pba0 = PF_Pcia_Tipo_0;
+                                    Iva_IngBr.Porc_IngBr_Pba1 = cliente.Porcentaje_Pcia;
+                                    Iva_IngBr.IngBr_Pba0 = Total_Prod_0 * PF_Pcia_Tipo_0 / 100;
+                                    Iva_IngBr.IngBr_Pba1 = Total_Prod_1 * cliente.Porcentaje_Pcia / 100;
+                                    Iva_IngBr.Base_Pba0 = Total_Prod_0;
+                                    Iva_IngBr.Base_Pba1 = Total_Prod_1;
+                                }else
+                                {
+                                    Iva_IngBr.Porc_IngBr_Pba0 = 0;
+                                    Iva_IngBr.Porc_IngBr_Pba1 = 0;
+                                    Iva_IngBr.IngBr_Pba0 = 0;
+                                    Iva_IngBr.IngBr_Pba1 = 0;
+                                    Iva_IngBr.Base_Pba0 = 0;
+                                    Iva_IngBr.Base_Pba1 = 0;
+                                }
+                            }
+                            else
+                            {
+                                Iva_IngBr.Porc_IngBr_Pba0 = Porc_Max_PBA;
+                                Iva_IngBr.Porc_IngBr_Pba1 = 0;
+                                Iva_IngBr.IngBr_Pba0 = Total_Bruto * Iva_IngBr.Porc_IngBr_Pba0 / 100;
+                                Iva_IngBr.IngBr_Pba1 = 0;
+                                Iva_IngBr.Base_Pba0 = Total_Bruto;
+                                Iva_IngBr.Base_Pba1 = 0;
+                            }
+                        }
+                        else
+                        {
+                            if(cliente.Id_Provincia_CatIngBr == 2)
+                            {
+                                if(cliente.Id_Cat_Ing_Br == 8)
+                                {
+                                    Iva_IngBr.Porc_IngBr_Cba = 0;
+                                    Iva_IngBr.IngBr_Cba = 0;
+                                }
+                                else
+                                {
+                                    if(cliente.Padron_Reg_Gral)
+                                    {
+                                        Iva_IngBr.Porc_IngBr_Cba = cliente.Alicuota_Percepcion;
+                                        Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
+                                        console.log(Iva_IngBr.IngBr_Cba);
+                                    }
+                                    else
+                                    {
+                                        Iva_IngBr.Porc_IngBr_Cba = Porc_Max_CBA;
+                                        Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
+                                        console.log(Iva_IngBr.IngBr_Cba);
+                                    }
+                                }
+                            }
+                            if(cliente.Id_Provincia_CatIngBr == 1)
+                            {
+                                if(cliente.Id_Cat_Ing_Br == 8)
+                                {
+                                    Iva_IngBr.Porc_IngBr_Pba0 = 0;
+                                    Iva_IngBr.Porc_IngBr_Pba1 = 0;
+                                    Iva_IngBr.IngBr_Pba0 = 0;
+                                    Iva_IngBr.IngBr_Pba1 = 0;
+                                }
+                                else
+                                {
+                                    if(cliente.Porcentaje_Pcia > 0)
+                                    {
+                                        switch (cliente.Tipo_Iva)
+                                        {
+                                            case "RI":
+                                                PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_RI;
+                                                break;
+                                            case "NI":
+                                            case "NC":
+                                            case "EX":
+                                            case "MT":
+                                                PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_MT;
+                                                break;
+                                            default:
+                                                PF_Pcia_Tipo_0 = PF_Pcia_Tipo_0_MT;
+                                                break;
+                                        }
+
+                                        Iva_IngBr.Porc_IngBr_Pba0 = PF_Pcia_Tipo_0;
+                                        Iva_IngBr.Porc_IngBr_Pba1 = cliente.Porcentaje_Pcia;
+                                        Iva_IngBr.IngBr_Pba0 = Total_Prod_0 * PF_Pcia_Tipo_0 / 100;
+                                        Iva_IngBr.IngBr_Pba1 = Total_Prod_1 * cliente.Porcentaje_Pcia / 100;
+                                        Iva_IngBr.Base_Pba0 = Total_Prod_0;
+                                        Iva_IngBr.Base_Pba1 = Total_Prod_1;
+                                    }
+                                    else
+                                    {
+                                        Iva_IngBr.Porc_IngBr_Pba0 = 0;
+                                        Iva_IngBr.Porc_IngBr_Pba1 = 0;
+                                        Iva_IngBr.IngBr_Pba0 = 0;
+                                        Iva_IngBr.IngBr_Pba1 = 0;
+                                        Iva_IngBr.Base_Pba0 = 0;
+                                        Iva_IngBr.Base_Pba1 = 0;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Iva_IngBr.Porc_IngBr_Cba = 0;
+                        Iva_IngBr.IngBr_Cba = 0;
+
+                        Iva_IngBr.Porc_IngBr_Pba0 = 0;
+                        Iva_IngBr.Porc_IngBr_Pba1 = 0;
+                        Iva_IngBr.IngBr_Pba0 = 0;
+                        Iva_IngBr.IngBr_Pba1 = 0;
+                        Iva_IngBr.Base_Pba0 = 0;
+                        Iva_IngBr.Base_Pba1 = 0;
+                    }
+
+                    //Misiones
+
+                    if(cliente.provincia == 14 && cliente.Id_Cat_Ing_Br != 8)
+                    {
+                        Iva_IngBr.Porc_IngBr_Mis = Porc_Mis;
+                        Iva_IngBr.IngBr_Mis = Total_Bruto * Iva_IngBr.Porc_IngBr_Mis / 100;
+                    }
+                    else
+                    {
+                        Iva_IngBr.Porc_IngBr_Mis = 0;
+                        Iva_IngBr.IngBr_Mis = 0;
+                    }
+
+                    //______________________________________
+                    var dBruto = 0;
+                    var dImpuestos = 0;
+                    var dSubTotal = 0;
+                    var dPorcDcto = parseFloat(cliente.Dcto,3);
+                    var dDescuento = 0;
+                    var dTotalNeto = 0;
+
+                    dBruto = Iva_IngBr.Total_Gravado + Iva_IngBr.Total_Exento;
+                    dImpuestos = Iva_IngBr.IngBr_Cba + Iva_IngBr.IngBr_Mis + Iva_IngBr.IngBr_Pba0 + Iva_IngBr.IngBr_Pba1 +
+                        Iva_IngBr.Iva_Ins + Iva_IngBr.Iva_NoIns;
+                    dSubTotal = dBruto + Iva_IngBr.Total_Prod_Exento + dImpuestos;
+                    dDescuento = (dBruto + Iva_IngBr.Total_Prod_Exento) * dPorcDcto / 100;
+                    dTotalNeto = dSubTotal - dDescuento;
+
+                    Iva_IngBr.Bruto = dBruto;
+                    Iva_IngBr.Impuestos = dImpuestos;
+                    Iva_IngBr.SubTotal = dSubTotal;
+                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex;
+                    Iva_IngBr.PorcDcto = dPorcDcto;
+                    Iva_IngBr.Descuento = dDescuento;
+                    Iva_IngBr.Total_Neto = dTotalNeto;
+
+                    return Iva_IngBr;
                 }
             };
 
@@ -408,36 +695,41 @@
                         });
 
             };
-            $scope.seleccionClienteCodigo = function(event){
-                if(event.which === 13){
-                    if(!isNaN($scope.clienteBuscado) && $scope.clienteBuscado.length < 7)
-                    {
-                        while($scope.clienteBuscado.length < 7)
-                            $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
 
-                        var codCliente = $scope.clienteBuscado;
-                        $scope.seleccionCliente(codCliente);
-                    }
-                }
-
-            };
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();
-                    if(cod !== null)
+
+                    /*
+                    if(event != null && event.which === 13){
+                        cod = $scope.clienteBuscado;
+                        if(!isNaN($scope.clienteBuscado) && $scope.clienteBuscado.length < 7)
+                        {
+                            while($scope.clienteBuscado.length < 7)
+                                $scope.clienteBuscado = padLeft($scope.clienteBuscado,7);
+
+                            cod = $scope.clienteBuscado;
+                        }
+                    }
+                    */
+
+                    if(cod !== undefined)
                     {
+
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
-                                    console.log(resp.data);
                                     if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
                                     {
                                         if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
                                         {
+
                                             if(CodVendedor == resp.data.Codigo_Vendedor)
                                             {
-                                                $scope.poneColorAgrup(resp.data.Id_Agrupacion);
 
+                                                $scope.poneColorAgrup(resp.data.Id_Agrupacion);
+//////////////////////////PROBLEM
                                                 $scope.pedidoTemporal.Cliente = resp.data;
+
                                                 buscarCliente.val('');
                                                 buscarProducto.focus();
                                             }
@@ -463,8 +755,8 @@
                                         divMjeCliente.fadeOut(6000);
                                     }
                         })
-                                .catch(function(){
-                                    console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
+                        .catch(function(){
+                            console.log('ERROR BUSQUEDA CLIENTE POR CODIGO');
                         });
 
                     }
@@ -521,9 +813,9 @@
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                                 .then(function(resp){
                                     $scope.productoTemporal = resp.data;
-                                    console.log(resp.data);
+
                                     $scope.poneColorRubro(resp.data.Rubro_Color);
-                                    console.log($scope.pedidoTemporal.id_Moneda);
+
                                     //Calculo precio_lista
                                     if($scope.productoTemporal.Precio_Moneda <= 0 && $scope.pedidoTemporal.id_Moneda == 1)
                                         $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Pesos;
@@ -546,6 +838,8 @@
                                         $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista) + (parseFloat($scope.productoTemporal.Precio_Lista) * parseFloat($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100);
                                     else
                                         $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
+
+
 
                                     $filter('number')(parseFloat($scope.productoTemporal.Precio),3);
                                     $filter('number')(parseFloat($scope.productoTemporal.Precio_Lista),3);

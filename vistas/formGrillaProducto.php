@@ -18,7 +18,7 @@
             <td>{{prod.Descripcion_Producto}}</td>
             <td>{{prod.Cantidad | number:3}}</td>
             <td>{{prod.Precio | number: 3}}</td>
-            <td>{{prod.Cantidad * prod.Precio | number: 2}} </td>
+            <td>{{prod.Total | number: 2}} </td>
             <td>{{prod.Estado}}</td>
             <td>{{prod.Fecha_Cotizacion}}</td>
             <td>{{prod.Nro_Cotizacion}}</td>
