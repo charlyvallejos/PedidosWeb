@@ -833,7 +833,10 @@
 
 
                                     //Convierto a float
-
+                                    $scope.productoTemporal.Precio_Moneda = parseFloat($scope.productoTemporal.Precio_Moneda).toFixed(2);
+                                    $scope.productoTemporal.Precio_Lista = parseFloat($scope.productoTemporal.Precio_Lista).toFixed(2);
+                                    $scope.productoTemporal.Precio_Pesos = parseFloat($scope.productoTemporal.Precio_Pesos).toFixed(2);
+                                    $scope.productoTemporal.Precio_Moneda = parseFloat($scope.productoTemporal.Precio_Moneda).toFixed(2);
 
                                     //Calculo precio_lista
                                     if($scope.productoTemporal.Precio_Moneda <= 0 && $scope.pedidoTemporal.id_Moneda == 1)
@@ -854,14 +857,12 @@
                                     //Calculo precio venta
 
                                     if($scope.productoTemporal.Tipo_Iva != "E")
-                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista,2) + (parseFloat($scope.productoTemporal.Precio_Lista,2) * parseFloat($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2);
+                                        $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista + $scope.productoTemporal.Precio_Lista * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2);
                                     else
-                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista,2).toFixed(2);
+                                        $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
 
 
-
-                                    parseFloat($scope.productoTemporal.Precio,2).toFixed(3);
-                                    parseFloat($scope.productoTemporal.Precio_Lista,2).toFixed(3);
+                                    $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio).toFixed(2);
                                     console.log($scope.productoTemporal);
                                     buscarProducto.val('');
                                     inputCantidad.focus();
