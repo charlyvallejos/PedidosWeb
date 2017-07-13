@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>Codigo</th>
+            <th>Renglon</th>
             <th>Descripcion</th>
             <th>Cantidad</th>
             <th>Precio</th>
@@ -15,6 +16,7 @@
         <tbody>
         <tr dir-paginate="prod in pedidoTemporal.Productos | filter:buscar|orderBy:sortKey:reverse | itemsPerPage: 5" pagination-id="prod" ng-click="selectProducto(prod)">
             <td>{{prod.Codigo_Producto}}</td>
+            <td>{{prod.Renglon}}</td>
             <td>{{prod.Descripcion_Producto}}</td>
             <td>{{prod.Cantidad | number:3}}</td>
             <td>{{prod.Precio | number: 3}}</td>

@@ -97,7 +97,6 @@
             $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "pedido";
 
 
-
             //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
@@ -171,6 +170,7 @@
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
+                                $scope.calculaTotal();
                             })
                             .catch(function(resp){
                                 console.log(resp);
@@ -185,6 +185,9 @@
                 $scope.index = $scope.pedidos.indexOf(ped);
 
                 formUp.slideDown();
+
+
+
             };
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
@@ -278,7 +281,9 @@
                                 if($scope.productoTemporal != null)
                                 {
                                     if(encontrarProducto)
+                                    {
                                         $scope.pedidoTemporal.Productos.indexOf(encontrarProducto).cantidad = prodTemporal.Cantidad;
+                                    }
                                     else
                                     {
                                         if(prodTemporal.Precio == 0)
@@ -309,18 +314,20 @@
 
             $scope.calculaTotal = function(){
                 $scope.pedidoTemporal.Total_Gravado = 0;
-                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){                    
-                    $scope.pedidoTemporal.Total_Gravado += v.Total;
+
+                angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
+                    $scope.pedidoTemporal.Total_Gravado += parseFloat(v.Total,3);
                 });
 
+
                 $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
-                var Iva = 0;
 
 
                 if($scope.Iva_IngBr != null)
                 {
                     $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.Iva_IngBr.Bruto,2);
-                    if($scope.Iva_IngBr.Iva_Ins > 0)
+
+                    if(parseFloat($scope.Iva_IngBr.Iva_Ins,3) > 0)
                     {
                         $scope.pedidoTemporal.Porc_Iva = $scope.Iva_IngBr.Porc_Iva_Ins;
                         $scope.pedidoTemporal.Iva = $scope.Iva_IngBr.Iva_Ins;
@@ -328,11 +335,10 @@
                     else
                     {
                         $scope.pedidoTemporal.Porc_Iva = $scope.Iva_IngBr.Porc_Iva_NoIns;
-                        $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
+                        $scope.pedidoTemporal.Iva = $scope.Iva_IngBr.Iva_NoIns;
                     }
 
 
-                    $scope.pedidoTemporal.Iva = Iva;
                     $scope.pedidoTemporal.Total_Exento =  $scope.Iva_IngBr.Total_Prod_Exento;
                     $scope.pedidoTemporal.IngBr_Cba = $scope.Iva_IngBr.IngBr_Cba;
                     $scope.pedidoTemporal.Porc_IngBr_Cba = $scope.Iva_IngBr.Porc_IngBr_Cba;
@@ -344,11 +350,16 @@
                     $scope.pedidoTemporal.Descuento = $scope.Iva_IngBr.Descuento;
                     $scope.pedidoTemporal.Total_Neto = $scope.Iva_IngBr.Total_Neto;
 
-
                 }
 
-            };
+                $scope.formatoPorcentaje();
 
+
+            };
+            $scope.formatoPorcentaje = function(){
+                $scope.pedidoTemporal.Porc_IngBr_Cba = parseFloat($scope.pedidoTemporal.Porc_IngBr_Cba,2).toFixed(2);
+                $scope.pedidoTemporal.Porc_IngBr_Mis = parseFloat($scope.pedidoTemporal.Porc_IngBr_Mis,2).toFixed(2);
+            };
             $scope.calculaIngBrutos = function(cliente,productos){
 
                 var Porc_Max_CBA = 6;
@@ -366,9 +377,9 @@
                 var Total_Prod_1 = 0;
                 var Total_Bruto = 0;
                 var Iva_B = 0;
-                var Iva_Ins = 0;
-                var Iva_NoIns = 0;
+                var Iva = 0;
                 var Total_Gravado = 0;
+
 
                 if(productos.length > 0){
                     //IVA y CM
@@ -377,21 +388,24 @@
 
                     //IVA
                     //......
+
                     angular.forEach(productos,function(v,k){
                         if(v.Tipo_Iva == "G") //PRODUCTO GRAVADO
                         {
+
                             var Precio_SINiva = v.Precio;
                             switch (cliente.Tipo_Iva){
                                 case 'RI':
                                 case 'NI':
                                     Total_Gravado += v.Cantidad * v.Precio;
-                                    Iva_Ins += (v.Cantidad * v.Precio ) * cliente.Porcentaje_Iva / 100;
+
+                                    Iva += (v.Cantidad * v.Precio ) * cliente.Porcentaje_Iva / 100;
                                     sLetra="B";
                                     break;
                                 case 'NC':
                                     v.Precio += parseFloat((v.Precio * cliente.Porcentaje_Iva / 100),2);
                                     Total_Exento += v.Cantidad * v.Precio;
-                                    Iva_NoIns += parseFloat(((v.Cantidad * v.Precio) * cliente.Porcentaje_Iva_2 /100),2);
+                                    Iva += parseFloat(((v.Cantidad * v.Precio) * cliente.Porcentaje_Iva_2 /100),2);
                                     Tot_Gravado_B += v.Cantidad * Precio_SINiva;
                                     Iva_B += ((v.Cantidad * Precio_SINiva) * cliente.Porcentaje_Iva / 100);
                                     sLetra = "B";
@@ -425,12 +439,13 @@
                     });
 
                     var Iva_IngBr = {};
-                    Iva_IngBr.Total_Gravado = Total_Gravado;
-                    Iva_IngBr.Total_Exento = Tot_Gravado_B + Iva_B;
-                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex;
-                    Iva_IngBr.Porc_Iva_Ins = parseFloat(cliente.Porcentaje_Iva,2);
-                    Iva_IngBr.Porc_Iva_NoIns = parseFloat(cliente.Porcentaje_Iva_2,2);
-                    Iva_IngBr.Iva_Ins = Iva_NoIns;
+                    Iva_IngBr.Total_Gravado = parseFloat(Total_Gravado,3).toFixed(2);
+
+                    Iva_IngBr.Total_Exento = (Tot_Gravado_B + Iva_B).toFixed();
+                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex.toFixed(2);
+                    Iva_IngBr.Porc_Iva_Ins = parseFloat(cliente.Porcentaje_Iva,2).toFixed(2);
+                    Iva_IngBr.Porc_Iva_NoIns = parseFloat(cliente.Porcentaje_Iva_2,2).toFixed(2);
+                    Iva_IngBr.Iva_Ins = Iva.toFixed(2);
                     Iva_IngBr.IngBr_Cba = 0;
                     Iva_IngBr.IngBr_Mis = 0;
                     Iva_IngBr.IngBr_Pba0 = 0;
@@ -628,20 +643,22 @@
                     var dDescuento = 0;
                     var dTotalNeto = 0;
 
-                    dBruto = Iva_IngBr.Total_Gravado + Iva_IngBr.Total_Exento;
-                    dImpuestos = Iva_IngBr.IngBr_Cba + Iva_IngBr.IngBr_Mis + Iva_IngBr.IngBr_Pba0 + Iva_IngBr.IngBr_Pba1 +
-                        Iva_IngBr.Iva_Ins + Iva_IngBr.Iva_NoIns;
-                    dSubTotal = dBruto + Iva_IngBr.Total_Prod_Exento + dImpuestos;
-                    dDescuento = (dBruto + Iva_IngBr.Total_Prod_Exento) * dPorcDcto / 100;
+                    dBruto = parseFloat(Iva_IngBr.Total_Gravado,3) + parseFloat(Iva_IngBr.Total_Exento,3);
+                    dImpuestos = parseFloat(Iva_IngBr.IngBr_Cba,3) + parseFloat(Iva_IngBr.IngBr_Mis,3) + parseFloat(Iva_IngBr.IngBr_Pba0,3)+ parseFloat(Iva_IngBr.IngBr_Pba1,3) +
+                        parseFloat(Iva_IngBr.Iva_Ins,3) + parseFloat(Iva_IngBr.Iva_NoIns,3);
+                    dSubTotal = dBruto + parseFloat(Iva_IngBr.Total_Prod_Exento,3) + dImpuestos;
+                    dDescuento = (dBruto + parseFloat(Iva_IngBr.Total_Prod_Exento,3)) * dPorcDcto / 100;
                     dTotalNeto = dSubTotal - dDescuento;
 
-                    Iva_IngBr.Bruto = dBruto;
-                    Iva_IngBr.Impuestos = dImpuestos;
-                    Iva_IngBr.SubTotal = dSubTotal;
-                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex;
-                    Iva_IngBr.PorcDcto = dPorcDcto;
-                    Iva_IngBr.Descuento = dDescuento;
-                    Iva_IngBr.Total_Neto = dTotalNeto;
+                    Iva_IngBr.Bruto = dBruto.toFixed(2);
+                    Iva_IngBr.Impuestos = dImpuestos.toFixed(2);
+                    Iva_IngBr.SubTotal = dSubTotal.toFixed(2);
+                    Iva_IngBr.Total_Prod_Exento = Total_Prod_Ex.toFixed(2);
+                    Iva_IngBr.PorcDcto = dPorcDcto.toFixed(2);
+                    Iva_IngBr.Descuento = dDescuento.toFixed(2);
+                    Iva_IngBr.Total_Neto = dTotalNeto.toFixed(2);
+
+
 
                     return Iva_IngBr;
                 }
@@ -784,7 +801,6 @@
             $scope.seleccionClienteModal = function(){
                 modalCliente.modal('hide');
                 var cod = modalCliente.attr('data-codCli');
-                console.log(cod);
                     if(cod !== null)
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
@@ -815,6 +831,10 @@
 
                                     $scope.poneColorRubro(resp.data.Rubro_Color);
 
+
+                                    //Convierto a float
+
+
                                     //Calculo precio_lista
                                     if($scope.productoTemporal.Precio_Moneda <= 0 && $scope.pedidoTemporal.id_Moneda == 1)
                                         $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Pesos;
@@ -834,15 +854,15 @@
                                     //Calculo precio venta
 
                                     if($scope.productoTemporal.Tipo_Iva != "E")
-                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista) + (parseFloat($scope.productoTemporal.Precio_Lista) * parseFloat($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100);
+                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista,2) + (parseFloat($scope.productoTemporal.Precio_Lista,2) * parseFloat($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2);
                                     else
-                                        $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
+                                        $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista,2).toFixed(2);
 
 
 
-                                    $filter('number')(parseFloat($scope.productoTemporal.Precio),3);
-                                    $filter('number')(parseFloat($scope.productoTemporal.Precio_Lista),3);
-
+                                    parseFloat($scope.productoTemporal.Precio,2).toFixed(3);
+                                    parseFloat($scope.productoTemporal.Precio_Lista,2).toFixed(3);
+                                    console.log($scope.productoTemporal);
                                     buscarProducto.val('');
                                     inputCantidad.focus();
                                 })
@@ -862,7 +882,6 @@
 //                    inputCantidad.focus();
 //                   }
             };
-
 
             $scope.poneColorRubro = function(color){
               if(color == "0")
@@ -961,7 +980,6 @@
                 {
                     $http.get(apiURL+"?a=get&t=monedde&idMoneda="+idMoneda)
                         .then(function(resp){
-                            console.log(resp);
                             $scope.pedidoTemporal.Valor_Moneda = resp.data.Valor_Moneda;
                         })
                         .catch(function(resp){
