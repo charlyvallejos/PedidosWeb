@@ -115,7 +115,7 @@ class Clien_Ma
             $query = $conexion->prepare($sql);
             $query->bindParam(':id',$id,PDO::PARAM_INT);
             $query->execute();
-            return $query->fetchAll(PDO::FETCH_ASSOC);
+            return $query->fetch(PDO::FETCH_ASSOC);
         }catch(PDOException $ex){
             return $ex->getMessage();
         }

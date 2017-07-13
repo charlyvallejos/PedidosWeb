@@ -94,7 +94,7 @@
             $scope.pedidoTemporal.Valor_Moneda = 1;
             $scope.clienteBuscado = "";
 
-            $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por;
+            $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "pedido";
 
 
 
@@ -167,12 +167,10 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
-                        //console.log(resp.data);
-                        console.log(ped.id_Cliente);
+
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
-                                console.log(resp);
                             })
                             .catch(function(resp){
                                 console.log(resp);
@@ -735,7 +733,7 @@
                                             }
                                             else
                                             {
-                                                modalCliente.attr('data-codCli',$scope.clienteBuscado);
+                                                modalCliente.attr('data-codCli',cod);
                                                 modalCliente.modal('show');
                                             }
                                         }
@@ -786,6 +784,7 @@
             $scope.seleccionClienteModal = function(){
                 modalCliente.modal('hide');
                 var cod = modalCliente.attr('data-codCli');
+                console.log(cod);
                     if(cod !== null)
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
@@ -900,6 +899,7 @@
                 formUp.slideUp();
                 $scope.pedidoTemporal = {};
                 $scope.pedidoTemporal.Generado_Por = "pedido";
+                $scope.pedidoTemporal.id_Moneda = 1;
                 $scope.pedidoTemporal.Productos = [];
                 divMjeProd.hide();
                 divMjeCliente.hide();
@@ -918,23 +918,12 @@
                 $scope.pedidoTemporal = {};
                 $scope.productoTemporal = {};
                 modalRadio.modal('hide');
-                if($radioFR.checked)
-                {
-                    $scope.pedidoTemporal.Generado_Por = 0;
+
+                $scope.pedidoTemporal.Generado_Por = gen;
+                if($radioFR[0].checked)
                     $scope.pedidoTemporal.Id_Reparto = 45;
-                }
-                else if($radioSF.checked)
-                {
-                    $scope.pedidoTemporal.Generado_Por = 0;
+                else if($radioSF[0].checked)
                     $scope.pedidoTemporal.Id_Reparto = 227;
-                }else if($radioPed.checked)
-                    $scope.pedidoTemporal.Generado_Por = 0;
-                else if($radioCoti.checked)
-                    $scope.pedidoTemporal.Generado_Por = 1;
-                else if($radioMostro.checked)
-                    $scope.pedidoTemporal.Generado_Por = 2;
-                else if($radioPresu.checked)
-                    $scope.pedidoTemporal.Generado_Por = 3;
 
                 return true;
             };

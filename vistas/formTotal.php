@@ -37,7 +37,7 @@
                 <label for="" class="control-label">IB PBA:</label>
             </div>
             <div  class="col-md-3 col-xs-3 falso-xs-12">
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" readonly hidden>
             </div>
             <div  class="col-md-5 col-xs-5 falso-xs-12">
                 <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Pba">

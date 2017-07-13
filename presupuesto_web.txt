@@ -9,6 +9,7 @@ Aplicación Web - Módulo Pedidos
 	Clientes
 	Productos
 	Listados
+	Login
 -- Gestión de pedidos
 -- Rearmado de base de datos adaptado a web con una actualización diaria en sincronización con la base de datos central. 
 -- Aplicación de escritorio conectado a la base de datos web para cargar pedidos de vendedores a base de datos central.
@@ -17,14 +18,16 @@ Detalle y alcance del proyecto:
 
 El vendedor será capaz de cargar, modificar y dar de baja pedidos, cotizaciones y presupuestos.
 Las cotizaciones podrán ser cargadas en pesos o dólares.
+En la seccion principal solo se veran los pedidos que lleva cargados durante el dia, con la opcion de modificar la cantidad de pedidos que quiere ver por página.
 También podrá consultar listado de clientes y productos así como también, la opción de listar pedidos entre las fechas que se elijan
-
 Una vez el vendedor finalice la carga de pedidos del día, deberá confirmar bloqueando de esta forma la carga o modificación de pedidos durante el dia. Luego, estos pedidos serán levantados en la base de datos central mediante una aplicación de escritorio.
+
+Mediante el sistema de Login, el vendedor podra ingresar a su perfil donde podrá ver sus datos personales  y las comisiones que estan cargados en el sistema de drogueria saporiti.
 
 Tecnologías a utilizar:
 
 HTML5 +CSS3 + Bootstrap
-Javascript 
+Javascript (Jquery, Angular)
 PHP
 Mysql
 C#

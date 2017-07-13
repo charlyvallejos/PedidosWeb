@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400|Raleway:300);
 /*  menu  */
+
 nav#menu{
     background-color: rgba(32, 45, 52, 0.89);
     margin-top:10px;
@@ -52,7 +53,7 @@ nav#menu ul li a:hover{
     box-shadow: none !important;
 }
 legend {
-    font-size: 18px;
+    font-size: .8em;
     color: inherit;
 }
 .form-horizontal .form-group {
@@ -355,7 +356,7 @@ ul.nav li:nth-child(n)  {
     width: 20%;
     margin-top: 42px;
     text-align: center;
-    font-size: 15px;
+    font-size: 1.2em;
 }
 
 ul.nav li:nth-child(3)  {
@@ -521,4 +522,15 @@ li.active > a:hover, li.active > span:hover{
 
 .colorAgrup{
     background: rgba(180, 0, 0, 0.16) !important;
+}
+
+table{
+    font-size: .9em;
+}
+#divObs{
+    margin-top:25px;
+}
+
+input, textarea,select{
+    font-size: 1em !important;
 }
