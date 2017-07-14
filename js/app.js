@@ -97,7 +97,7 @@
             $scope.pedidoTemporal.Generado_Por = $scope.Generado_Por = "pedido";
 
 
-            //$scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
+            $scope.config = {headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}};
 
             //// Para ordenar por nro pedido, fecha o cliente /////
             $scope.sort = function(keyname){
@@ -733,6 +733,7 @@
 
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
+
                                     if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
                                     {
                                         if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
@@ -744,6 +745,10 @@
                                                 $scope.poneColorAgrup(resp.data.Id_Agrupacion);
 //////////////////////////PROBLEM
                                                 $scope.pedidoTemporal.Cliente = resp.data;
+                                                $scope.pedidoTemporal.Id_Reparto = resp.data.Id_Reparto;
+                                                $scope.pedidoTemporal.Id_Condicion = resp.data.Id_Condicion;
+                                                $scope.pedidoTemporal.Id_Lista = resp.data.Id_Lista;
+                                                $scope.pedidoTemporal.Id_Grupo_Cliente = resp.data.Id_Grupo_Cliente;
 
                                                 buscarCliente.val('');
                                                 buscarProducto.focus();
@@ -863,7 +868,7 @@
 
 
                                     $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio).toFixed(2);
-                                    console.log($scope.productoTemporal);
+
                                     buscarProducto.val('');
                                     inputCantidad.focus();
                                 })
@@ -990,5 +995,79 @@
                 else
                     $scope.pedidoTemporal.Valor_Moneda = 1;
 
+            };
+
+            $scope.altaPedido = function(){
+                if($scope.pedidoTemporal != undefined && $scope.pedidoTemporal != null)
+                {
+                    if($scope.pedidoTemporal.Cliente != undefined && $scope.pedidoTemporal.Cliente != null)
+                    {
+                        if($scope.pedidoTemporal.Productos.length > 0)
+                        {
+                            if($scope.pedidoTemporal.Nro_Pedido == 0 || $scope.pedidoTemporal.Nro_Pedido == undefined)
+                            {
+                                $scope.pedidoTemporal.Id_Tomado_Por = "";
+                                $scope.pedidoTemporal.Id_Usuario = "";
+                                $scope.pedidoTemporal.Fecha_Operacion = $scope.pedidoTemporal.Fecha_Pedido = Date.now();
+                                $scope.pedidoTemporal.Nro_Cotizacion = 0;
+                                $scope.pedidoTemporal.Nro_Presupuesto = 0;
+                                $scope.pedidoTemporal.Nro_Pedido = 0;
+                                $scope.pedidoTemporal.Codigo_Vendedor = CodVendedor;
+                                $scope.pedidoTemporal.Id_Moneda = $scope.pedidoTemporal.id_Moneda;
+                                $scope.pedidoTemporal.Cotizacion_Moneda = $scope.pedidoTemporal.Valor_Moneda;
+                                $scope.pedidoTemporal.Estado = 'CAR';
+                                $scope.pedidoTemporal.Nro_orden_compra = 0;
+                                $scope.pedidoTemporal.Id_Condicion = $scope.pedidoTemporal.Cliente.Id_Condicion_Vta;
+                                $scope.pedidoTemporal.Id_Lista = $scope.pedidoTemporal.Cliente.Id_Lista_Precio;
+                                $scope.pedidoTemporal.Id_Reparto = $scope.pedidoTemporal.Cliente.Id_Reparto;
+                                if(!$scope.pedidoTemporal.Id_Transporte)
+                                    $scope.pedidoTemporal.Id_Transporte = $scope.pedidoTemporal.Cliente.Id_Transporte;
+
+                                switch ($scope.pedidoTemporal.Generado_Por)
+                                {
+                                    case 'pedido':
+                                        $scope.pedidoTemporal.Generado_Por = 0;
+                                        break;
+                                    case 'cotizacion':
+                                        $scope.pedidoTemporal.Generado_Por = 1;
+                                        break;
+                                    case 'presupuesto':
+                                        $scope.pedidoTemporal.Generado_Por = 3;
+                                        break;
+                                    case 'mostrador':
+                                        $scope.pedidoTemporal.Generado_Por = 2;
+                                        break;
+                                    case 'fr':
+                                        $scope.pedidoTemporal.Generado_Por = 0;
+                                        $scope.pedidoTemporal.Id_Reparto = 45;
+                                        break;
+                                    case 'sf':
+                                        $scope.pedidoTemporal.Generado_Por = 0;
+                                        $scope.pedidoTemporal.Id_Reparto = 227;
+                                        break;
+                                }
+
+                                var pedido = $.param({
+                                    'pedido':$scope.pedidoTemporal
+                                });
+
+                                console.log($scope.pedidoTemporal);
+                                $http.post(apiURL)
+                                    .then(function(response){
+                                        console.log(response);
+                                       //$scope.pedidos.push({
+                                       //    Nro_Pedido:response.data.Nro_Pedido
+                                       //});
+
+                                       //formUp.slideUp();
+
+                                    })
+                                    .catch(function(response){
+                                        console.log(response);
+                                    });
+                            }
+                        }
+                    }
+                }
             }
         });
