@@ -7,14 +7,30 @@
         respuesta = $("#respuesta"),
         mostrar = $("#mostrar"),
         ajax = null;
-    var hoy = new Date();
-    var dia = hoy.getDate() + "";
-    var mes = (hoy.getMonth() + 1) + "";
-    var anio = hoy.getFullYear() + "";
-    var h = hoy.getHours() + "";
-    var m = hoy.getMinutes() + "";
-    var s = hoy.getSeconds() + "";
 
+    var today = new Date();
+    var day = today.getDate() + "";
+    var month = (today.getMonth() + 1) + "";
+    var year = today.getFullYear() + "";
+    var hour = today.getHours() + "";
+    var minutes = today.getMinutes() + "";
+    var seconds = today.getSeconds() + "";
+
+    day = checkZero(day);
+    month = checkZero(month);
+    year = checkZero(year);
+    hour = checkZero(hour);
+    mintues = checkZero(minutes);
+    seconds = checkZero(seconds);
+
+    var fechaHoy = year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+
+    function checkZero(data){
+        if(data.length == 1){
+            data = "0" + data;
+        }
+        return data;
+    }
 
     var formUp = $('.formData'),
         btnPlus = $('.agregar'),
@@ -1035,7 +1051,7 @@
                                 $scope.pedidoTemporal.Id_Tomado_Por =0;
                                 $scope.pedidoTemporal.id_Usuario = 0;
 
-                                $scope.pedidoTemporal.Fecha_Operacion = $scope.pedidoTemporal.Fecha_Pedido = hoy.getDate();
+                                $scope.pedidoTemporal.Fecha_Operacion = $scope.pedidoTemporal.Fecha_Pedido = fechaHoy;
                                 $scope.pedidoTemporal.Nro_Cotizacion = 0;
                                 $scope.pedidoTemporal.Nro_Presupuesto = 0;
                                 $scope.pedidoTemporal.Nro_Pedido = 0;

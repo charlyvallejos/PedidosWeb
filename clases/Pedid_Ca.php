@@ -226,8 +226,8 @@ class Pedid_Ca{
             $query->bindParam(':Porc_IngBr_Mis',$Porc_IngBr_Mis,PDO::PARAM_STR);
             $query->bindParam(':IngBr_Mis',$IngBr_Mis,PDO::PARAM_STR);
 
-            //return $query->execute();
-            return $this;
+            return $query->execute();
+            //return $this;
             /*
             if($query->execute())
                 return $Nro_Pedido;
