@@ -154,9 +154,9 @@ class Pedid_Ca{
             $this->cargarDatosFormulario();
 
             /////// TRAE DE PEDID_NUMER ///////////////
-            $NumeroPedido = $this->traerUltimoNumero($conexion);
+            $this->Nro_Pedido = $this->traerUltimoNumero($conexion);
 
-            $Nro_Pedido = intval($NumeroPedido);
+            $Nro_Pedido = intval($this->Nro_Pedido);
             $Fecha_Pedido = $this->Fecha_Pedido;
             $Codigo_Vendedor = intval($this->Codigo_Vendedor);
             $idCliente = intval($this->id_Cliente);
