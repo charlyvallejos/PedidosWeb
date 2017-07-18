@@ -30,163 +30,122 @@ class Pedid_De
             return $r;
         }catch(PDOException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function getNroPedido()
-    {
-        return $this->Nro_Pedido;
+    public function editarPedido_detalle($conexion,$pedido){
+        try{
+            //if(isset($_POST['Productos']))
+            //{
+            $nroPedido = $pedido['Nro_Pedido'];
+            $productos = $pedido['Productos'];
+                if(count($productos) > 0)
+                {
+                    $query = $conexion->prepare("CALL Pedid_De_Delete_Igual_Nro(:NroPedido)");
+                    $query->bindParam(':NroPedido',$nroPedido,PDO::PARAM_INT);
+                    if($query->execute())
+                        return $this->altaPedido_detalle($conexion,$pedido);
+                }
+            //}
+            return false;
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
     }
+    public function altaPedido_detalle($conexion,$pedido = null){
+        $sql = "CALL Pedid_De_Insert(:Nro_Pedido,:Renglon,:Id_Producto,:Id_Fraccio,:Codigo_Producto,
+                                     :Cantidad,:Precio,:Precio_Lista,:Estado,:Nro_Cotizacion,:Fecha_Cotizacion,
+                                     :Nro_Despacho,:Nro_Lote,:Id_Origen)";
+        try{
+            if(!is_null($pedido) && isset($pedido['Productos']))
+            {
+                $productos = $pedido['Productos'];
+                $cantidad_reg = 0;
+                foreach ($productos as $producto)
+                {
+                    $query = $conexion->prepare($sql);
 
-    public function setNroPedido($Nro_Pedido)
-    {
-        $this->Nro_Pedido = $Nro_Pedido;
+                    $this->cargarDatosFormulario($producto);
+
+                    if(is_null($pedido['Nro_Pedido']))
+                        $NumeroPedido = $this->traerUltimoNumero($conexion);
+                    else
+                        $NumeroPedido = $pedido['Nro_Pedido'];
+
+                    $Renglon = $this->Renglon;
+                    $Id_Producto = $this->Id_Producto;
+                    $Id_Fraccio = $this->Id_Fraccio;
+                    $Codigo_Producto = $this->Codigo_Producto;
+                    $Cantidad = $this->Cantidad;
+                    $Precio = $this->Precio;
+                    $Precio_Lista = $this->Precio_Lista;
+                    $Estado = $this->Estado;
+                    $Nro_Cotizacion = $this->Nro_Cotizacion;
+                    $Fecha_Cotizacion = $this->Fecha_Cotizacion;
+                    $Nro_Despacho = $this->Nro_Despacho;
+                    $Nro_Lote = $this->Nro_Lote;
+                    $Id_Origen = $this->Id_Origen;
+
+                    $query->bindParam(':Nro_Pedido',$NumeroPedido);
+                    $query->bindParam(':Renglon',$Renglon);
+                    $query->bindParam(':Id_Producto', $Id_Producto);
+                    $query->bindParam(':Id_Fraccio',$Id_Fraccio);
+                    $query->bindParam(':Codigo_Producto',$Codigo_Producto);
+                    $query->bindParam(':Cantidad',$Cantidad);
+                    $query->bindParam(':Precio',$Precio);
+                    $query->bindParam(':Precio_Lista',$Precio_Lista);
+                    $query->bindParam(':Estado',$Estado);
+                    $query->bindParam(':Nro_Cotizacion',$Nro_Cotizacion);
+                    $query->bindParam(':Fecha_Cotizacion',$Fecha_Cotizacion);
+                    $query->bindParam(':Nro_Despacho',$Nro_Despacho);
+                    $query->bindParam(':Nro_Lote',$Nro_Lote);
+                    $query->bindParam(':Id_Origen',$Id_Origen);
+
+                    if($query->execute())
+                        $cantidad_reg+=1;
+                }
+
+                if(count($productos) == $cantidad_reg)
+                    return true;
+            }
+
+            return false;
+        }catch(PDOException $e){
+            return $e->getMessage();
+        }
     }
+    private function cargarDatosFormulario($producto){
 
-    public function getRenglon()
-    {
-        return $this->Renglon;
+        if(isset($_POST))
+        {
+            if($producto['Nro_Pedido'] > 0)
+                $this->Nro_Pedido = $producto['Nro_Pedido'];
+            else
+                $this->Nro_Pedido = 0;
+
+            $this->Renglon = $producto['Renglon'];
+            $this->Id_Producto = $producto['Id_Producto'];
+            $this->Id_Fraccio = $producto['Id_Fraccio'];
+            $this->Codigo_Producto = $producto['Codigo_Producto'];
+            $this->Cantidad = $producto['Cantidad'];
+            $this->Precio = $producto['Precio'];
+            $this->Precio_Lista = $producto['Precio_Lista'];
+            $this->Estado = $producto['Estado'];
+            $this->Nro_Cotizacion = $producto['Nro_Cotizacion'];
+            $this->Fecha_Cotizacion = $producto['Fecha_Cotizacion'];
+            $this->Nro_Despacho = $producto['Nro_Despacho'];
+            $this->Nro_Lote = $producto['Nro_Lote'];
+            $this->Id_Origen = $producto['Id_Origen'];
+        }
     }
+    private function traerUltimoNumero($conexion){
+        //$conexion = Conexion::conectar();
+        $sql = "SELECT Numero FROM Pedid_Numer LIMIT 1";
+        $query = $conexion->prepare($sql);
+        $query->execute();
 
-    public function setRenglon($Renglon)
-    {
-        $this->Renglon = $Renglon;
+        return $query->fetch()['Numero'];
+
     }
-
-    public function getIdProducto()
-    {
-        return $this->Id_Producto;
-    }
-
-    public function setIdProducto($Id_Producto)
-    {
-        $this->Id_Producto = $Id_Producto;
-    }
-
-    public function getIdFraccio()
-    {
-        return $this->Id_Fraccio;
-    }
-
-    public function setIdFraccio($Id_Fraccio)
-    {
-        $this->Id_Fraccio = $Id_Fraccio;
-    }
-
-    public function getCodigoProducto()
-    {
-        return $this->Codigo_Producto;
-    }
-
-    public function setCodigoProducto($Codigo_Producto)
-    {
-        $this->Codigo_Producto = $Codigo_Producto;
-    }
-
-    public function getCantidad()
-    {
-        return $this->Cantidad;
-    }
-
-    public function setCantidad($Cantidad)
-    {
-        $this->Cantidad = $Cantidad;
-    }
-
-    public function getPrecio()
-    {
-        return $this->Precio;
-    }
-
-    public function setPrecio($Precio)
-    {
-        $this->Precio = $Precio;
-    }
-
-    public function getPrecioLista()
-    {
-        return $this->Precio_Lista;
-    }
-
-    public function setPrecioLista($Precio_Lista)
-    {
-        $this->Precio_Lista = $Precio_Lista;
-    }
-
-    public function getEstado()
-    {
-        return $this->Estado;
-    }
-
-    public function setEstado($Estado)
-    {
-        $this->Estado = $Estado;
-    }
-
-    public function getNroCotizacion()
-    {
-        return $this->Nro_Cotizacion;
-    }
-
-    public function setNroCotizacion($Nro_Cotizacion)
-    {
-        $this->Nro_Cotizacion = $Nro_Cotizacion;
-    }
-
-    public function getFechaCotizacion()
-    {
-        return $this->Fecha_Cotizacion;
-    }
-
-    public function setFechaCotizacion($Fecha_Cotizacion)
-    {
-        $this->Fecha_Cotizacion = $Fecha_Cotizacion;
-    }
-
-    public function getNroDespacho()
-    {
-        return $this->Nro_Despacho;
-    }
-
-    public function setNroDespacho($Nro_Despacho)
-    {
-        $this->Nro_Despacho = $Nro_Despacho;
-    }
-
-    public function getNroLote()
-    {
-        return $this->Nro_Lote;
-    }
-
-    public function setNroLote($Nro_Lote)
-    {
-        $this->Nro_Lote = $Nro_Lote;
-    }
-
-    public function getIdOrigen()
-    {
-        return $this->Id_Origen;
-    }
-
-    public function setIdOrigen($Id_Origen)
-    {
-        $this->Id_Origen = $Id_Origen;
-    }
-
 
 }

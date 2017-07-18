@@ -34,24 +34,24 @@ img{
     /*background-color: #a62833;*/
     margin: 5px auto;
     width: 450px;
-    padding: 20px;
+    padding: 10px;
     /*color: #a62833;*/
     text-align: center;
     color: #E9EDEF;
-    background-color: rgba(217, 49, 58, 0.88);
+    background-color: rgba(165, 38, 38, 0.88);
     border-color: rgba(178, 40, 48, 0.88);
     border-radius: 2px;
 }
 
 .exito{
     /*background-color: #2e9123;*/
-    margin: auto;
+    margin: 5px auto;
     width: 450px;
-    padding: 20px;
+    padding: 10px;
     /*color: #2e9123;*/
     text-align: center;
-    color: #ffffff;
-    background-color: rgba(38, 185, 154, 0.88);
+    color: #585858;
+    background-color: rgba(170, 224, 189, 0.88);
     border-color: rgba(38, 185, 154, 0.88);
     border-radius: 2px;
 }

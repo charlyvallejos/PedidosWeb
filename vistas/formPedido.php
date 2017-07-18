@@ -1,9 +1,9 @@
  <?php ?>
 <div class="panel panel-default panel_pedido_plus">
     <div class="panel-heading agregar"><img src="img/add.png" alt=""></div>
-    <div class="mensaje ocultar">
-        <div class="error"><p></p></div>
-        <div class="exito"><p></p></div>
+    <div class="mensaje">
+        <div class="error ocultar"><p>Ha ocurrido un error, intente nuevamente</p></div>
+        <div class="exito ocultar"></div>
     </div>
     <div class="panel-body ocultar formData">
         <strong class="nroPedido" ng-show="pedidoTemporal.Nro_Pedido > 0">PEDIDO {{pedidoTemporal.Nro_Pedido}}</strong>
@@ -106,8 +106,15 @@
                         <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" ng-click="grabarPedido(pedidoForm)" ng-disabled="pedidoTemporal.Productos.length == 0">Grabar</button>
+                        <button class="btn-1" type="submit" ng-click="altaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-hide="pedidoTemporal.Nro_Pedido > 0">Grabar</button>
                     </div>
+                    <div class="col-md-12">
+                        <button class="btn-1" type="submit" ng-click="bajaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-show="pedidoTemporal.Nro_Pedido > 0">Dar de BAJA</button>
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn-1" type="submit" ng-click="modificarPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-show="pedidoTemporal.Nro_Pedido > 0">Modificar</button>
+                    </div>
+
                 </div>
                 <!--
                 <div class="row">

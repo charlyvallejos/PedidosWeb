@@ -12,6 +12,17 @@
             </div>
         </div>
     </div>
+    <div class="modal fade alert-modal in" id="modalCliente2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-pedido>
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body" ng-model="pedAgrega">
+                    <p>El cliente ya tiene un pedido Nro: {{pedAgrega.Nro_Pedido}} , le agrega?</p>
+                    <button class="btn-1" ng-click="seleccionClienteModal2()">Si</button>
+                    <button class="btn-0" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <fieldset><legend>Cliente</legend>
     <div class="msgCliente ocultar"></div>

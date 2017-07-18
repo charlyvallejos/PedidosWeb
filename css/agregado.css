@@ -55,6 +55,7 @@ nav#menu ul li a:hover{
 legend {
     font-size: .8em;
     color: inherit;
+    text-decoration: underline;
 }
 .form-horizontal .form-group {
     margin-right: 0;

@@ -5,7 +5,7 @@ $pedidos = '';
 // $a = action
 // $t = table
 
-if(isset($_GET)){
+if(!empty(isset($_GET))){
     if(isset($_GET['login']))
     {
         $usuario = new Usuario();
