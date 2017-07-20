@@ -73,12 +73,12 @@ var app = angular.module('appLogin', ['ngMessages'])
                 headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8;'}
             })
                 .then(function(resp){
-                    if(resp.data.ok){
+                    if(resp.data.ok === true){
                         $scope.msj = "";
                         $window.location.reload();
                     }
                     else {
-                       $scope.msj = "Contraseña incorrecta";
+                           $scope.msj = "Contraseña incorrecta";
                     }
                 })
                 .catch(function(resp){
