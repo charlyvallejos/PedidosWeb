@@ -148,6 +148,7 @@
             $scope.selectPedido = function (ped) {
                 $scope.pedidoTemporal = ped;
 
+
                 if($scope.pedidoTemporal.Generado_Por == 0)
                 {
                     if($scope.pedidoTemporal.Id_Reparto == 45)
@@ -190,7 +191,6 @@
                 $http.get(apiURL+"?a=get&t=pedide&n="+ped.Nro_Pedido)                    
                     .then(function(resp){
                         $scope.pedidoTemporal.Productos = resp.data; ///////PEDID_DE
-
                         $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                             .then(function(resp){
                                 $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
@@ -216,8 +216,8 @@
 
             ////////// SELECCIONA PRODUCTO DE GRILLA
             $scope.selectProducto = function(prod,formCtrlProducto){
-                //$scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
-                //$scope.productoTemporal = prod;
+                $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
+                $scope.productoTemporal = prod;
             };
             $scope.borraProductoGrilla = function(prodTemporal){
 
@@ -241,6 +241,7 @@
                     if($scope.productoTemporal.Cantidad > 0 && productoSeleccion != "")
                     {
                         if($scope.productoTemporal.Estado !== "BAJ"){
+
 
                             if(parseFloat($scope.productoTemporal.Minimo) > 0)
                             {
@@ -301,7 +302,7 @@
                                         }
                                     }
 
-
+                                    console.log($scope.productoTemporal.Renglon);
                                     if($scope.pedidoTemporal.Productos.length <= 0)
                                         $scope.productoTemporal.Renglon = 1;
                                     else
@@ -335,16 +336,22 @@
                                             $scope.pedidoTemporal.Productos.push($scope.productoTemporal);
                                         }
 
-                                        $scope.productoTemporal = {};
-                                        buscarProducto.val('');
-                                        buscarProducto.focus();
-                                        $scope.calculaTotal();
-                                    }
 
+
+
+
+                                    }
+                                    console.log($scope.productoTemporal.Renglon);
+                                    $scope.calculaTotal();
                                 }
 
                             }
+
                         }
+
+                        $scope.productoTemporal = {};
+                        buscarProducto.val('');
+                        buscarProducto.focus();
                     }
                     else
                         console.log("hola");
@@ -355,11 +362,10 @@
 
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
                     $scope.pedidoTemporal.Total_Gravado += parseFloat(v.Total,3);
+
                 });
 
-
                 $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
-
 
                 if($scope.Iva_IngBr != null)
                 {
@@ -593,13 +599,11 @@
                                     {
                                         Iva_IngBr.Porc_IngBr_Cba = cliente.Alicuota_Percepcion;
                                         Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
-                                        console.log(Iva_IngBr.IngBr_Cba);
                                     }
                                     else
                                     {
                                         Iva_IngBr.Porc_IngBr_Cba = Porc_Max_CBA;
                                         Iva_IngBr.IngBr_Cba = Total_Bruto * Iva_IngBr.Porc_IngBr_Cba / 100;
-                                        console.log(Iva_IngBr.IngBr_Cba);
                                     }
                                 }
                             }
@@ -1138,6 +1142,9 @@
                             });
                             $http.post("sendData.php",pedido)
                                 .then(function(response) {
+                                    console.log(response);
+                                    console.log($scope.pedidoTemporal);
+                                    console.log($scope.pedidos);
                                     if(response.data.ok)
                                     {
                                         formUp.slideToggle();

@@ -115,11 +115,11 @@ class Pedid_Ca{
 
             $sql = "CALL Pedid_Ca_Insert(
                                         :Nro_Pedido,
+                                        :Codigo_Vendedor,
+                                        :Nro_Cotizacion,
+                                        :Nro_Presupuesto,
                                         :id_Cliente,
                                         :Fecha_Pedido,
-                                        :Codigo_Vendedor,
-                                        :Nro_Cotizacion
-                                        :Nro_Presupuesto,
                                         :Id_Lista,
                                         :Id_Condicion,
                                         :Id_Moneda,
@@ -149,6 +149,7 @@ class Pedid_Ca{
                                         :Porc_IngBr_Mis,
                                         :IngBr_Mis)";
 
+
             $query = $conexion->prepare($sql);
 
             $this->cargarDatosFormulario();
@@ -160,15 +161,20 @@ class Pedid_Ca{
             $Fecha_Pedido = $this->Fecha_Pedido;
             $Codigo_Vendedor = intval($this->Codigo_Vendedor);
             $idCliente = intval($this->id_Cliente);
+
+
             $Nro_Cotizacion = intval($this->Nro_Cotizacion);
             $Nro_Presupuesto = intval($this->Nro_Presupuesto);
             $Id_Lista = intval($this->Id_Lista);
+
             $Id_Condicion = intval($this->Id_Condicion);
             $Id_Moneda = intval($this->Id_Moneda);
             $Cotizacion_Moneda = floatval($this->Cotizacion_Moneda);
+
+
             $Estado = $this->Estado;
             $Id_Reparto = intval($this->Id_Reparto);
-            $Nro_orden_compra =  intval($this->Nro_orden_compra);
+            $Nro_orden_compra =  $this->Nro_orden_compra;
             $Id_Tomado_Por = intval($this->Id_Tomado_Por);
             $Id_Usuario = intval($this->Id_Usuario);
             $Fecha_Operacion = $this->Fecha_Operacion;
@@ -195,15 +201,20 @@ class Pedid_Ca{
             $query->bindParam(':id_Cliente',$idCliente,PDO::PARAM_INT);
             $query->bindParam(':Fecha_Pedido',$Fecha_Pedido,PDO::PARAM_STR);
             $query->bindParam(':Codigo_Vendedor', $Codigo_Vendedor,PDO::PARAM_INT);
+
             $query->bindParam(':Nro_Cotizacion',$Nro_Cotizacion,PDO::PARAM_INT);
             $query->bindParam(':Nro_Presupuesto',$Nro_Presupuesto,PDO::PARAM_INT);
             $query->bindParam(':Id_Lista',$Id_Lista,PDO::PARAM_INT);
+
             $query->bindParam(':Id_Condicion',$Id_Condicion,PDO::PARAM_INT);
             $query->bindParam(':Id_Moneda',$Id_Moneda,PDO::PARAM_INT);
             $query->bindParam(':Cotizacion_Moneda',$Cotizacion_Moneda,PDO::PARAM_STR);
+
             $query->bindParam(':Estado',$Estado,PDO::PARAM_STR);
             $query->bindParam(':Id_Reparto',$Id_Reparto,PDO::PARAM_INT);
-            $query->bindParam(':Nro_orden_compra',$Nro_orden_compra,PDO::PARAM_INT);
+            $query->bindParam(':Nro_orden_compra',$Nro_orden_compra,PDO::PARAM_STR);
+
+
             $query->bindParam(':Id_Tomado_Por',$Id_Tomado_Por,PDO::PARAM_INT);
             $query->bindParam(':Id_Usuario',$Id_Usuario,PDO::PARAM_INT);
             $query->bindParam(':Fecha_Operacion',$Fecha_Operacion,PDO::PARAM_STR);
@@ -226,14 +237,15 @@ class Pedid_Ca{
             $query->bindParam(':Porc_IngBr_Mis',$Porc_IngBr_Mis,PDO::PARAM_STR);
             $query->bindParam(':IngBr_Mis',$IngBr_Mis,PDO::PARAM_STR);
 
-            return $query->execute();
+
+            //return $query->execute();
             //return $this;
-            /*
+
             if($query->execute())
                 return $Nro_Pedido;
             else
                 return false;
-            */
+
 
         }catch(PDOException $e)
         {
@@ -366,6 +378,12 @@ class Pedid_Ca{
         return $query->fetch()['Numero'];
 
     }
+    public function actualizar_Numeracion($conexion)
+    {
+        $sql = "UPDATE Pedid_Numer SET Numero = Numero + 1";
+        $query = $conexion->prepare($sql);
+        return $query->execute();
+    }
     private function cargarDatosFormulario(){
         if(isset($_POST)){
 
@@ -376,6 +394,7 @@ class Pedid_Ca{
                 $this->Nro_Pedido = 0;
 
             $cliente = $pedido['Cliente'];
+
             $this->id_Cliente = $cliente['id'];
             $this->Codigo_Vendedor = $pedido['Codigo_Vendedor'];
             $this->Nro_Cotizacion = $pedido['Nro_Cotizacion'];
