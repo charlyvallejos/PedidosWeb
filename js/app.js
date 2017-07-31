@@ -1142,9 +1142,7 @@
                             });
                             $http.post("sendData.php",pedido)
                                 .then(function(response) {
-                                    console.log(response);
-                                    console.log($scope.pedidoTemporal);
-                                    console.log($scope.pedidos);
+
                                     if(response.data.ok)
                                     {
                                         formUp.slideToggle();

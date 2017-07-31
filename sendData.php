@@ -50,9 +50,26 @@ if(!empty(isset($_POST)))
             $NroPedidoCa = $pedid_ca->altaPedido($conexion);
             if($NroPedidoCa > 0)
             {
-                $pedid_ca->actualizar_Numeracion($conexion);
-                $conexion->commit();
+                $pedid_de = new Pedid_De();
+                if($pedid_de->altaPedido_detalle($conexion,$pedido,$NroPedidoCa))
+                {
+                    $pedid_ca->actualizar_Numeracion($conexion);
+                    $conexion->commit();
+                    $ok = true;
+                }else
+                {
+                    $conexion->rollBack();
+                    $ok = false;
+                }
 
+                if($ok)
+                    echo json_encode(array("ok" => true, "nroPedido" => $NroPedidoCa));
+                else
+                    echo json_encode(array("ok" => false,"nroPedido" => $NroPedidoCa));
+
+            }else{
+                $conexion->rollBack();
+                echo json_encode(array("ok" => false,"nroPedido" => $NroPedidoCa));
             }
             /*
             if($NroPedidoCa)
@@ -68,13 +85,11 @@ if(!empty(isset($_POST)))
             else
                 $conexion->rollBack();
 
-
             if($ok)
                 echo json_encode(array("ok" => true, "nroPedido" => $NroPedidoCa));
             else
                 echo json_encode(array("ok" => false,"nroPedido" => $NroPedidoCa));
             */
 
-            echo json_encode(array("ok" => true,"nroPedido" => $NroPedidoCa));
         }
 }
