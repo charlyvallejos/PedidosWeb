@@ -36,50 +36,51 @@
                 </div>
 
             <div class="col-md-4 col-xs-12">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="funkyradio">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor"  ng-click="changeRadio()" ng-model="pedidoTemporal.Generado_Por" id="radioPedido" value="pedido"/>
-                                <label for="radioPedido">Pedido</label>
+                <fieldset ng-disabled="pedidoTemporal.Nro_Pedido > 0"><legend>Opciones</legend>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="funkyradio">
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor"  ng-click="changeRadio()" ng-model="pedidoTemporal.Generado_Por" id="radioPedido" value="pedido"/>
+                                    <label for="radioPedido">Pedido</label>
+                                </div>
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor" id="radioCoti" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="cotizacion"/>
+                                    <label for="radioCoti">Cotización</label>
+                                </div>
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor" id="radioPresu" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="presupuesto"/>
+                                    <label for="radioPresu">Presupuesto</label>
+                                </div>
                             </div>
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor" id="radioCoti" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="cotizacion"/>
-                                <label for="radioCoti">Cotización</label>
-                            </div>
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor" id="radioPresu" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="presupuesto"/>
-                                <label for="radioPresu">Presupuesto</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="funkyradio">
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor" ng-model="pedidoTemporal.Generado_Por" id="radioMostra" ng-click="changeRadio()" value="mostrador"/>
+                                    <label for="radioMostra">Mostrador</label>
+                                </div>
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor" id="radioFR" ng-model="pedidoTemporal.Generado_Por"  ng-click="changeRadio()" value="fr"/>
+                                    <label for="radioFR">F.R</label>
+                                </div>
+                                <div class="funkyradio-default">
+                                    <input type="radio" name="generadoPor" id="radioSF" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="sf"/>
+                                    <label for="radioSF">S.F</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        <div class="funkyradio">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor" ng-model="pedidoTemporal.Generado_Por" id="radioMostra" ng-click="changeRadio()" value="mostrador"/>
-                                <label for="radioMostra">Mostrador</label>
-                            </div>
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor" id="radioFR" ng-model="pedidoTemporal.Generado_Por"  ng-click="changeRadio()" value="fr"/>
-                                <label for="radioFR">F.R</label>
-                            </div>
-                            <div class="funkyradio-default">
-                                <input type="radio" name="generadoPor" id="radioSF" ng-model="pedidoTemporal.Generado_Por" ng-click="changeRadio()" value="sf"/>
-                                <label for="radioSF">S.F</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </fieldset>
 
                 <div class="row form-group">
                     <div class="col-xs-3">
                         <label for="trans" class="control-label">Transporte:</label>
                     </div>
                     <div class="col-xs-9">
-                        <select name="transportista" id="trans" class="form-control">
-                            <option value="pedidoTemporal.Id_Transporte"></option>
-                            <option value="pedidoTemporal.Id_Transporte">SPA</option>
-                            <option value="pedidoTemporal.Id_Transporte">VIA1</option>
+                        <select name="transportista" id="trans" class="form-control" ng-model="pedidoTemporal.Id_Transporte">
+                            <option value="620">SPA</option>
+                            <option value="570">VIA1</option>
                         </select>
                     </div>
                 </div>
@@ -88,16 +89,16 @@
                         <label for="moneda" class="control-label">Moneda:</label>
                     </div>
                     <div class="col-xs-4">
-                        <select name="moneda" id="moneda" class="form-control" ng-model="pedidoTemporal.id_Moneda" ng-change="buscaCotizacion(pedidoTemporal.id_Moneda)">
-                            <option value=1>PESOS</option>
-                            <option value=2>DOLAR</option>
+                        <select name="moneda" id="moneda" class="form-control  fuente_dif" ng-model="pedidoTemporal.id_Moneda" ng-change="buscaCotizacion(pedidoTemporal.id_Moneda)">
+                            <option value="1">PESOS</option>
+                            <option value="2">DOLAR</option>
                         </select>
                     </div>
                     <div class="col-xs-2">
                         <label for="cotizacion_moneda" class="control-label">Coti:</label>
                     </div>
                     <div class="col-xs-4">
-                        <input type="text" class="form-control" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
+                        <input type="text" class="form-control  fuente_dif" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
                     </div>
                 </div>
 

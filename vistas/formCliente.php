@@ -24,7 +24,7 @@
         </div>
     </div>
 
-<fieldset><legend>Cliente</legend>
+<fieldset ng-disabled="pedidoTemporal.Cliente.id > 0"><legend>Cliente</legend>
     <div class="msgCliente ocultar"></div>
     <div class="item form-group top_search">
         <div class="row">

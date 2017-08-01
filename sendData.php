@@ -11,9 +11,9 @@ if(!empty(isset($_POST)))
         $nroPedido = intval($pedido['Nro_Pedido']);
         $pedid_ca = new Pedid_Ca();
         $ok = false;
-
         if($pedid_ca->editarPedido($conexion))
         {
+
             $pedid_de = new Pedid_De();
             if($pedid_de->editarPedido_detalle($conexion,$pedido,$nroPedido))
             {
@@ -21,20 +21,18 @@ if(!empty(isset($_POST)))
                 $ok = true;
             }
             else
-            {
                 $conexion->rollBack();
-            }
 
         }
         else
-        {
             $conexion->rollBack();
-        }
+
 
         if($ok)
             echo json_encode(array("ok" => true, "pedido" => $pedido));
         else
             echo json_encode(array("ok" => false,"pedido" => false));
+
 
     }else
         if(!isset($pedido['Nro_Pedido']) || intval($pedido['Nro_Pedido']) == 0)

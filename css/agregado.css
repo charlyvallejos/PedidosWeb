@@ -535,3 +535,8 @@ table{
 input, textarea,select{
     font-size: 1em !important;
 }
+
+.fuente_dif{
+     font-size: 11px !important;
+     font-weight: bold;
+ }
