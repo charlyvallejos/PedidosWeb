@@ -106,13 +106,13 @@
                         <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="altaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-hide="pedidoTemporal.Nro_Pedido > 0">Grabar</button>
+                        <button class="btn-1" type="submit" ng-click="altaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0  && pedidoTemporal.Cliente == undefined" ng-hide="pedidoTemporal.Nro_Pedido > 0">Grabar</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="bajaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-show="pedidoTemporal.Nro_Pedido > 0">Dar de BAJA</button>
+                        <button class="btn-1" type="submit" ng-click="bajaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Dar de BAJA</button>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="modificarPedido()" ng-disabled="pedidoTemporal.Productos.length == 0" ng-show="pedidoTemporal.Nro_Pedido > 0">Modificar</button>
+                        <button class="btn-1" type="submit" ng-click="modificarPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Modificar</button>
                     </div>
 
                 </div>

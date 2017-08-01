@@ -33,18 +33,17 @@ class Pedid_De
             return $e->getMessage();
         }
     }
-    public function editarPedido_detalle($conexion,$pedido){
+    public function editarPedido_detalle($conexion,$pedido,$nroPedido){
         try{
             //if(isset($_POST['Productos']))
             //{
-            $nroPedido = $pedido['Nro_Pedido'];
             $productos = $pedido['Productos'];
                 if(count($productos) > 0)
                 {
                     $query = $conexion->prepare("CALL Pedid_De_Delete_Igual_Nro(:NroPedido)");
                     $query->bindParam(':NroPedido',$nroPedido,PDO::PARAM_INT);
                     if($query->execute())
-                        return $this->altaPedido_detalle($conexion,$pedido);
+                        return $this->altaPedido_detalle($conexion,$pedido,$nroPedido);
                 }
             //}
             return false;

@@ -394,8 +394,11 @@ class Pedid_Ca{
                 $this->Nro_Pedido = 0;
 
             $cliente = $pedido['Cliente'];
+            if($cliente)
+                $this->id_Cliente = $cliente['id'];
+            else
+                $this->id_Cliente = $pedido['id_Cliente'];
 
-            $this->id_Cliente = $cliente['id'];
             $this->Codigo_Vendedor = $pedido['Codigo_Vendedor'];
             $this->Nro_Cotizacion = $pedido['Nro_Cotizacion'];
             $this->Nro_Presupuesto = $pedido['Nro_Presupuesto'];
