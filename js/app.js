@@ -1102,7 +1102,6 @@
                                 $http.post("sendData.php",pedido)
                                     .then(function(response){
                                         console.log(response);
-                                        console.log($scope.pedidoTemporal);
                                         if(response.data.ok)
                                         {
                                             //$scope.pedidos.push({

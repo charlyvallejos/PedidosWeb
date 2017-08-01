@@ -54,6 +54,7 @@ if(!empty(isset($_POST)))
                 if($pedid_de->altaPedido_detalle($conexion,$pedido,$NroPedidoCa))
                 {
                     $pedid_ca->actualizar_Numeracion($conexion);
+                    $pedido['Nro_Pedido'] = $NroPedidoCa;
                     $conexion->commit();
                     $ok = true;
                 }else
@@ -63,7 +64,7 @@ if(!empty(isset($_POST)))
                 }
 
                 if($ok)
-                    echo json_encode(array("ok" => true, "nroPedido" => $NroPedidoCa));
+                    echo json_encode(array("ok" => true, "pedido" => $pedido));
                 else
                     echo json_encode(array("ok" => false,"nroPedido" => $NroPedidoCa));
 
