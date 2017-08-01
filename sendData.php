@@ -48,7 +48,7 @@ if(!empty(isset($_POST)))
             if($NroPedidoCa > 0)
             {
                 $pedid_de = new Pedid_De();
-                if($pedid_de->altaPedido_detalle($conexion,$pedido,$nroPedido))
+                if($pedid_de->altaPedido_detalle($conexion,$pedido,$NroPedidoCa))
                 {
                     $pedid_ca->actualizar_Numeracion($conexion);
                     $pedido['Nro_Pedido'] = $NroPedidoCa;
