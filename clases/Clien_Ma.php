@@ -129,7 +129,7 @@ class Clien_Ma
             $query = $conexion->prepare($sql);
             $query->bindParam(':codigo',$codigoCliente,PDO::PARAM_STR,7);
             $query->execute();
-            return $query->fetch(PDO::FETCH_ASSOC);            
+            return $query->fetchAll(PDO::FETCH_ASSOC);            
         } catch (PDOException $ex) {
             return $ex->getMessage();
         }

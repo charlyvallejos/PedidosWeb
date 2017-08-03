@@ -168,27 +168,23 @@ if(!empty(isset($_GET))){
         if(isset($_GET['cliente']))
         {
             if(isset($term))
-            {
-                
-                if(ctype_digit($term) == true)
-                {
-                    $clien_ma = new Clien_Ma();
+            {                
+                $clien_ma = new Clien_Ma();
+                if(!ctype_digit($term))
+                {                    
                     $sql = $clien_ma->consultaDescripcion($term);
                     foreach ($sql as $dato){// as $dato){
                         $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
-                    }
-                    //echo json_encode($resultado);
-                    echo json_encode(array("hola"=>$term));
+                    }                    
+                    echo json_encode($resultado);
                 }
                 else
-                {
-                    $clien_ma = new Clien_Ma();
+                {                  
                     $sql = $clien_ma->consultaCodigoCliente($term);                    
                     foreach ($sql as $dato){// as $dato){
                         $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
                     }
-                    //echo json_encode($resultado);
-                    echo json_encode(array("hola"=>$term));
+                    echo json_encode($resultado);                   
                 }                
             }
         }
@@ -197,12 +193,22 @@ if(!empty(isset($_GET))){
             if(isset($term))
             {
                 $produ_ma = new Produ_Ma();
-
-                $sql = $produ_ma->consultaDescripcion($term);
-                foreach ($sql as $dato){// as $dato){
-                    $resultado[] = $dato['Codigo_Producto'].' - '. $dato['Descripcion_Producto'];
+                if(!ctype_digit($term))
+                {
+                    $sql = $produ_ma->consultaDescripcion($term);
+                    foreach ($sql as $dato){// as $dato){
+                        $resultado[] = $dato['Codigo_Producto'].' - '. $dato['Descripcion_Producto'];
+                    }
+                    echo json_encode($resultado);
                 }
-                echo json_encode($resultado);
+                else
+                {
+                    $sql = $produ_ma->consultaCodigoProductoTodos($term);
+                    foreach ($sql as $dato){
+                        $resultado[] = $dato['Codigo_Producto'].' - '. $dato['Descripcion_Producto'];
+                    }                        
+                    echo json_encode($resultado);
+                }
             }
         }
     }

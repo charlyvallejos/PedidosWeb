@@ -49,6 +49,21 @@ class Produ_Ma{
             return $ex->getMessage();
         }
     }
+    
+    public function consultaCodigoProductoTodos($CodigoProducto)
+    {
+        $sql = "CALL Produ_Ma_Cons_CodigoProductoTodos(:CodigoProducto)";
+        try        
+        {
+            $conectar = Conexion::conectar();
+            $query = $conectar->prepare($sql);
+            $query->bindParam(':CodigoProducto', $CodigoProducto, PDO::PARAM_STR,9);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);            
+        } catch (PDOException $ex) {
+            return $ex->getMessage();
+        }
+    }
 
     public function consultaTodos()
     {
