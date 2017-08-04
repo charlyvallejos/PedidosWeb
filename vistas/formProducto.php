@@ -16,67 +16,61 @@
     </div>
     <div class="item form-group">
         <div class="row">
-            <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12">
                 <input type="text" id="DescProd" class="form-control" name="DescProd" readonly ng-model="productoTemporal.Descripcion_Producto">
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <input type="text" id="CodProd" class="form-control" value="______/___" name="CodProd" readonly ng-model="productoTemporal.Codigo_Producto">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" id="UmeVta" class="form-control" name="UmeVta" readonly ng-model="productoTemporal.UmeVta">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <select name="estadoProd" id="" class="form-control" disabled ng-init="productoTemporal.Estado_PF = 'CAR'">
+                    <option value="{{productoTemporal.Estado_PF}}" >{{productoTemporal.Estado_PF}}</option>
+                </select>
             </div>
         </div>
     </div>
     <div class="item form-group">
         <div class="row">
-            <div class="col-md-9 col-sm-9 col-xs-9 falso-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12">
                 <input type="text" id="RubroProd" class="form-control" name="RubroProd" readonly ng-model="productoTemporal.Rubro_Vta">
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="UmeVta" class="form-control" name="UmeVta" readonly ng-model="productoTemporal.UmeVta">
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="ListaProd">Lista</label>
             </div>
-        </div>
-    </div>
-    <div class="item form-group">
-        <div class="row fila-form">
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Lista</label>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
+            <div class="col-md-5 col-sm-5 col-xs-12">
                 <input type="text" id="ListaProd" class="form-control" name="ListaProd" readonly ng-model="pedidoTemporal.Cliente.Lista">
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Precio Lista</label>
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="PrecioProd" class="form-control" name="PrecioLista" readonly ng-model="productoTemporal.Precio_Lista">
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <select name="estadoProd" id="" class="form-control" disabled ng-init="productoTemporal.Estado_PF = 'CAR'">
-                    <option value="{{productoTemporal.Estado_PF}}" >{{productoTemporal.Estado_PF}}</option>
-                </select>
-            </div>
-
         </div>
     </div>
     <div class="item form-group">
         <div class="row fila-form">
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label class="control-label" for="PrecioProdLista">Precio Lista</label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" id="PrecioProdLista" class="form-control" name="PrecioProdLista" readonly ng-model="productoTemporal.Precio_Lista">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="PrecioProd">Precio</label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" id="PrecioProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio">
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
                 <label class="control-label" for="CantProd">Cant.</label>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <input type="text" id="CantProd" class="form-control" name="CantProd"  ng-model="productoTemporal.Cantidad" ng-keydown="agregarProductoGrilla($event)" autocomplete="off">
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Precio</label>
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="CantProd" class="form-control" name="PrecioProd" readonly ng-model="productoTemporal.Precio">
-            </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <input type="hidden" ng-model="pedidoTemporal.Cliente.Id_Lista_Precio">
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <a href=""><img src="img/delete.png" width="44px" height="44px" alt="Borrar" ng-click="borraProductoGrilla(productoTemporal)"></a>
             </div>
         </div>
+    </div>
+    <div class="item form-group">
         <div class="row" ng-show="muestraMsjProducto">
             <div class="col-md-12">
                 <div id="msjProdu">{{msjProducto}}</div>

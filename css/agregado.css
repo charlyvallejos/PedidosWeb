@@ -112,6 +112,7 @@ legend {
 fieldset {
     background: rgba(238, 238, 238, 0.34);
     padding:10px;
+    margin-bottom:20px;
 }
 label{
     margin-top:6px !important;
@@ -528,9 +529,7 @@ li.active > a:hover, li.active > span:hover{
 table{
     font-size: .9em;
 }
-#divObs{
-    margin-top:25px;
-}
+
 
 input, textarea,select{
     font-size: 1em !important;
@@ -540,3 +539,7 @@ input, textarea,select{
      font-size: 11px !important;
      font-weight: bold;
  }
+
+.divProductos{
+    padding-bottom: 30px;
+}

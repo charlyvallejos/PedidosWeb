@@ -24,7 +24,7 @@
         </div>
     </div>
 
-<fieldset ng-disabled="pedidoTemporal.Cliente.id > 0"><legend>Cliente</legend>
+<fieldset ng-disabled="pedidoTemporal.Nro_Pedido > 0"><legend>Cliente</legend>
     <div class="msgCliente ocultar"></div>
     <div class="item form-group top_search">
         <div class="row">
@@ -41,95 +41,86 @@
     </div>
     <div class="item form-group">
         <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <label class="control-label" for="RazonSocial">Razon Social</label>
             </div>
-            <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-12">
                 <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" ng-model="pedidoTemporal.Cliente.Razon_Social" readonly>
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="CodigoCliente">Cod</label>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="CodigoCliente">Codigo</label>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <input type="text" id="CodigoCliente" class="form-control" name="CodigoCliente" ng-model="pedidoTemporal.Cliente.Codigo_Cliente"  readonly>
             </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="Reparto">Reparto</label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <input type="text" id="Reparto" class="form-control" name="Reparto" readonly ng-model="pedidoTemporal.Cliente.Codigo_Reparto">
+            </div>
         </div>
     </div>
     <div class="item form-group">
         <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <label class="control-label" for="NombreFantasia">Nombre Fantasia</label>
             </div>
-            <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <input type="text" id="NombreFantasia" class="form-control" name="NombreFantasia" ng-model="pedidoTemporal.Cliente.Nombre_Fantasia" readonly>
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
+            <div class="col-md-1 col-sm-1 col-xs-12">
                 <label class="control-label" for="Tipo_Iva">IVA</label>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-1 col-sm-1 col-xs-12">
                 <input type="text" id="Tipo_Iva" class="form-control" name="Tipo_Iva" ng-model="pedidoTemporal.Cliente.Tipo_Iva" readonly>
             </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="Codigo_Vendedor">Vendedor</label>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <input type="text" id="Codigo_Vendedor" class="form-control" name="Codigo_Vendedor" ng-model="pedidoTemporal.Cliente.Codigo_Vendedor"  readonly>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <label class="control-label" for="Transporte">Trans</label>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                <input type="text" id="Transporte" class="form-control" name="Transporte" readonly ng-model="pedidoTemporal.Cliente.Transporte">
+            </div>
         </div>
     </div>
     <div class="item form-group">
         <div class="row fila-form">
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <label class="control-label" for="Domicilio">Dirección</label>
             </div>
-            <div class="col-md-5 col-sm-5 col-xs-5 falso-xs-12">
+            <div class="col-md-4 col-sm-4 col-xs-12">
                 <input type="text" id="Domicilio" class="form-control" name="Domicilio" ng-model="pedidoTemporal.Cliente.Domicilio" readonly>
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Rep</label>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Codigo_Reparto">
-            </div>
-        </div>
-    </div>
-    <div class="item form-group">
-        <div class="row fila-form">
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Obs Imp</label>
-            </div>
-            <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_Imprimir"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="item form-group fila-form">
-        <div class="row">
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Obs No Imp</label>
-            </div>
-            <div class="col-md-10 col-sm-10 col-xs-10 falso-xs-12">
-                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_No_Imprimir"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="item form-group">
-        <div class="row fila-form">
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <label class="control-label" for="RazonSocial">Trans</label>
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Transporte">
-            </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
+            <div class="col-md-2 col-sm-2 col-xs-12">
                 <label class="control-label" for="AgrupCli">Agrup</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
                 <input type="text" id="AgrupCli" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Agrupacion">
             </div>
-            <div class="col-md-1 col-sm-1 col-xs-1 falso-xs-12">
-                <label class="control-label" for="Codigo_Vendedor">Vend</label>
+        </div>
+    </div>
+    <div class="item form-group">
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
+                <label class="control-label" for="RazonSocial">Obs Imp</label>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
+                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_Imprimir"></textarea>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
-                <input type="text" id="Codigo_Vendedor" class="form-control" name="Codigo_Vendedor" ng-model="pedidoTemporal.Cliente.Codigo_Vendedor"  readonly>
+                <label class="control-label" for="RazonSocial">Obs No Imp</label>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4 falso-xs-12">
+                <textarea type="text" id="RazonSocial" class="form-control" name="RazonSocial" readonly ng-model="pedidoTemporal.Cliente.Obs_No_Imprimir"></textarea>
             </div>
         </div>
     </div>
-
     <div class="item form-group">
         <div class="row fila-form">
             <div class="col-md-2 col-sm-2 col-xs-2 falso-xs-12">
