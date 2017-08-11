@@ -1150,7 +1150,7 @@
             $scope.seleccionClienteModal = function(){
                 modalCliente.modal('hide');
                 var cod = modalCliente.attr('data-codCli');
-                    if(cod !== null)
+                    if(cod !== null && cod.length > 0)
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                             .then(function(resp){
