@@ -1,101 +1,49 @@
 <fieldset><legend>Total</legend>
     <div class="item form-group">
-        <div class="row">
+        <div class="row total_datos">
 
-            <div class="row">
-                <div class=" col-md-1 col-xs-12">
-                    <label for="inputTotalBruto" class="control-label">Total bruto:</label>
+                <div class="col-md-4 col-xs-12">
+                    <label for="" class="col-md-6 col-xs-12 control-label label_titulo">Total bruto: </label>
+                    <label for="" class="col-md-6 col-xs-12 control-label"> {{pedidoTemporal.Total_Gravado | number:2}}</label>
                 </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control" id="inputTotalBruto" name="" readonly ng-model="pedidoTemporal.Total_Gravado">
+                <div class=" col-md-4 col-xs-12">
+                    <label for="" class="col-md-2 col-xs-12 control-label label_titulo">IVA: </label>
+                    <label for="" class="col-md-5 col-xs-12 control-label">{{pedidoTemporal.Porc_Iva | number:2 | porcentaje}}</label>
+                    <label for="" class="col-md-5 col-xs-12 control-label">{{pedidoTemporal.Iva | number:2}}</label>
                 </div>
-                <div class=" col-md-1 col-xs-12">
-                    <label for="" class="control-label">IVA:</label>
+                <div class=" col-md-4 col-xs-12">
+                    <label for="" class="col-md-6 col-xs-12 control-label label_titulo">Exento: </label>
+                    <label for="" class="col-md-6 col-xs-12 control-label">{{pedidoTemporal.Total_Exento | number:2}}</label>
                 </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Porc_Iva">
+                <div class="col-md-8 offset-md-4 col-xs-12">
+                    <label for="" class="col-md-3 col-xs-12 control-label label_titulo">IB CBA: </label>
+                    <label for="" class="col-md-3 col-xs-12 control-label">{{pedidoTemporal.Porc_IngBr_Cba | number:2 | porcentaje}} </label>
+                    <label for="" class="col-md-3 col-xs-12 control-label">{{pedidoTemporal.IngBr_Cba | number:2}} </label>
                 </div>
-                <div class="col-md-1 col-xs-12">
-                    <span>%</span>
-                </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Iva">
-                </div>
-                <div class=" col-md-1 col-xs-12">
-                    <label for="" class="control-label">Exento:</label>
-                </div>
-                <div  class="col-md-2 col-xs-2 falso-xs-12">
-                    <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Total_Exento">
-                </div>
-            </div>
-            <div class="row">
 
 
-                <div class=" col-md-1 col-xs-1 falso-xs-12">
-                    <label for="" class="control-label">IB CBA:</label>
+                <div class=" col-md-4 col-xs-12">
+                    <label for="" class="control-label label_titulo">IB PBA: </label>
+                    <label for="" class="control-label"> {{pedidoTemporal.IngBr_Pba| number:2}}</label>
                 </div>
-                <div  class="col-md-2 col-xs-2 falso-xs-12">
-                    <input type="text" class="form-control" readonly ng-model="pedidoTemporal.Porc_IngBr_Cba">
+                <div class=" col-md-4 col-xs-12">
+                    <label for="" class="control-label label_titulo">IB Mis: </label>
+                    <label for="" class="control-label"> {{pedidoTemporal.Porc_IngBr_Mis| number:2 | porcentaje}}</label>
+                    <label for="" class="control-label"> {{pedidoTemporal.IngBr_Mis| number:2}}</label>
                 </div>
-
-                <div class="col-md-1 col-xs-1 falso-xs-12">
-                    <span>%</span>
+                <div class="col-md-4 col-xs-12">
+                    <label for="" class="control-label label_titulo">Dcto: </label>
+                    <label for="" class="control-label"> {{pedidoTemporal.PorcDcto| number:2 | porcentaje}}</label>
+                    <label for="" class="control-label"> {{pedidoTemporal.Descuento| number:2}}</label>
                 </div>
-                <div class="col-md-2 col-xs-2 falso-xs-12">
-                    <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Cba">
+                <div class="col-md-4 col-xs-12">
+                    <label for="" class="control-label label_titulo">SubTotal: </label>
+                    <label for="" class="control-label"> {{pedidoTemporal.SubTotal| number:2}}</label>
                 </div>
-
-                <div class=" col-md-1 col-xs-12">
-                    <label for="" class="control-label">IB PBA:</label>
+                <div class="col-md-4 col-xs-12">
+                    <label for="" class="control-label label_titulo">Total Neto: </label>
+                    <label for="" class="control-label"> {{pedidoTemporal.Total_Neto| number:2}}</label>
                 </div>
-                <div  class="col-md-1 col-xs-12">
-                    <input type="text" class="form-control" readonly hidden>
-                </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Pba">
-                </div>
-            </div>
-            <div class="row">
-                <div class=" col-md-2 col-xs-12">
-                    <label for="" class="control-label">IB Mis:</label>
-                </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.Porc_IngBr_Mis">
-                </div>
-                <div class="col-md-1 col-xs-12">
-                    <span>%</span>
-                </div>
-                <div  class="col-md-2 col-xs-12">
-                    <input type="text" class="form-control"  readonly ng-model="pedidoTemporal.IngBr_Mis">
-                </div>
-
-            </div>
-
-            <hr>
-
-            <div class=" col-md-1 col-xs-12">
-                <label for="" class="control-label">Dcto:</label>
-            </div>
-            <div  class="col-md-2 col-xs-12">
-                <input type="text" class="form-control"  ng-model="pedidoTemporal.PorcDcto" readonly>
-            </div>
-            <div  class="col-md-2 col-xs-12">
-                <input type="text" class="form-control"  ng-model="pedidoTemporal.Descuento" readonly>
-            </div>
-            <div class=" col-md-1 col-xs-1 falso-xs-12">
-                <label for="" class="control-label">SubTotal:</label>
-            </div>
-            <div  class="col-md-2 col-xs-2 falso-xs-12">
-                <input type="text" class="form-control"  ng-model="pedidoTemporal.SubTotal" readonly>
-            </div>
-
-            <br><!-- linea -->
-            <div class=" col-md-4 col-xs-4 falso-xs-12">
-                <label for="" class="control-label">Total Neto:</label>
-            </div>
-            <div  class="col-md-8 col-xs-8 falso-xs-12">
-                <input type="text" class="form-control"  ng-model="pedidoTemporal.Total_Neto" readonly>
-            </div>
         </div>
     </div>
 </fieldset>

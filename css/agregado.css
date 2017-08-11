@@ -543,3 +543,10 @@ input, textarea,select{
 .divProductos{
     padding-bottom: 30px;
 }
+
+.total_datos label{
+    text-align: left;
+}
+.label_titulo {
+    text-decoration: underline;
+}

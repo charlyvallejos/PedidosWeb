@@ -9,8 +9,6 @@
             <th>Precio</th>
             <th>Total</th>
             <th>Estado</th>
-            <th>Fecha Cot</th>
-            <th>Nro Cotiz</th>
         </tr>
         </thead>
         <tbody>
@@ -22,8 +20,6 @@
             <td>{{prod.Precio | number: 3}}</td>
             <td>{{prod.Total | number: 2}} </td>
             <td>{{prod.Estado}}</td>
-            <td>{{prod.Fecha_Cotizacion}}</td>
-            <td>{{prod.Nro_Cotizacion}}</td>
         </tr>
         </tbody>
     </table>

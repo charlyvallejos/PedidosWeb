@@ -99,6 +99,12 @@
 
     var app = angular.module('appSapo', ['angularUtils.directives.dirPagination','appLogin','appCliente','appProducto','ngMessages']) // aplicacion de angular
 
+        app.filter('porcentaje', ['$filter', function ($filter) {
+            return function (input) {
+                if(input != undefined)
+                return input + '%';
+            };
+        }])
         .controller('pedidosController',function($scope,$http, $filter){ //controlador pedidos
             $scope.date = new Date();
             $scope.date = $filter('date')(Date.now(),'dd/MM/yyyy');
