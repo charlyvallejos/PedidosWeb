@@ -1063,14 +1063,15 @@
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                                 .then(function(resp){
-
-                                    if(resp.data.Fecha_Vto_Psico == '01/01/1900' || resp.data.Fecha_Vto_Psico >= $scope.date)
+                                    //$scope.pedidoTemporal.Cliente = resp.data;
+                                    //console.log($scope.pedidoTemporal.Cliente[0].Fecha_Vto_Psico);
+                                    if(resp.data[0].Fecha_Vto_Psico == '01/01/1900' || resp.data[0].Fecha_Vto_Psico >= $scope.date)
                                     {
-                                        if(resp.data.Fecha_Facturar_Hasta == '01/01/1900' || resp.data.Fecha_Facturar_Hasta >= $scope.date)
+                                        if(resp.data[0].Fecha_Facturar_Hasta == '01/01/1900' || resp.data[0].Fecha_Facturar_Hasta >= $scope.date)
                                         {
-                                            if(CodVendedor == resp.data.Codigo_Vendedor)
+                                            if(CodVendedor == resp.data[0].Codigo_Vendedor)
                                             {
-                                                $scope.poneColorAgrup(resp.data.Id_Agrupacion);
+                                                $scope.poneColorAgrup(resp.data[0].Id_Agrupacion);
 //////////////////////////PROBLEM
                                                 $scope.pedidoTemporal.Cliente = resp.data;
                                                 $scope.pedidoTemporal.Id_Reparto = resp.data.Id_Reparto;
