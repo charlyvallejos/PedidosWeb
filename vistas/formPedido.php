@@ -111,8 +111,8 @@
 
 
                 </div>
-                <!--
-                                    <div class="col-xs-12">
+                
+                    <div class="col-xs-12">
                         <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
                     </div>
                     <div class="col-md-12">
@@ -152,7 +152,7 @@
                             <input type="text" class="form-control  fuente_dif" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
                         </div>
                     </div>
-                -->
+                
 
 
 

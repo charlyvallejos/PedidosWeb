@@ -6,31 +6,29 @@
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formCliente.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formProducto.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Pedid_Ca.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Pedid_De.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/menu.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/controlador.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/config.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/pedidos_web.js</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Clien_Ma.php</file>
+            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/pedidos_web.js</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/vistaPedidos.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formLogin.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/index.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/login.js</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/app.js</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Ma.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Frac.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/config/config.php</file>
+            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Frac.php</file>
+            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/estilos.css</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/agregado.css</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formClienteConsulta.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formPedido.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Usuario.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/loadData.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/vistaClientes.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formGrillaProducto.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/conexion.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/appCliente.js</file>
+            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/saporitiweb%20(9).sql</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formTotal.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/messages.html</file>
         </group>
     </open-files>
 </project-private>

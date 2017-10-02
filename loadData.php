@@ -109,7 +109,7 @@ if(!empty(isset($_GET))){
                 else if(isset($idCli))
                         echo json_encode($clien_ma->consultaCliente_Id($idCli));
                 else if(isset($cod))
-                    echo json_encode($clien_ma->consultaCodigoCliente($cod));
+                    echo json_encode($clien_ma->consultaCodigoCliente($cod)[0]);
                 else
                     echo json_encode($clien_ma->consulta_todos());
             }
@@ -119,7 +119,7 @@ if(!empty(isset($_GET))){
                 if(isset($idPro))
                 {
                     echo json_encode($produ_ma->consultaProducto($idPro));
-                }
+                }   
                 else if(isset($des)){
                     echo json_encode($produ_ma->consultaDescripcion($des));
                 }
