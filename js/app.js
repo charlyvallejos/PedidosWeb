@@ -504,7 +504,12 @@
                 }
                 else
                 {
-                    divMjeProd.show();
+                    //divMjeProd.show();
+                    
+                    divMjeProd.text = "Debe seleccionar el cliente";
+                    //divMjeProd.append("Debe seleccionar el cliente");
+                    divMjeProd.fadeIn(5);
+                    divMjeProd.fadeOut(6000);
                 }
 //                $scope.mostrarP = false;
 //                if(prod !== null){
@@ -534,7 +539,7 @@
                 {
                     if($scope.productoTemporal.Cantidad > 0 && productoSeleccion != "")
                     {
-                        if($scope.productoTemporal.Estado !== "BAJ"){
+                        if($scope.productoTemporal.Estado_PF !== "BAJ"){
 
 
                             if(parseFloat($scope.productoTemporal.Minimo) > 0)
@@ -647,8 +652,11 @@
                     }
                     else
                     {
-                        console.log("hola");
-
+                        divMjeProd.text = "";
+                        divMjeProd.append("Debe una cantidad mayor a cero");
+                        divMjeProd.show();
+//                        divMjeProd.fadeIn(5);
+//                        divMjeProd.fadeOut(6000);
                     }
                 }
             };
