@@ -550,3 +550,18 @@ input, textarea,select{
 .label_titulo {
     text-decoration: underline;
 }
+
+.t-total{
+    width: 300px;
+    font-size: 1em;
+    margin:0 auto;
+}
+
+.t-total td {
+    border: none !important;
+}
+
+.t-total tr td:nth-child(1){
+    font-weight: bold !important;
+    text-decoration: underline;
+}

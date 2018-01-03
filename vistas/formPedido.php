@@ -95,16 +95,62 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="trans" class="control-label">Transporte:</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <select name="transportista" id="trans" class="form-control" ng-model="pedidoTemporal.Id_Transporte">
+                                    <option value="620">SPA</option>
+                                    <option value="570">VIA1</option>
+                                </select>
+                            </div>
+                            <div class="row form-group" ng-show="pedidoTemporal.Generado_Por == 'cotizacion'">
+                                <div class="col-xs-3">
+                                    <label for="moneda" class="control-label">Moneda:</label>
+                                </div>
+                                <div class="col-xs-3">
+                                    <select name="moneda" id="moneda" class="form-control  fuente_dif" ng-model="pedidoTemporal.id_Moneda" ng-change="buscaCotizacion(pedidoTemporal.id_Moneda)">
+                                        <option value="1">PESOS</option>
+                                        <option value="2">DOLAR</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label for="cotizacion_moneda" class="control-label">Coti:</label>
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control  fuente_dif" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn-1" type="submit" ng-click="altaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0  && pedidoTemporal.Cliente == undefined" ng-hide="pedidoTemporal.Nro_Pedido > 0">Grabar</button>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn-1" type="submit" ng-click="bajaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Dar de BAJA</button>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn-1" type="submit" ng-click="modificarPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Modificar</button>
+                            </div>
+
                         </div>
                     </fieldset>
                 </div>
                 <div class="col-md-8 cold-xs-12">
+                    <!--############## TOTAL ########### -->
                     <?php include 'formTotal.php' ?>
 
                 </div>
             </div>
             <div class="col-md-12 col-xs-12">
-                <!--############## TOTAL ########### -->
+
             </div>
 
                 <div class="row">
@@ -112,46 +158,10 @@
 
                 </div>
                 
-                    <div class="col-xs-12">
-                        <button class="btn-0" ng-click="resetearFormulario(pedidoForm)">Cancelar</button>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="altaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0  && pedidoTemporal.Cliente == undefined" ng-hide="pedidoTemporal.Nro_Pedido > 0">Grabar</button>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="bajaPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Dar de BAJA</button>
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn-1" type="submit" ng-click="modificarPedido()" ng-disabled="pedidoTemporal.Productos.length == 0 && pedidoTemporal.Cliente == undefined" ng-show="pedidoTemporal.Nro_Pedido > 0">Modificar</button>
-                    </div>
 
 
-                    <div class="col-xs-6">
-                        <label for="trans" class="control-label">Transporte:</label>
-                    </div>
-                    <div class="col-xs-6">
-                        <select name="transportista" id="trans" class="form-control" ng-model="pedidoTemporal.Id_Transporte">
-                            <option value="620">SPA</option>
-                            <option value="570">VIA1</option>
-                        </select>
-                    </div>
-                    <div class="row form-group" ng-show="pedidoTemporal.Generado_Por == 'cotizacion'">
-                        <div class="col-xs-3">
-                            <label for="moneda" class="control-label">Moneda:</label>
-                        </div>
-                        <div class="col-xs-3">
-                            <select name="moneda" id="moneda" class="form-control  fuente_dif" ng-model="pedidoTemporal.id_Moneda" ng-change="buscaCotizacion(pedidoTemporal.id_Moneda)">
-                                <option value="1">PESOS</option>
-                                <option value="2">DOLAR</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <label for="cotizacion_moneda" class="control-label">Coti:</label>
-                        </div>
-                        <div class="col-xs-3">
-                            <input type="text" class="form-control  fuente_dif" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
-                        </div>
-                    </div>
+
+
                 
 
 

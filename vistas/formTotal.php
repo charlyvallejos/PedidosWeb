@@ -2,48 +2,49 @@
     <div class="item form-group">
         <div class="row total_datos">
 
-                <div class="col-md-4 col-xs-12">
-                    <label for="" class="col-md-6 col-xs-12 control-label label_titulo">Total bruto: </label>
-                    <label for="" class="col-md-6 col-xs-12 control-label"> {{pedidoTemporal.Total_Gravado | number:2}}</label>
-                </div>
-                <div class=" col-md-4 col-xs-12">
-                    <label for="" class="col-md-2 col-xs-12 control-label label_titulo">IVA: </label>
-                    <label for="" class="col-md-5 col-xs-12 control-label">{{pedidoTemporal.Porc_Iva | number:2 | porcentaje}}</label>
-                    <label for="" class="col-md-5 col-xs-12 control-label">{{pedidoTemporal.Iva | number:2}}</label>
-                </div>
-                <div class=" col-md-4 col-xs-12">
-                    <label for="" class="col-md-6 col-xs-12 control-label label_titulo">Exento: </label>
-                    <label for="" class="col-md-6 col-xs-12 control-label">{{pedidoTemporal.Total_Exento | number:2}}</label>
-                </div>
-                <div class="col-md-8 offset-md-4 col-xs-12">
-                    <label for="" class="col-md-3 col-xs-12 control-label label_titulo">IB CBA: </label>
-                    <label for="" class="col-md-3 col-xs-12 control-label">{{pedidoTemporal.Porc_IngBr_Cba | number:2 | porcentaje}} </label>
-                    <label for="" class="col-md-3 col-xs-12 control-label">{{pedidoTemporal.IngBr_Cba | number:2}} </label>
-                </div>
+            <table class="table table-responsive t-total">
+                <tr>
+                    <td colspan="2">Total bruto: </td>
+                    <td>{{pedidoTemporal.Total_Gravado | number:2}}</td>
+                </tr>
+                <tr>
+                    <td>Iva: </td>
+                    <td>{{pedidoTemporal.Porc_Iva | number:2 | porcentaje}} </td>
+                    <td>{{pedidoTemporal.Iva | number:2}}</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">Exento: </td>
+                    <td>{{pedidoTemporal.Total_Exento | number:2}}</td>
+                </tr>
+                <tr>
+                    <td>IB CABA: </td>
+                    <td>{{pedidoTemporal.Porc_IngBr_Cba | number:2 | porcentaje}} </td>
+                    <td>{{pedidoTemporal.IngBr_Cba | number:2}}</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">IB PBA: </td>
+                    <td>{{pedidoTemporal.IngBr_Pba| number:2}}</td>
+                </tr>
+                <tr>
+                    <td>IB Mis: </td>
+                    <td>{{pedidoTemporal.Porc_IngBr_Mis| number:2 | porcentaje}} </td>
+                    <td>{{pedidoTemporal.IngBr_Mis| number:2}}</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">SubTotal: </td>
+                    <td>{{pedidoTemporal.SubTotal| number:2}}</td>
+                </tr>
+                <tr>
+                    <td>Dcto: </td>
+                    <td>{{pedidoTemporal.PorcDcto| number:2 | porcentaje}} </td>
+                    <td>{{pedidoTemporal.Descuento| number:2}}</td>
+                </tr>
+                <tr>
+                    <td  colspan="2">Neto:  </td>
+                    <td>{{pedidoTemporal.Total_Neto| number:2}}</td>
+                </tr>
+            </table>
 
-
-                <div class=" col-md-4 col-xs-12">
-                    <label for="" class="control-label label_titulo">IB PBA: </label>
-                    <label for="" class="control-label"> {{pedidoTemporal.IngBr_Pba| number:2}}</label>
-                </div>
-                <div class=" col-md-4 col-xs-12">
-                    <label for="" class="control-label label_titulo">IB Mis: </label>
-                    <label for="" class="control-label"> {{pedidoTemporal.Porc_IngBr_Mis| number:2 | porcentaje}}</label>
-                    <label for="" class="control-label"> {{pedidoTemporal.IngBr_Mis| number:2}}</label>
-                </div>
-                <div class="col-md-4 col-xs-12">
-                    <label for="" class="control-label label_titulo">Dcto: </label>
-                    <label for="" class="control-label"> {{pedidoTemporal.PorcDcto| number:2 | porcentaje}}</label>
-                    <label for="" class="control-label"> {{pedidoTemporal.Descuento| number:2}}</label>
-                </div>
-                <div class="col-md-4 col-xs-12">
-                    <label for="" class="control-label label_titulo">SubTotal: </label>
-                    <label for="" class="control-label"> {{pedidoTemporal.SubTotal| number:2}}</label>
-                </div>
-                <div class="col-md-4 col-xs-12">
-                    <label for="" class="control-label label_titulo">Total Neto: </label>
-                    <label for="" class="control-label"> {{pedidoTemporal.Total_Neto| number:2}}</label>
-                </div>
         </div>
     </div>
 </fieldset>

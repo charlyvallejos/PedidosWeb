@@ -8,7 +8,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Pedidos Web</title>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
         <link rel="stylesheet" href="css/input_radio.css">
         <link rel="stylesheet" type="text/css" href="css/estilos.css"/>
