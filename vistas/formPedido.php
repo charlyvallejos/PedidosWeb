@@ -98,6 +98,9 @@
 
 
                         </div>
+
+                    </fieldset>
+                    <fieldset>
                         <div class="row">
                             <div class="col-xs-6">
                                 <label for="trans" class="control-label">Transporte:</label>
@@ -109,19 +112,19 @@
                                 </select>
                             </div>
                             <div class="row form-group" ng-show="pedidoTemporal.Generado_Por == 'cotizacion'">
-                                <div class="col-xs-3">
+                                <div class="col-xs-2">
                                     <label for="moneda" class="control-label">Moneda:</label>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-4">
                                     <select name="moneda" id="moneda" class="form-control  fuente_dif" ng-model="pedidoTemporal.id_Moneda" ng-change="buscaCotizacion(pedidoTemporal.id_Moneda)">
                                         <option value="1">PESOS</option>
                                         <option value="2">DOLAR</option>
                                     </select>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-1">
                                     <label for="cotizacion_moneda" class="control-label">Coti:</label>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-4">
                                     <input type="text" class="form-control  fuente_dif" readonly name="cotizacion_moneda" id="cotizacion_moneda" ng-model="pedidoTemporal.Valor_Moneda">
                                 </div>
                             </div>

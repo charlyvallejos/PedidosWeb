@@ -1,0 +1,42 @@
+-- Restringir modificar dependiendo el estado del documento
+-- Responsive panels
+-- Cotizacion en dolar
+-- Calculo de IIBB
+-- Restringe al cliente productos agrupacion
+-- Trae clientes repetidos en el buscador
+-- Validacion cantidad producto (minimos y multiplos)
+-- Cambia de tipo documento, luego no trae precio de producto
+-- Grabacion exitosa, desplegar pedido completo
+-- Listados
+-- Generacion de usuarios
+-- Mensaje de error, selecciona producto sin haber seleccionado cliente
+
+
+
+
+
+case 'pedido':
+    $scope.pedidoTemporal.Generado_Por = 0;
+    break;
+case 'cotizacion':
+    $scope.pedidoTemporal.Generado_Por = 1;
+    break;
+case 'presupuesto':
+    $scope.pedidoTemporal.Generado_Por = 3;
+    break;
+case 'mostrador':
+    $scope.pedidoTemporal.Generado_Por = 2;
+    break;
+case 'fr':
+    $scope.pedidoTemporal.Generado_Por = 0;
+    $scope.pedidoTemporal.Id_Reparto = 45;
+    break;
+case 'sf':
+    $scope.pedidoTemporal.Generado_Por = 0;
+    $scope.pedidoTemporal.Id_Reparto = 227;
+    break;
+
+
+
+
+

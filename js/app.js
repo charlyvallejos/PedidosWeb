@@ -74,16 +74,7 @@
         return new Array(n-String(this).length+1).join(str||'0')+this;
     };
 
-    buscarCliente.autocomplete({
-            source: apiURL+"?cliente",
-            select: function(event,ui){
-                var codCliente = [];
 
-               codCliente = ui.item.value.split('-');
-
-               angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
-            }
-        });
     buscarProducto.autocomplete({
          source: apiURL+"?producto",
          select: function(event,ui){
@@ -268,11 +259,11 @@
                                         if(response.data.ok)
                                         {
                                             $scope.agregarPedidoGrilla('alta',response.data.pedido);
-                                            formUp.slideToggle();
 
                                             $exito.html("<p>Exito!! Se dio de alta el pedido " + response.data.pedido.Nro_Pedido + " </p>");
                                             $exito.fadeIn();
                                             $exito.fadeOut(5000);
+                                            formUp.slideToggle();
                                         }
                                         else
                                         {
@@ -285,6 +276,9 @@
                                     .catch(function(response){
                                         console.log(response);
                                     });
+
+                                $scope.pedidoTemporal = {};
+
                             }
                         }
                     }
@@ -460,7 +454,6 @@
                     {
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                             .then(function(resp){
-                                $scope.productoTemporal = resp.data;
                                 $scope.poneColorRubro(resp.data.Rubro_Color);
 
                                 //Convierto a float
@@ -504,19 +497,16 @@
                 }
                 else
                 {
-                    //divMjeProd.show();
+                    buscarProducto.val('');
+                    divMjeProd.show();
                     
-                    divMjeProd.text = "Debe seleccionar el cliente";
-                    //divMjeProd.append("Debe seleccionar el cliente");
+                    //divMjeProd.text = "Debe seleccionar el cliente";
+                    divMjeProd.append("Debe seleccionar el cliente");
                     divMjeProd.fadeIn(5);
                     divMjeProd.fadeOut(6000);
+
                 }
-//                $scope.mostrarP = false;
-//                if(prod !== null){
-//                    $scope.productoTemporal = prod;
-//                    $scope.mostrarP = false;
-//                    inputCantidad.focus();
-//                   }
+
             };
             $scope.borraProductoGrilla = function(prodTemporal){
 
@@ -1019,6 +1009,17 @@
             /////////////////////////////////////////
             // CLIENTE
 
+            buscarCliente.autocomplete({
+                source: apiURL+"?cliente",
+                select: function(event,ui){
+                    var codCliente = [];
+
+                    codCliente = ui.item.value.split('-');
+                    //$scope.clie = codCliente;
+                    //console.log($scope.clie);
+                    angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
+                }
+            });
             $scope.clientes = [];
             $scope.clienteSeleccionado = [];
             $scope.consultaClienteDescripcion = function(des){                                
@@ -1050,10 +1051,13 @@
                 }
                 
             };
+            $scope.desplegarCliente = function(){
+                $("#buscarCliente")[0].value = "";
+
+            };
             $scope.seleccionCliente = function(cod){
                 if($scope.pedidoTemporal.Productos == undefined || $scope.pedidoTemporal.Productos.length == 0){
                     divMjeCliente.hide();
-
                     /*
                     if(event != null && event.which === 13){
                         cod = $scope.clienteBuscado;
@@ -1066,7 +1070,6 @@
                         }
                     }
                     */
-
                     if(cod !== undefined)
                     {
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
@@ -1097,9 +1100,6 @@
                                                         modalCliente2.modal('show');
                                                     }
                                                 });
-
-
-
                                                 buscarCliente.val('');
                                                 buscarProducto.focus();
                                             }
@@ -1164,7 +1164,6 @@
                         $http.get(apiURL+"?a=get&t=cli&cod="+cod)
                             .then(function(resp){
                                     $scope.pedidoTemporal.Cliente = resp.data;
-                                    console.log($scope.pedidoTemporal.Cliente);
                                     $scope.poneColorAgrup(resp.data.Id_Agrupacion);
     //////////////////////////PROBLEM
                                     $scope.pedidoTemporal.Cliente = resp.data;
@@ -1173,6 +1172,17 @@
                                     $scope.pedidoTemporal.Id_Lista = resp.data.Id_Lista;
                                     $scope.pedidoTemporal.Id_Grupo_Cliente = resp.data.Id_Grupo_Cliente;
                                     $scope.pedidoTemporal.Id_Transporte = resp.data.Id_Transporte;
+
+                                    $http.get(apiURL+"?a=get&t=cli_obs&cod="+cod)
+                                        .then(function(r){
+                                            if(r.data.Imprimir == "1")
+                                                $scope.pedidoTemporal.Cliente.Obs_Imprimir = r.data.Obs;
+                                            if(r.data.Imprimir == "0")
+                                                $scope.pedidoTemporal.Cliente.Obs_No_Imprimir = r.data.Obs;
+                                        }).catch(function(){
+
+                                    });
+
                                     buscarCliente.val('');
                                     buscarProducto.focus();
                             })
@@ -1274,7 +1284,6 @@
                     $scope.pedidoTemporal.Valor_Moneda = 1;
 
             };
-
 
             $scope.resetearFormulario = function(pedidoForm){
                 $('input').val('').removeAttr('selected');

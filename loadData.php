@@ -113,6 +113,13 @@ if(!empty(isset($_GET))){
                 else
                     echo json_encode($clien_ma->consulta_todos());
             }
+            else if($tabla == "cli_obs"){
+                $clien_ma = new Clien_Ma();
+                if(isset($cod))
+                    echo json_encode($clien_ma->consultaObs($cod));
+                else
+                    echo json_encode(array("error" => "mal"));
+            }
             else if($tabla == 'prodma')
             {
                 $produ_ma = new Produ_Ma();
@@ -173,6 +180,7 @@ if(!empty(isset($_GET))){
                 if(!ctype_digit($term))
                 {                    
                     $sql = $clien_ma->consultaDescripcion($term);
+                    $resultado = [];
                     foreach ($sql as $dato){// as $dato){
                         $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
                     }                    
@@ -180,7 +188,8 @@ if(!empty(isset($_GET))){
                 }
                 else
                 {                  
-                    $sql = $clien_ma->consultaCodigoCliente($term);                    
+                    $sql = $clien_ma->consultaCodigoCliente($term);
+                    $resultado = [];
                     foreach ($sql as $dato){// as $dato){
                         $resultado[] = $dato['Codigo_Cliente'].' - '. $dato['Razon_Social'].' - '.$dato['Nombre_Fantasia'];
                     }

@@ -120,7 +120,18 @@ class Clien_Ma
             return $ex->getMessage();
         }
     }
-    
+    public function consultaObs($cod){
+        $sql = "CALL Clien_Obs_Igual_CodCli(:Cod)";
+        try{
+            $conexion = Conexion::conectar();
+            $query = $conexion->prepare($sql);
+            $query->bindParam(':Cod',$cod,PDO::PARAM_INT);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }catch(PDOException $ex){
+            return $ex->getMessage();
+        }
+    }
     public function consultaCodigoCliente($codigoCliente){
         //$sql = "SELECT * FROM clien_ma WHERE Codigo_Cliente = '$codigoCliente'";
         $sql = "CALL Clien_Ma_Igual_Codigo(:codigo)";
