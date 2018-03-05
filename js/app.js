@@ -455,7 +455,7 @@
                         $http.get(apiURL+"?a=get&t=prodma&cod="+prod)
                             .then(function(resp){
                                 $scope.poneColorRubro(resp.data.Rubro_Color);
-
+                                $scope.productoTemporal = resp.data;
                                 //Convierto a float
                                 $scope.productoTemporal.Precio_Moneda = parseFloat($scope.productoTemporal.Precio_Moneda).toFixed(2);
                                 $scope.productoTemporal.Precio_Lista = parseFloat($scope.productoTemporal.Precio_Lista).toFixed(2);
@@ -480,7 +480,7 @@
                                 //Calculo precio venta
 
                                 if($scope.productoTemporal.Tipo_Iva != "E")
-                                    $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista + $scope.productoTemporal.Precio_Lista * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2);
+                                    $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista + ($scope.productoTemporal.Precio_Lista * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2));
                                 else
                                     $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
 
