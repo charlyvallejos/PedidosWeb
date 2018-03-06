@@ -478,9 +478,11 @@
                                     $scope.productoTemporal.Precio_Lista = $scope.productoTemporal.Precio_Moneda / $scope.productoTemporal.Valor_Moneda;
 
                                 //Calculo precio venta
-
+                                
+                                //var Precio_Lista = parseFloat($scope.productoTemporal.Precio_Lista)
+                                //var Precio_Lista2 = parseFloat((parseFloat($scope.productoTemporal.Precio_Lista) * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100)))
                                 if($scope.productoTemporal.Tipo_Iva != "E")
-                                    $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista + ($scope.productoTemporal.Precio_Lista * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100).toFixed(2));
+                                    $scope.productoTemporal.Precio = parseFloat($scope.productoTemporal.Precio_Lista) +  parseFloat((parseFloat($scope.productoTemporal.Precio_Lista) * parseFloat(($scope.pedidoTemporal.Cliente.Porcentaje_Iva) /100)));
                                 else
                                     $scope.productoTemporal.Precio = $scope.productoTemporal.Precio_Lista;
 
