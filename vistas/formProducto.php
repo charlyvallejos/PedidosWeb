@@ -1,5 +1,5 @@
 <fieldset><legend>Producto</legend>
-    <div class="msgProducto ocultar" ng-hide="pedidoTemporal.Cliente"></div>
+    <div class="msgProducto ocultar"></div> <!--ng-hide="pedidoTemporal.Cliente"></div>-->
     <div class="item form-group top_search">
         <div class="row">
             <label class="control-label col-md-3 col-sm-3 col-xs-3 falso-xs-12" for="buscarProducto">Buscar:</label>

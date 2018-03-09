@@ -644,11 +644,13 @@
                     }
                     else
                     {
-                        divMjeProd.text = "";
-                        divMjeProd.append("Debe una cantidad mayor a cero");
+                        //divMjeProd.text = "";
                         divMjeProd.show();
-//                        divMjeProd.fadeIn(5);
-//                        divMjeProd.fadeOut(6000);
+                        divMjeProd.append("Debe una cantidad mayor a cero");
+                        //divMjeProd.hide();
+                        
+                        divMjeProd.fadeIn(5);
+                        divMjeProd.fadeOut(6000);
                     }
                 }
             };
