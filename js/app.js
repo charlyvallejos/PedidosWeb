@@ -53,7 +53,8 @@
         $radioMostro = $("#radioMostra"),
         modalCliente2 = $("#modalCliente2"),
         $exito = $(".exito"),
-        $error = $(".error");
+        $error = $(".error"),
+        cantProd = $("#cantprod");
 
     btnPlus.on('click',function(e){
         e.preventDefault();
@@ -646,9 +647,9 @@
                     {
                         //divMjeProd.text = "";
                         divMjeProd.show();
-                        divMjeProd.append("Debe una cantidad mayor a cero");
+                        divMjeProd.append("Debe ingresar una cantidad mayor a cero");
                         //divMjeProd.hide();
-                        
+                        cantProd.focus();
                         divMjeProd.fadeIn(5);
                         divMjeProd.fadeOut(6000);
                     }
