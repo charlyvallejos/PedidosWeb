@@ -1022,7 +1022,8 @@
                     codCliente = ui.item.value.split('-');
                     //$scope.clie = codCliente;
                     //console.log($scope.clie);
-                    angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
+                    //angular.element($('#vistaPedidos')).scope().seleccionCliente(codCliente[0]);
+                    $scope.seleccionCliente(codCliente[0]);
                 }
             });
             $scope.clientes = [];
