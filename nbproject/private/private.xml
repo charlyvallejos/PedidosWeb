@@ -19,6 +19,7 @@
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Ma.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/config/config.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Frac.php</file>
+            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/login.css</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/estilos.css</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/agregado.css</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formClienteConsulta.php</file>
@@ -28,7 +29,6 @@
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/loadData.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formGrillaProducto.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/conexion.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/saporitiweb%20(9).sql</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formTotal.php</file>
         </group>
     </open-files>
