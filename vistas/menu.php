@@ -17,7 +17,7 @@ else
 
 ?>
 <script>
-    var CodVendedor = "<?php echo $_SESSION['Codigo_Vendedor']?>";
+    var CodVendedor = <?php echo $_SESSION['Codigo_Vendedor']?>;
 </script>
 <div class="nav-color">
     <div class="nav-wrap">
