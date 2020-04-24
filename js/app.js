@@ -141,7 +141,7 @@
             /////////
             // PEDIDO
             $scope.selectPedido = function (ped) {
-                $scope.pedidoTemporal = ped;
+                $scope.pedidoTemporal = ped;                
                 if(ped.Estado != "BAJ")
                 {
                     $scope.index = $scope.pedidos.indexOf(ped);
@@ -191,7 +191,7 @@
                             $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                                 .then(function(resp){
                                     $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
-                                    $scope.calculaTotal();
+                                    //$scope.calculaTotal();
                                 })
                                 .catch(function(resp){
                                     console.log(resp);
@@ -200,8 +200,7 @@
                         .catch(function(resp){
                             console.log(resp);
                         });
-
-
+                        
                     //Capturo el indice del array pedidos que seleccione
                     $scope.index = $scope.pedidos.indexOf(ped);
 
@@ -310,6 +309,7 @@
                         break;
                 }
             };
+            
             $scope.agregarPedidoGrilla = function(accion,pedido){
                 if(accion == 'alta')
                 {
@@ -434,6 +434,7 @@
                     }
                 }
             };
+            
             $scope.bajaPedido = function(){
               $scope.pedidoTemporal.Estado = "BAJ";
               $scope.modificarPedido();
@@ -659,8 +660,7 @@
                 $scope.pedidoTemporal.Total_Gravado = 0;
 
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
-                    $scope.pedidoTemporal.Total_Gravado += parseFloat(v.Total,3);
-
+                    $scope.pedidoTemporal.Total_Gravado += parseFloat(v.Total,3);                    
                 });
 
                 $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
@@ -699,7 +699,8 @@
                     $scope.pedidoTemporal.Iva_NoIns = $scope.Iva_IngBr.Iva_NoIns;
 
                 }
-
+                
+                
                 $scope.formatoPorcentaje();
 
 
