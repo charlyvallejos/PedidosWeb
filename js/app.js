@@ -191,7 +191,7 @@
                             $http.get(apiURL+"?a=get&t=cli&idCli="+ped.id_Cliente)
                                 .then(function(resp){
                                     $scope.pedidoTemporal.Cliente = resp.data; ////////CLIEN_MA
-                                    //$scope.calculaTotal();
+                                    $scope.calculaTotal();
                                 })
                                 .catch(function(resp){
                                     console.log(resp);
@@ -662,13 +662,13 @@
                 angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
                     $scope.pedidoTemporal.Total_Gravado += parseFloat(v.Total,3);                    
                 });
-
+                console.log($scope.pedidoTemporal.Total_Gravado);
                 $scope.Iva_IngBr = $scope.calculaIngBrutos($scope.pedidoTemporal.Cliente,$scope.pedidoTemporal.Productos);
 
                 if($scope.Iva_IngBr != null)
                 {
                     $scope.pedidoTemporal.Total_Gravado = $filter('number')($scope.Iva_IngBr.Bruto,2);
-
+                    console.log($scope.pedidoTemporal.Total_Gravado);
                     if(parseFloat($scope.Iva_IngBr.Iva_Ins,3) > 0)
                     {
                         $scope.pedidoTemporal.Porc_Iva = $scope.Iva_IngBr.Porc_Iva_Ins;

@@ -68,7 +68,7 @@ function insertarPedido(evento)
     ejecutarAJAX(datos);    
 }
 
-function altaPedido(evento)
+function bbbbAltaPedido2(evento)
 {
     evento.preventDefault();   
     var datos = "transaccion=alta";
