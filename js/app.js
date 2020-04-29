@@ -521,9 +521,13 @@
 
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prodTemporal);
 
-                if($scope.index >= 0){
+                if($scope.index >= 0){                                        
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
                     $scope.productoTemporal = null;
+                    angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
+                        if($scope.index + 1 > v.Renglon)
+                            v.Renglon -= 1;
+                    });
                     $scope.calculaTotal();
                 }                
                 else
@@ -542,7 +546,7 @@
                     {
                         if($scope.productoTemporal.Estado_PF !== "BAJ"){
 
-
+                        
                             if(parseFloat($scope.productoTemporal.Minimo) > 0 && parseFloat($scope.productoTemporal.Cantidad) >= parseFloat($scope.productoTemporal.Minimo))
                             {
                                 var resto = parseFloat($scope.productoTemporal.Cantidad) % parseFloat($scope.productoTemporal.Minimo);//(parseFloat($scope.productoTemporal.Cantidad)/parseFloat($scope.productoTemporal.Minimo))*parseFloat($scope.productoTemporal.Minimo);
@@ -705,7 +709,7 @@
                 //--------------------------------------------------------------------------------------
                 //--------------------------------------------------------------------------------------
                 //Esto se agrego hasta ver lo de calcula Ingreso Brutos
-                $scope.pedidoTemporal.Iva_Ins = ($scope.pedidoTemporal.Total_Gravado) * $scope.pedidoTemporal.Porc_Iva_Ins / 100;
+                $scope.pedidoTemporal.Iva_Ins = ($scope.pedidoTemporal.Total_Gravado) * $scope.pedidoTemporal.Cliente.Porcentaje_Iva / 100;
                 
                 $scope.pedidoTemporal.Total_Exento =  0;
                 $scope.pedidoTemporal.IngBr_Cba = 0;
@@ -722,7 +726,7 @@
                 $scope.pedidoTemporal.Porc_Iva_NoIns = 0;
                 $scope.pedidoTemporal.Iva_NoIns = 0;
                 
-                $scope.pedidoTemporal.Porc_Iva = $scope.pedidoTemporal.Porc_Iva_Ins;
+                $scope.pedidoTemporal.Porc_Iva = $scope.pedidoTemporal.Cliente.Porcentaje_Iva;
                 $scope.pedidoTemporal.Iva = $scope.pedidoTemporal.Iva_Ins;
                 $scope.pedidoTemporal.SubTotal = $scope.pedidoTemporal.Total_Gravado + $scope.pedidoTemporal.Iva_Ins;
                 $scope.pedidoTemporal.Total_Neto = $scope.pedidoTemporal.Total_Gravado + $scope.pedidoTemporal.Iva_Ins;
