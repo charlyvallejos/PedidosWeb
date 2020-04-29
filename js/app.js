@@ -447,10 +447,11 @@
                    }
             });
      
-            $scope.selectProducto = function(prod,formCtrlProducto){
+            $scope.selectProducto = function(prod){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
             };
+            
             $scope.seleccionProducto = function(prod){
 
                 if($scope.pedidoTemporal.Cliente !== undefined)
@@ -536,20 +537,22 @@
             $scope.agregarProductoGrilla = function(event){
                 if(event.which === 13 )                
                 {
+                    $scope.msjProducto = "";
                     if($scope.productoTemporal.Cantidad > 0 && productoSeleccion != "")
                     {
                         if($scope.productoTemporal.Estado_PF !== "BAJ"){
 
 
-                            if(parseFloat($scope.productoTemporal.Minimo) > 0)
+                            if(parseFloat($scope.productoTemporal.Minimo) > 0 && parseFloat($scope.productoTemporal.Cantidad) >= parseFloat($scope.productoTemporal.Minimo))
                             {
-                                var resto = (parseFloat($scope.productoTemporal.Cantidad)/parseFloat($scope.productoTemporal.Minimo))*parseFloat($scope.productoTemporal.Minimo);
+                                var resto = parseFloat($scope.productoTemporal.Cantidad) % parseFloat($scope.productoTemporal.Minimo);//(parseFloat($scope.productoTemporal.Cantidad)/parseFloat($scope.productoTemporal.Minimo))*parseFloat($scope.productoTemporal.Minimo);
 
-                                if(parseFloat($scope.productoTemporal.Cantidad) !== resto)
+                                if(resto !== 0)//(parseFloat($scope.productoTemporal.Cantidad) !== resto)
                                 {
                                     $scope.muestraMsjProducto = true;
                                     $scope.msjProducto = "La cantidad debe ser multiplo de: " + $scope.productoTemporal.Minimo;
                                     $scope.productoTemporal.Cantidad = "";
+                                    return;
                                 }
                                 else
                                 {
@@ -600,12 +603,23 @@
                                             $scope.productoTemporal = {};
                                         }
                                     }
-
-
-                                    if($scope.pedidoTemporal.Productos.length <= 0)
-                                        $scope.productoTemporal.Renglon = 1;
+                                    
+                                    if($scope.pedidoTemporal.Productos.length > 0)
+                                    {                                        
+                                        if(encontrarProducto)
+                                            $scope.productoTemporal.Renglon = encontrarProducto.Renglon;
+                                        else
+                                            $scope.productoTemporal.Renglon = $scope.pedidoTemporal.Productos.length + 1;
+                                    }
                                     else
-                                        $scope.productoTemporal.Renglon = $scope.pedidoTemporal.Productos.length + 1;
+                                    {
+                                        $scope.productoTemporal.Renglon = 1;
+                                    }
+
+//                                    if($scope.pedidoTemporal.Productos.length <= 0)
+//                                        $scope.productoTemporal.Renglon = 1;
+//                                    else
+//                                        $scope.productoTemporal.Renglon = $scope.pedidoTemporal.Productos.length + 1;
 
                                     if($scope.productoTemporal != null)
                                     {
@@ -642,9 +656,26 @@
                                 }
 
                             }
+                            else
+                            {
+                                divMjeProd.html("");
+                                divMjeProd.append("Cantidad inferior al mínimo permitido");                                
+                                divMjeProd.fadeIn(5);
+                                divMjeProd.fadeOut(6000);
+                                cantProd.focus();
+                                return;
+                            }
 
                         }
-
+                        else
+                        {
+                            divMjeProd.html("");
+                            divMjeProd.append("Producto dado de baja");
+                            //divMjeProd.hide();                        
+                            divMjeProd.fadeIn(5);
+                            divMjeProd.fadeOut(6000);
+                        }
+                        
                         $scope.productoTemporal = {};
                         buscarProducto.val('');
                         buscarProducto.focus();
@@ -652,12 +683,13 @@
                     else
                     {
                         //divMjeProd.text = "";
-                        divMjeProd.show();
+                        //divMjeProd.show();
+                        divMjeProd.html("");
                         divMjeProd.append("Debe ingresar una cantidad mayor a cero");
-                        //divMjeProd.hide();
-                        cantProd.focus();
+                        //divMjeProd.hide();                        
                         divMjeProd.fadeIn(5);
                         divMjeProd.fadeOut(6000);
+                        cantProd.focus();
                     }
                 }
             };
