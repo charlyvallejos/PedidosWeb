@@ -74,16 +74,7 @@
     Number.prototype.padLeft = function (n,str){
         return new Array(n-String(this).length+1).join(str||'0')+this;
     };
-
-
-    buscarProducto.autocomplete({
-         source: apiURL+"?producto",
-         select: function(event,ui){
-               var codProducto = [];
-               codProducto = ui.item.value.split('-');
-               angular.element($('#vistaPedidos')).scope().seleccionProducto(codProducto[0]);
-            }
-     });
+    
         
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// APLICACION ANGULAR ///////////////////////////////////////////////////
@@ -445,7 +436,17 @@
 
             //////////
             // PRODUCTO
-
+            
+            buscarProducto.autocomplete({
+                source: apiURL+"?producto",
+                select: function(event,ui){
+                      var codProducto = [];
+                      codProducto = ui.item.value.split('-');
+                      //angular.element($('#vistaPedidos')).scope().seleccionProducto(codProducto[0]);
+                      $scope.seleccionProducto(codProducto[0]);
+                   }
+            });
+     
             $scope.selectProducto = function(prod,formCtrlProducto){
                 $scope.index = $scope.pedidoTemporal.Productos.indexOf(prod);
                 $scope.productoTemporal = prod;
@@ -531,6 +532,7 @@
                     pedidoForm.buscarProducto.focus();
                 }
             };
+            
             $scope.agregarProductoGrilla = function(event){
                 if(event.which === 13 )                
                 {
