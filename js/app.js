@@ -302,7 +302,7 @@
             };
             
             $scope.agregarPedidoGrilla = function(accion,pedido){
-                if(accion == 'alta')
+                if(accion === 'alta')
                 {
                     $scope.pedidos.unshift({
                         Codigo_Cliente:pedido.Cliente.Codigo_Cliente,
@@ -525,7 +525,7 @@
                     $scope.pedidoTemporal.Productos.splice($scope.index,1);
                     $scope.productoTemporal = null;
                     angular.forEach($scope.pedidoTemporal.Productos,function(v,k){
-                        if($scope.index + 1 > v.Renglon)
+                        if(v.Renglon > $scope.index + 1 )
                             v.Renglon -= 1;
                     });
                     $scope.calculaTotal();
