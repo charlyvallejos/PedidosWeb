@@ -249,9 +249,9 @@
                                     .then(function(response){
                                         if(response.data.ok)
                                         {
-                                            $scope.agregarPedidoGrilla('alta',response.data.pedido);
-
-                                            $exito.html("<p>Exito!! Se dio de alta el pedido " + response.data.pedido.Nro_Pedido + " </p>");
+                                            //$scope.agregarPedidoGrilla('alta',response.data.pedido);
+                                            $scope.consultaPedidos(CodVendedor);
+                                            $exito.html("<p>Exito!! Se dio de alta el pedido " + response.data.nroPedido + " </p>");
                                             $exito.fadeIn();
                                             $exito.fadeOut(5000);
                                             formUp.slideToggle();
@@ -564,7 +564,7 @@
 
                                     var encontrarProducto = false;
 
-                                    if($scope.pedidoTemporal.Productos.length > 0)
+                                    if($scope.pedidoTemporal.Productos !== undefined && $scope.pedidoTemporal.Productos.length > 0)
                                     {
                                         encontrarProducto = $filter('filter')($scope.pedidoTemporal.Productos,{Id_Producto:$scope.productoTemporal.Id_Producto,Id_Fraccio:$scope.productoTemporal.Id_Fraccio})[0];
                                     }
@@ -608,7 +608,7 @@
                                         }
                                     }
                                     
-                                    if($scope.pedidoTemporal.Productos.length > 0)
+                                    if($scope.pedidoTemporal.Productos !== undefined && $scope.pedidoTemporal.Productos.length > 0)
                                     {                                        
                                         if(encontrarProducto)
                                             $scope.productoTemporal.Renglon = encontrarProducto.Renglon;
@@ -709,6 +709,7 @@
                 //--------------------------------------------------------------------------------------
                 //--------------------------------------------------------------------------------------
                 //Esto se agrego hasta ver lo de calcula Ingreso Brutos
+                $scope.pedidoTemporal.Porc_Iva_Ins = $scope.pedidoTemporal.Cliente.Porcentaje_Iva;   
                 $scope.pedidoTemporal.Iva_Ins = ($scope.pedidoTemporal.Total_Gravado) * $scope.pedidoTemporal.Cliente.Porcentaje_Iva / 100;
                 
                 $scope.pedidoTemporal.Total_Exento =  0;

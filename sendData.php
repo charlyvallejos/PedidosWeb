@@ -43,6 +43,7 @@ if(!empty(isset($_POST)))
             $pedid_ca = new Pedid_Ca();
             $ok = false;
             $NroPedidoCa = $pedid_ca->altaPedido($conexion);
+            //$NroPedidoCa = 10;
             if($NroPedidoCa > 0)
             {
                 $pedid_de = new Pedid_De();
@@ -59,7 +60,7 @@ if(!empty(isset($_POST)))
 
 
             if($ok)
-                echo json_encode(array("ok" => true, "pedido" => $pedido));
+                echo json_encode(array("ok" => true, "nroPedido" => $NroPedidoCa));
             else
                 echo json_encode(array("ok" => false,"nroPedido" => $NroPedidoCa));
         }
