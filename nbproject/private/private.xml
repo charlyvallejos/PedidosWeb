@@ -3,37 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formProducto.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formCliente.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Pedid_Ca.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Pedid_De.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/menu.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/bootstrap.min.css</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/controlador.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/config.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Clien_Ma.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/pedidos_web.js</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formLogin.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/vistaPedidos.php</file>
             <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/index.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/login.js</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/js/app.js</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Ma.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/config/config.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Produ_Frac.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/login.css</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/estilos.css</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/agregado.css</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/sendData.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formClienteConsulta.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formPedido.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/Usuario.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/vistaListados.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/css/input_radio.css</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/loadData.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formGrillaProducto.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/clases/conexion.php</file>
-            <file>file:/C:/xampp/htdocs/MVC/PedidosWeb/vistas/formTotal.php</file>
         </group>
     </open-files>
 </project-private>
