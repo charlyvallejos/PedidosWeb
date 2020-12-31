@@ -31,9 +31,16 @@
         }
     }
 
-
-
-
-
-
 ?>
+
+<html ng-app="appLogin">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Pedidos</title>
+        <link href="css/login.css" rel="stylesheet"/>
+        <script src="js/login.js"></script>
+    </head>
+    <body ng-controler="loginController">
+        
+    </body>
+</html>
